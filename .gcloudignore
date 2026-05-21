@@ -1,0 +1,19 @@
+# Ignore Git metadata
+.git/
+.gitignore
+
+# Ignore local dependency directories recursively
+**/node_modules/
+
+# Ignore compiled/build outputs recursively
+**/dist/
+
+# Ignore local environment files
+**/.env
+**/.env.*
+.env.production
+.env.local
+
+# Ignore docker files
+.dockerignore
+.gcloudignore

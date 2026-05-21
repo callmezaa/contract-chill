@@ -1,0 +1,144 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', sans-serif;
+  
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-subtle: var(--text-subtle);
+}
+
+:root {
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  
+  --background: #ffffff;
+  --surface: #fafafa;
+  --surface-2: #f4f4f5;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --text-subtle: #94a3b8;
+}
+
+/* Premium Dark Mode Palette */
+.dark, [data-theme='dark'] {
+  --background: #09090b;
+  --surface: #121217;
+  --surface-2: #1e1e24;
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-subtle: #64748b;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem; /* Account for sticky nav */
+  }
+  body {
+    @apply bg-background text-text antialiased selection:bg-primary/20 selection:text-primary transition-colors duration-300;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white font-bold py-2.5 px-5 rounded-xl hover:bg-primary-dark transition-all active:scale-95 shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-border text-text font-bold py-2 px-5 rounded-xl hover:border-primary/50 hover:bg-surface transition-all active:scale-95;
+  }
+  
+  .card {
+    @apply bg-surface border border-border rounded-3xl transition-all duration-300;
+  }
+
+  .input {
+    @apply w-full bg-surface-2 border border-border rounded-xl py-3 px-4 focus:outline-none focus:border-primary transition-all;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-text-muted rounded-xl hover:text-primary hover:bg-primary/5 transition-all;
+  }
+
+  .nav-link-active {
+    @apply flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-primary bg-primary/5 rounded-xl border border-primary/10 transition-all shadow-sm;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full hover:bg-text-subtle transition-colors;
+  }
+}
+
+/* PDF Export Classes */
+.pdf-export-container {
+  padding: 40px !important;
+  background-color: white !important;
+  color: black !important;
+  width: 210mm !important; /* A4 width */
+  min-height: 297mm !important;
+  margin: 0 !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.pdf-export-hide {
+  display: none !important;
+}
+
+.pdf-header {
+  border-bottom: 2px solid #3b82f6 !important;
+  margin-bottom: 30px !important;
+  padding-bottom: 20px !important;
+}
+
+/* Premium Background & Micro-Animations */
+.bg-grid-pattern {
+  background-size: 24px 24px;
+  background-image: radial-gradient(circle, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+}
+.dark .bg-grid-pattern, [data-theme='dark'] .bg-grid-pattern {
+  background-image: radial-gradient(circle, rgba(248, 250, 252, 0.035) 1px, transparent 1px);
+}
+
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+

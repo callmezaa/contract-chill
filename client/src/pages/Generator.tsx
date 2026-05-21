@@ -1,0 +1,465 @@
+import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../contexts/AuthContext';
+import { Wand2, Loader2, Copy, Download, CheckCircle2, PenTool } from 'lucide-react';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { generateContractDraft } from '../services/api';
+import type { GenerateContractParams } from '../services/api';
+import { toast } from 'sonner';
+import ReactMarkdown from 'react-markdown';
+import remarkBreaks from 'remark-breaks';
+
+export const Generator = () => {
+  useDocumentTitle('Contract Generator - ContractChill');
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+  const { user } = useAuth();
+  
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
+  
+  // Load draft from localStorage on startup
+  const [draft, setDraft] = useState<string | null>(() => {
+    return localStorage.getItem('contract_generator_result_draft') || null;
+  });
+  
+  // Load form state from localStorage on startup
+  const [formData, setFormData] = useState<GenerateContractParams>(() => {
+    const saved = localStorage.getItem('contract_generator_draft');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        return {
+          ...parsed,
+          myName: parsed.myName || user?.displayName || ''
+        };
+      } catch (e) {
+        // Fallback on error
+      }
+    }
+    return {
+      clientName: '',
+      myName: user?.displayName || '',
+      projectValue: '',
+      contractType: 'Freelance Services Agreement',
+      specialConditions: ''
+    };
+  });
+
+  // Sync formData changes to localStorage
+  useEffect(() => {
+    localStorage.setItem('contract_generator_draft', JSON.stringify(formData));
+  }, [formData]);
+
+  // Sync draft changes to localStorage
+  useEffect(() => {
+    if (draft) {
+      localStorage.setItem('contract_generator_result_draft', draft);
+    } else {
+      localStorage.removeItem('contract_generator_result_draft');
+    }
+  }, [draft]);
+
+  // Handle user object being loaded asynchronously
+  useEffect(() => {
+    if (user?.displayName && !formData.myName) {
+      setFormData(prev => ({ ...prev, myName: user.displayName || '' }));
+    }
+  }, [user]);
+
+  const handleClear = () => {
+    setFormData({
+      clientName: '',
+      myName: user?.displayName || '',
+      projectValue: '',
+      contractType: 'Freelance Services Agreement',
+      specialConditions: ''
+    });
+    setDraft(null);
+    localStorage.removeItem('contract_generator_draft');
+    localStorage.removeItem('contract_generator_result_draft');
+    toast.success('Form cleared');
+  };
+
+  const resultRef = useRef<HTMLDivElement>(null);
+
+  const handleGenerate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.clientName || !formData.myName || !formData.projectValue) {
+      toast.error('Missing fields', { description: 'Please fill in all required fields.' });
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      const generatedDraft = await generateContractDraft(formData);
+      setDraft(generatedDraft);
+      toast.success('Contract Generated!', { description: 'Your pro-freelancer draft is ready.' });
+    } catch (error: any) {
+      toast.error('Generation Failed', { description: error.message || 'Something went wrong.' });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleCopy = () => {
+    if (!draft) return;
+    navigator.clipboard.writeText(draft);
+    setIsCopied(true);
+    toast.success('Copied to clipboard');
+    setTimeout(() => setIsCopied(false), 2000);
+  };
+
+  const handleDownloadPDF = () => {
+    if (!resultRef.current || !draft) return;
+    
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      toast.error('Failed to open print window', { description: 'Please allow pop-ups for this site.' });
+      return;
+    }
+
+    const content = resultRef.current.innerHTML;
+    const title = `Contract_${formData.clientName.replace(/\s+/g, '_')}`;
+    
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>${title}</title>
+          <style>
+            @page { margin: 2cm; }
+            body { 
+              font-family: 'Times New Roman', Times, serif; 
+              line-height: 1.6; 
+              color: #000;
+              max-width: 21cm;
+              margin: 0 auto;
+              font-size: 12pt;
+            }
+            h1 { font-size: 18pt; text-align: center; margin-bottom: 24pt; font-weight: bold; text-transform: uppercase; }
+            h2 { font-size: 14pt; margin-top: 18pt; margin-bottom: 12pt; font-weight: bold; }
+            h3 { font-size: 12pt; font-weight: bold; margin-top: 12pt; }
+            p { margin-bottom: 12pt; text-align: justify; }
+            ul, ol { margin-bottom: 12pt; padding-left: 24pt; }
+            li { margin-bottom: 6pt; text-align: justify; }
+            strong { font-weight: bold; }
+            em { font-style: italic; }
+            
+            @media print {
+              body { padding: 0; }
+            }
+          </style>
+        </head>
+        <body>
+          ${content}
+          <script>
+            setTimeout(() => {
+              document.title = "${title}";
+              window.print();
+            }, 500);
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
+
+  const contractTypes = [
+    'Freelance Services Agreement',
+    'Non-Disclosure Agreement (NDA)',
+    'Software Development Contract',
+    'Retainer Agreement',
+    'Creative Agency Contract'
+  ];
+
+  return (
+    <div className="flex flex-col gap-6 max-w-6xl w-full mx-auto">
+      {/* Header */}
+      <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-1">
+        <h1 className="text-2xl font-display font-bold text-text flex items-center gap-2">
+          <Wand2 className="w-6 h-6 text-primary" />
+          Contract Generator
+        </h1>
+        <p className="text-text-muted text-sm">Automatically draft professional, legally sound contracts powered by AI.</p>
+      </motion.div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Left: Input Form */}
+        <motion.div 
+          initial={{ opacity: 0, x: -12 }} 
+          animate={{ opacity: 1, x: 0 }}
+          className={`lg:col-span-5 p-5 rounded-3xl border flex flex-col gap-5 ${
+            isDark ? 'bg-surface border-white/5' : 'bg-white border-slate-200 shadow-sm'
+          }`}
+        >
+          <div className="flex items-center justify-between border-b border-border pb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <PenTool className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="font-bold text-sm">Draft Settings</h3>
+                <p className="text-xs text-text-subtle">Fill in the details to generate</p>
+              </div>
+            </div>
+            {(formData.clientName || formData.projectValue || formData.specialConditions || draft) && (
+              <button 
+                type="button"
+                onClick={handleClear}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition-all active:scale-95 lowercase cursor-pointer ${
+                  isDark 
+                    ? 'bg-surface-2 border-white/10 hover:border-red-500/20 text-text-muted hover:text-red-400' 
+                    : 'bg-slate-50 border-slate-200 hover:border-red-200 text-text-muted hover:text-red-500'
+                }`}
+                title="Clear Draft"
+              >
+                clear
+              </button>
+            )}
+          </div>
+
+          <form onSubmit={handleGenerate} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="contractType" className="text-xs font-bold text-text-muted">Contract Type</label>
+              <select 
+                id="contractType"
+                title="Select contract type"
+                value={formData.contractType}
+                onChange={(e) => setFormData({...formData, contractType: e.target.value})}
+                className={`p-2.5 rounded-xl border text-sm outline-none transition-colors ${
+                  isDark ? 'bg-surface-2 border-white/10 focus:border-primary' : 'bg-slate-50 border-slate-200 focus:border-primary'
+                }`}
+              >
+                {contractTypes.map(type => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="clientName" className="text-xs font-bold text-text-muted">Client Name (Party A)</label>
+              <input 
+                id="clientName"
+                type="text" 
+                required
+                title="Client Name"
+                placeholder="e.g. Acme Corp"
+                value={formData.clientName}
+                onChange={(e) => setFormData({...formData, clientName: e.target.value})}
+                className={`p-2.5 rounded-xl border text-sm outline-none transition-colors ${
+                  isDark ? 'bg-surface-2 border-white/10 focus:border-primary' : 'bg-slate-50 border-slate-200 focus:border-primary'
+                }`}
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="myName" className="text-xs font-bold text-text-muted">Your Name / Agency (Party B)</label>
+              <input 
+                id="myName"
+                type="text" 
+                required
+                title="Your Name"
+                placeholder="e.g. John Doe"
+                value={formData.myName}
+                onChange={(e) => setFormData({...formData, myName: e.target.value})}
+                className={`p-2.5 rounded-xl border text-sm outline-none transition-colors ${
+                  isDark ? 'bg-surface-2 border-white/10 focus:border-primary' : 'bg-slate-50 border-slate-200 focus:border-primary'
+                }`}
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="projectValue" className="text-xs font-bold text-text-muted">Project Value / Compensation</label>
+              <input 
+                id="projectValue"
+                type="text" 
+                required
+                title="Project Value"
+                placeholder="e.g. $5,000 USD or Rp 50.000.000"
+                value={formData.projectValue}
+                onChange={(e) => setFormData({...formData, projectValue: e.target.value})}
+                className={`p-2.5 rounded-xl border text-sm outline-none transition-colors ${
+                  isDark ? 'bg-surface-2 border-white/10 focus:border-primary' : 'bg-slate-50 border-slate-200 focus:border-primary'
+                }`}
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="specialConditions" className="text-xs font-bold text-text-muted">Special Conditions (Optional)</label>
+              <textarea 
+                id="specialConditions"
+                rows={3}
+                title="Special Conditions"
+                placeholder="e.g. 50% upfront payment, max 2 revisions..."
+                value={formData.specialConditions}
+                onChange={(e) => setFormData({...formData, specialConditions: e.target.value})}
+                className={`p-2.5 rounded-xl border text-sm outline-none transition-colors resize-none ${
+                  isDark ? 'bg-surface-2 border-white/10 focus:border-primary' : 'bg-slate-50 border-slate-200 focus:border-primary'
+                }`}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isGenerating}
+              className="mt-2 w-full py-3 px-4 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary-hover active:scale-95 transition-all disabled:opacity-70 disabled:active:scale-100 flex items-center justify-center gap-2"
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Generating Draft...
+                </>
+              ) : (
+                <>
+                  <Wand2 className="w-4 h-4" />
+                  Generate Contract
+                </>
+              )}
+            </button>
+          </form>
+        </motion.div>
+
+        {/* Right: Result Preview */}
+        <motion.div 
+          initial={{ opacity: 0, x: 12 }} 
+          animate={{ opacity: 1, x: 0 }}
+          className={`lg:col-span-7 flex flex-col rounded-3xl border overflow-hidden min-h-[600px] ${
+            isDark ? 'bg-surface border-white/5' : 'bg-white border-slate-200 shadow-sm'
+          }`}
+        >
+          {/* Toolbar */}
+          <div className={`p-4 border-b flex items-center justify-between ${isDark ? 'border-white/5 bg-surface-2/50' : 'border-slate-200 bg-slate-50'}`}>
+            <h3 className="font-bold text-sm text-text">Preview</h3>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleCopy}
+                disabled={!draft}
+                className={`p-2 rounded-lg transition-colors flex items-center justify-center disabled:opacity-50 ${
+                  isCopied ? 'bg-green-500/10 text-green-500' : isDark ? 'hover:bg-white/10 text-text' : 'hover:bg-slate-200 text-text'
+                }`}
+                title="Copy to clipboard"
+              >
+                {isCopied ? <CheckCircle2 className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              </button>
+              <button
+                onClick={handleDownloadPDF}
+                disabled={!draft}
+                className={`p-2 rounded-lg transition-colors flex items-center justify-center disabled:opacity-50 ${
+                  isDark ? 'hover:bg-white/10 text-text' : 'hover:bg-slate-200 text-text'
+                }`}
+                title="Download PDF"
+              >
+                <Download className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Content Area */}
+          <div className="flex-1 overflow-y-auto p-6 relative">
+            <AnimatePresence mode="wait">
+              {isGenerating ? (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 p-6 flex flex-col gap-5 select-none pointer-events-none bg-grid-pattern overflow-hidden"
+                >
+                  {/* Floating active action badge */}
+                  <div className={`flex items-center gap-2.5 py-2 px-4 rounded-full border shadow-md backdrop-blur-md w-fit mx-auto mt-2 animate-pulse ${
+                    isDark ? 'bg-surface/80 border-white/5' : 'bg-white/80 border-slate-200'
+                  }`}>
+                    <Loader2 className="w-4 h-4 text-primary animate-spin" />
+                    <span className="text-[12px] font-bold text-text-muted">AI Drafting Iron-Clad Clauses...</span>
+                  </div>
+
+                  {/* Mock Legal Document Page */}
+                  <div className={`flex-1 rounded-2xl border p-6 sm:p-8 flex flex-col gap-6 shadow-sm overflow-hidden ${
+                    isDark ? 'bg-surface-2/40 border-white/5' : 'bg-slate-50/50 border-slate-100'
+                  }`}>
+                    {/* Header */}
+                    <div className="flex flex-col gap-2.5 border-b pb-4">
+                      <div className="w-2/5 h-3.5 rounded bg-text-subtle/20 animate-pulse" />
+                      <div className="w-1/4 h-2 rounded bg-text-subtle/10 animate-pulse" />
+                    </div>
+
+                    {/* Body Clauses */}
+                    <div className="flex-1 flex flex-col gap-5 overflow-hidden">
+                      {/* Clause 1 */}
+                      <div className="flex flex-col gap-2.5">
+                        <div className="w-12 h-3 rounded bg-text-subtle/20 animate-pulse" />
+                        <div className="w-full h-2 rounded bg-text-subtle/10 animate-pulse" />
+                        <div className="w-11/12 h-2 rounded bg-text-subtle/10 animate-pulse" />
+                        <div className="w-4/5 h-2 rounded bg-text-subtle/10 animate-pulse" />
+                      </div>
+
+                      {/* Clause 2 */}
+                      <div className="flex flex-col gap-2.5">
+                        <div className="w-16 h-3 rounded bg-text-subtle/20 animate-pulse" />
+                        <div className="w-11/12 h-2 rounded bg-text-subtle/10 animate-pulse" />
+                        <div className="w-full h-2 rounded bg-text-subtle/10 animate-pulse" />
+                        <div className="w-2/3 h-2 rounded bg-text-subtle/10 animate-pulse" />
+                      </div>
+
+                      {/* Clause 3 */}
+                      <div className="flex flex-col gap-2.5">
+                        <div className="w-14 h-3 rounded bg-text-subtle/20 animate-pulse" />
+                        <div className="w-full h-2 rounded bg-text-subtle/10 animate-pulse" />
+                        <div className="w-5/6 h-2 rounded bg-text-subtle/10 animate-pulse" />
+                      </div>
+                    </div>
+
+                    {/* Signature lines */}
+                    <div className="flex justify-between border-t pt-4 mt-auto">
+                      <div className="flex flex-col gap-1.5">
+                        <div className="w-20 h-1.5 rounded bg-text-subtle/20 animate-pulse" />
+                        <div className="w-12 h-1 rounded bg-text-subtle/10 animate-pulse" />
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <div className="w-20 h-1.5 rounded bg-text-subtle/20 animate-pulse" />
+                        <div className="w-12 h-1 rounded bg-text-subtle/10 animate-pulse" />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ) : draft ? (
+                <motion.div
+                  key="content"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="bg-white text-black p-8 rounded-lg shadow-sm border border-slate-200 min-h-full"
+                >
+                  <div ref={resultRef} className="prose prose-sm max-w-none prose-headings:font-display prose-headings:font-bold">
+                    <ReactMarkdown remarkPlugins={[remarkBreaks]}>{draft}</ReactMarkdown>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="empty"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-text-subtle bg-grid-pattern"
+                >
+                  <div className="relative flex items-center justify-center">
+                    <div className="absolute inset-0 w-20 h-20 bg-primary/10 rounded-full blur-xl animate-pulse" />
+                    <div className={`relative w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transition-transform hover:scale-105 duration-300 border ${
+                      isDark ? 'bg-surface-2 border-white/5' : 'bg-white border-slate-200'
+                    }`}>
+                      <Wand2 className="w-7 h-7 text-primary animate-bounce-slow" />
+                    </div>
+                  </div>
+                  <div className="text-center px-6">
+                    <p className="text-sm font-semibold text-text mb-1">Drafting Arena Ready</p>
+                    <p className="text-[12px] text-text-subtle max-w-[260px] mx-auto leading-relaxed">Fill out the generator details on the left, then click 'Generate Contract' to create your draft.</p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+};

@@ -1,0 +1,10 @@
+client/node_modules
+client/dist
+server/node_modules
+server/dist
+server/.env
+.git
+.gitignore
+.dockerignore
+npm-debug.log
+scratch

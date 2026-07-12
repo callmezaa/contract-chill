@@ -43,6 +43,13 @@ yarn-error.log*
 *.sln
 *.sw?
 
+# Uploaded files
+uploads/
+
+# Local binaries
+*.exe
+*.zip
+
 # OpenCode tooling
 .agents/
 skills-lock.json

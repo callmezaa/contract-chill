@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-const model = genAI.getGenerativeModel({ model: 'gemini-flash-latest' });
+const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
 export type Persona = 'Angry Lawyer' | 'Chill Friend' | 'Corporate Mentor' | 'Freelancer Senior';
 

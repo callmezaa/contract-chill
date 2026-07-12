@@ -1,78 +1,149 @@
-# ContractChill 📑✨
+![Build](https://github.com/koyeb/koyeb-cli/workflows/Release/badge.svg)
 
-> AI-Powered Legal Document Analyzer and Generator built to protect freelancers, creators, and small businesses from unfair agreements. Developed for the **#JuaraVibeCoding** hackathon.
+# Koyeb CLI
 
-[![Live Demo](https://img.shields.io/badge/Demo-Live_Website-4F46E5?style=for-the-badge)](https://contract-chill-884974546946.asia-southeast1.run.app)
+The Koyeb CLI (Command Line Interface) is a powerful tool to manage your Koyeb serverless infrastructure directly from your terminal.
 
----
+## Installation
 
-## 🔍 Features
+### Download from GitHub
 
-*   **AI Threat Scan & Red Flags:** Instantly scans PDF agreements to highlight penalty traps, strict deadlines, and unfair clauses.
-*   **Overall Risk Score Meter:** Visually rates the safety level of the contract.
-*   **Interactive Contract Chat:** Ask questions directly to your contract to clarify complex terms without reading the entire document.
-*   **Negotiation Script Generator:** Auto-generates polite yet assertive email/chat response drafts to renegotiate clauses using custom AI personas (e.g., Chill Friend, Strict Lawyer).
-*   **AI Contract Generator:** Easily draft custom, legally-sound contracts (like NDA, Freelance Agreement, or Software Contract) in seconds based on your project parameters.
-*   **Premium PDF Report Export:** Save and download styled, comprehensive legal analysis reports.
+The CLI can be installed from pre-compiled binaries for macOS (darwin), Linux and Windows. You can download the appropriate version from the [Releases](https://github.com/koyeb/koyeb-cli/releases) page.
 
----
+### MacOS
 
-## 🛠️ Tech Stack
+You can install the latest version of the Koyeb CLI on macOS using [Homebrew](http://brew.sh/):
 
-*   **Frontend:** React (TypeScript), Vite, Tailwind CSS, Framer Motion, `@react-pdf-viewer`
-*   **Backend:** Node.js (Express, TypeScript), Multer, PDF-Parse
-*   **AI Engine:** Google Gemini API
-*   **Authentication & Database:** Firebase Auth (Google Sign-In), Firestore, Firebase Cloud Storage
-*   **Infrastructure:** Docker, Google Cloud Run (Serverless)
+```shell
+brew install koyeb/tap/koyeb
+```
 
----
+You can upgrade an existing installation of the Koyeb CLI running:
 
-## 🚀 Getting Started
+```
+brew upgrade koyeb
+```
 
-### Prerequisites
-*   Node.js (v18+)
-*   Google Gemini API Key (obtained from [Google AI Studio](https://aistudio.google.com/))
-*   Firebase Project (Auth, Firestore, Cloud Storage enabled)
+### Living at the Edge
 
-### Local Installation
+To install the latest `koyeb` binary with go, simply run:
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/callmezaa/contract-chill.git
-   cd contract-chill
-   ```
+```shell
+go get github.com/koyeb/koyeb-cli/cmd/koyeb
+go install github.com/koyeb/koyeb-cli/cmd/koyeb
+```
 
-2. **Backend Setup**
-   ```bash
-   cd server
-   npm install
-   ```
-   *Create a `.env` file in the `server` directory using the variables in `.env.example`:*
-   ```env
-   PORT=5000
-   NODE_ENV=development
-   GEMINI_API_KEY=your_gemini_api_key_here
-   ```
-   *Start the backend:*
-   ```bash
-   npm run dev
-   ```
+If you need a go environment, follow the [official Go installation documentation](https://golang.org/doc/install).
 
-3. **Frontend Setup**
-   ```bash
-   cd ../client
-   npm install
-   ```
-   *Create a `.env` file in the `client` directory:*
-   ```env
-   VITE_API_URL=http://localhost:5000/api
-   ```
-   *Start the frontend:*
-   ```bash
-   npm run dev
-   ```
 
----
+## Getting started
 
-## 📄 License
-This project is open-source and available under the [MIT License](LICENSE).
+### Initial configuration
+
+Generate an API token and run `koyeb login` to create a new configuration file.
+
+```shell
+➜ koyeb login
+? Do you want to create a new configuration file in (/Users/kbot/.koyeb.yaml)? [y/N]
+✗ Enter your personal access token. You can create a new token here (https://app.koyeb.com/user/settings/api/): *************
+INFO[0006] Creating new configuration in /Users/kbot/.koyeb.yaml
+```
+
+### General usage
+
+```shell
+➜ koyeb --help
+Koyeb CLI
+
+Usage:
+  koyeb [command]
+
+Available Commands:
+  apps                 Apps
+  archives             Archives
+  completion           Generate completion script
+  databases            Databases
+  deploy               Deploy a directory to Koyeb
+  deployments          Deployments
+  domains              Domains
+  help                 Help about any command
+  instances            Instances
+  login                Login to your Koyeb account
+  metrics              Metrics
+  organizations        Organization
+  regional-deployments Regional deployments
+  secrets              Secrets
+  services             Services
+  version              Get version
+  volumes              Manage persistent volumes
+
+Flags:
+  -c, --config string         config file (default is $HOME/.koyeb.yaml)
+  -d, --debug                 enable the debug output
+      --debug-full            do not hide sensitive information (tokens) in the debug output
+      --force-ascii           only output ascii characters (no unicode emojis)
+      --full                  do not truncate output
+  -h, --help                  help for koyeb
+      --organization string   organization ID
+  -o, --output output         output format (yaml,json,table)
+      --token string          API token
+      --url string            url of the api (default "https://app.koyeb.com")
+
+Use "koyeb [command] --help" for more information about a command.
+```
+
+
+### Enabling shell auto-completion
+
+`koyeb` has auto-completion support for `bash`, `zsh` and `fish`.
+
+#### Bash
+
+You can easily do `source <(koyeb completion bash)` to add completion to your current Bash session.
+
+To load completions for all sessions, simply add the auto-completion script to your `bash_completion.d` folder.
+
+On Linux:
+
+```shell
+koyeb completion bash > /etc/bash_completion.d/koyeb
+```
+
+On MacOs:
+
+```shell
+koyeb completion bash > /usr/local/etc/bash_completion.d/koyeb
+```
+
+You will need to start a new shell for this setup to take effect.
+
+#### Zsh
+
+If shell completion is not already enabled in your environment you will need to enable it.  You can execute the following once:
+
+```shell
+echo "autoload -U compinit; compinit" >> ~/.zshrc
+```
+
+To automatically load completions for all your shell session, execute once:
+
+```shell
+koyeb completion zsh > "${fpath[1]}/_koyeb"
+```
+
+You will need to start a new shell for this setup to take effect.
+
+#### Fish
+
+You can easily run `koyeb completion fish | source` to add completions to your current Fish session.
+
+To automatically load completions for all your shell session, execute once:
+
+```shell
+koyeb completion fish > ~/.config/fish/completions/koyeb.fish
+```
+
+## Contribute
+
+Checkout [CONTRIBUTING.md](CONTRIBUTING.md)
+

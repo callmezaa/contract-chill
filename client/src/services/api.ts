@@ -19,7 +19,7 @@ api.interceptors.request.use(async (config) => {
   return Promise.reject(error);
 });
 
-export const analyzeContract = async (file: File, persona: Persona): Promise<AnalysisResult> => {
+export const analyzeContract = async (file: File, persona: Persona): Promise<AnalysisResult & { fileUrl: string }> => {
   const formData = new FormData();
   formData.append('contract', file);
   formData.append('persona', persona);

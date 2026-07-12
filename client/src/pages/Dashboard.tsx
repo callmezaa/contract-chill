@@ -7,9 +7,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { analyzeContract } from '../services/api';
 import type { Persona } from '../types/analysis';
-import { db, storage } from '../lib/firebase';
+import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp, query, where, getDocs, doc, getDoc, setDoc } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { toast } from 'sonner';
@@ -91,10 +90,8 @@ export const Dashboard = () => {
 
   const mutation = useMutation({
     mutationFn: async (file: File) => {
-      const storageRef = ref(storage, `contracts/${user?.uid}/${Date.now()}_${file.name}`);
-      const uploadResult = await uploadBytes(storageRef, file);
-      const fileUrl = await getDownloadURL(uploadResult.ref);
-      const result = await analyzeContract(file, selectedPersona);
+      const response = await analyzeContract(file, selectedPersona);
+      const { fileUrl, ...result } = response;
       const docRef = await addDoc(collection(db, 'analyses'), {
         userId: user?.uid,
         userName: user?.displayName,

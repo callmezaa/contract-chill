@@ -2,9 +2,9 @@ import { User, CreditCard, Bell, Shield, Camera, Loader2, CheckCircle2, AlertTri
 import { useAuth } from '../contexts/AuthContext';
 import { useState, useRef, useEffect } from 'react';
 import { updateProfile, deleteUser } from 'firebase/auth';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { storage, db } from '../lib/firebase';
+import { db } from '../lib/firebase';
+import { api } from '../services/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -75,11 +75,12 @@ export const Settings = () => {
 
     setIsUploading(true);
     try {
-      const storageRef = ref(storage, `profiles/${user.uid}`);
-      const uploadResult = await uploadBytes(storageRef, file);
-      const photoURL = await getDownloadURL(uploadResult.ref);
-      
-      await updateProfile(user, { photoURL });
+      const formData = new FormData();
+      formData.append('photo', file);
+      const { data } = await api.post('/upload-photo', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      await updateProfile(user, { photoURL: data.photoURL });
       toast.success('Photo uploaded successfully');
       window.location.reload(); 
     } catch (error) {

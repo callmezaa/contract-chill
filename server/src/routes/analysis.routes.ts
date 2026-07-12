@@ -1,8 +1,11 @@
 import { Router } from 'express';
 import multer from 'multer';
 import rateLimit from 'express-rate-limit';
+import path from 'path';
+import fs from 'fs';
+import crypto from 'crypto';
 import { AnalysisController } from '../controllers/analysis.controller';
-import { requireAuth } from '../middleware/auth.middleware';
+import { requireAuth, AuthenticatedRequest } from '../middleware/auth.middleware';
 
 const router = Router();
 
@@ -10,6 +13,32 @@ const router = Router();
 const upload = multer({ 
   storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 } 
+});
+
+// Profile photo upload endpoint (bypasses Firebase Storage quota)
+const photoUpload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 2 * 1024 * 1024 } // 2MB for profile photos
+});
+router.post('/upload-photo', requireAuth, photoUpload.single('photo'), (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+    const authReq = req as AuthenticatedRequest;
+    const uploadsDir = path.join(__dirname, '../../uploads');
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true });
+    }
+    const ext = path.extname(req.file.originalname) || '.jpg';
+    const safeName = `profile_${authReq.user?.uid}_${crypto.randomUUID()}${ext}`;
+    fs.writeFileSync(path.join(uploadsDir, safeName), req.file.buffer);
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
+    res.json({ photoURL: `${baseUrl}/uploads/${safeName}` });
+  } catch (error) {
+    console.error('Photo upload error:', error);
+    res.status(500).json({ error: 'Failed to upload photo' });
+  }
 });
 
 // Rate limiter: Max 5 analysis requests per hour per IP (Free Tier protection)

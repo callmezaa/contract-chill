@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 import path from 'path';
+import fs from 'fs';
 
 import analysisRoutes from './routes/analysis.routes';
 
@@ -10,6 +11,12 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, '../uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 // Middleware
 app.use(
@@ -20,6 +27,9 @@ app.use(
 );
 app.use(cors());
 app.use(express.json());
+
+// Serve uploaded files (bypasses Firebase Storage quota)
+app.use('/uploads', express.static(uploadsDir));
 
 // API Routes
 app.use('/api', analysisRoutes);

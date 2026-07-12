@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import { GeminiService, Persona } from '../services/gemini.service';
 import axios from 'axios';
+import path from 'path';
+import fs from 'fs';
+import crypto from 'crypto';
 const pdf = require('pdf-parse');
 
 export class AnalysisController {
@@ -31,10 +34,22 @@ export class AnalysisController {
         return res.status(400).json({ error: 'Teks dokumen terlalu sedikit atau tidak terbaca (misalnya PDF berisi gambar hasil scan). Harap unggah dokumen yang teksnya bisa disalin.' });
       }
 
+      // Save file to local disk (bypasses Firebase Storage quota)
+      const uploadsDir = path.join(__dirname, '../../uploads');
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+      const ext = path.extname(file.originalname);
+      const safeName = `${crypto.randomUUID()}${ext}`;
+      fs.writeFileSync(path.join(uploadsDir, safeName), file.buffer);
+
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const fileUrl = `${baseUrl}/uploads/${safeName}`;
+
       console.log(`Starting analysis for persona: ${persona}. Text length: ${text.length} chars.`);
       const analysis = await GeminiService.analyzeContract(text, persona);
 
-      res.json(analysis);
+      res.json({ ...analysis, fileUrl });
     } catch (error: any) {
       console.error('Controller Error:', error);
       res.status(500).json({ error: error.message || 'Gagal menganalisis kontrak' });

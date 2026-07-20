@@ -6,6 +6,8 @@ import { FileText, Calendar, ChevronRight, Search, AlertTriangle, CheckCircle2, 
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { Button } from '@/components/motion/button';
+import { Input } from '@/components/motion/input';
 
 export const History = () => {
   const { user } = useAuth();
@@ -148,31 +150,25 @@ export const History = () => {
 
       {/* Search & Filters */}
       <div className="flex flex-col gap-3">
-        <div className="relative">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-subtle" />
-          <input
-            type="text"
-            placeholder="Search by file name..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="input pl-10 bg-surface transition-[border-color,box-shadow] duration-150 text-sm font-medium border-border hover:border-primary/20"
-          />
-        </div>
+        <Input
+          value={searchQuery}
+          onChange={(value) => setSearchQuery(value)}
+          placeholder="Search by file name..."
+          leftIcon={<Search className="w-4 h-4 text-text-subtle" />}
+          classNames={{ field: "bg-surface" }}
+        />
 
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-hide flex-1 min-w-0">
             {['All', 'High Risk', 'Safe', 'Chill Friend', 'Angry Lawyer', 'Corporate Mentor', 'Freelancer Senior'].map(f => (
-              <button
+              <Button
                 key={f}
+                variant={activeFilter === f ? "primary" : "ghost"}
+                size="sm"
                 onClick={() => setActiveFilter(f)}
-                 className={`whitespace-nowrap px-3 py-1.5 rounded-full text-[11px] font-medium transition-[background-color,border-color,color,transform] duration-150 ${
-                  activeFilter === f 
-                    ? 'bg-primary text-white shadow-md shadow-primary/20 border border-primary' 
-                    : 'bg-surface border border-border text-text-subtle hover:text-text hover:border-primary/30'
-                }`}
               >
                 {f.toLowerCase()}
-              </button>
+              </Button>
             ))}
           </div>
           
@@ -263,13 +259,15 @@ export const History = () => {
                           </div>
                         </div>
                         <div className="flex items-center gap-1">
-                          <button
+                          <Button
+                            variant="ghost"
+                            size="icon"
                             onClick={(e) => handleDelete(e, item.id)}
-                            className="p-2 rounded-lg text-text-subtle hover:text-red-500 hover:bg-red-500/10 md:opacity-0 group-hover:opacity-100 transition-all"
+                            className="text-text-subtle hover:text-red-500 md:opacity-0 group-hover:opacity-100"
                             title="Delete"
                           >
                             <Trash2 className="w-4 h-4" />
-                          </button>
+                          </Button>
                           <ChevronRight className="w-4 h-4 text-border group-hover:text-primary group-hover:translate-x-0.5 transition-all hidden sm:block" />
                         </div>
                       </Link>
@@ -290,8 +288,8 @@ export const History = () => {
                 Your analyzed contracts will magically appear here. Let's get started!
               </p>
             </div>
-            <Link to="/dashboard" className="bg-text text-background py-2.5 px-6 rounded-xl text-sm font-bold shadow-lg hover:opacity-90 transition-opacity mt-2">
-              Analyze a Contract
+            <Link to="/dashboard">
+              <Button>Analyze a Contract</Button>
             </Link>
           </div>
         ) : (
@@ -305,15 +303,16 @@ export const History = () => {
                 We couldn't find any documents matching your current search or filters.
               </p>
             </div>
-            <button 
+            <Button 
+              variant="ghost"
+              size="sm"
               onClick={() => {
                 setSearchQuery('');
                 setActiveFilter('All');
               }}
-              className="text-[13px] font-bold text-primary hover:text-primary/80 transition-colors mt-2 px-4 py-2 rounded-lg hover:bg-primary/5"
             >
               Clear all filters
-            </button>
+            </Button>
           </div>
         )}
       </div>

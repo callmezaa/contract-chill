@@ -101,11 +101,11 @@ export const History = () => {
 
 
   return (
-    <div className="flex flex-col gap-6 w-full max-w-3xl">
+    <div className="flex flex-col gap-8 w-full max-w-4xl">
       {/* Header with summary bar */}
       <div className="flex flex-col gap-3">
         <div>
-          <h1 className="text-2xl font-display font-bold text-text">Analysis History</h1>
+           <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-[-0.05em] text-text">Analysis history</h1>
           <p className="text-text-muted text-sm mt-1">Review all your previous contract analyses.</p>
         </div>
 
@@ -155,7 +155,7 @@ export const History = () => {
             placeholder="Search by file name..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="input pl-10 bg-surface focus:ring-4 focus:ring-primary/5 transition-all text-sm font-semibold border-border/50 hover:border-primary/20"
+            className="input pl-10 bg-surface transition-[border-color,box-shadow] duration-150 text-sm font-medium border-border hover:border-primary/20"
           />
         </div>
 
@@ -165,7 +165,7 @@ export const History = () => {
               <button
                 key={f}
                 onClick={() => setActiveFilter(f)}
-                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-[11px] font-bold transition-all duration-200 ${
+                 className={`whitespace-nowrap px-3 py-1.5 rounded-full text-[11px] font-medium transition-[background-color,border-color,color,transform] duration-150 ${
                   activeFilter === f 
                     ? 'bg-primary text-white shadow-md shadow-primary/20 border border-primary' 
                     : 'bg-surface border border-border text-text-subtle hover:text-text hover:border-primary/30'
@@ -230,7 +230,7 @@ export const History = () => {
                       <Link
                         key={item.id}
                         to={`/analyze/${item.id}`}
-                        className="card p-4 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group flex items-center justify-between gap-2 overflow-hidden"
+                         className="card p-4 hover:shadow-md hover:-translate-y-0.5 transition-[box-shadow,transform,border-color] duration-150 group flex items-center justify-between gap-2 overflow-hidden"
                       >
                         <div className="flex items-center gap-3 min-w-0 flex-1">
                           <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors ${

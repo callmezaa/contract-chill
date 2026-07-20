@@ -116,10 +116,10 @@ export const Settings = () => {
   };
 
   return (
-    <div className="flex flex-col gap-8 max-w-2xl">
+    <div className="flex flex-col gap-8 max-w-4xl">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-display font-bold text-text">Settings</h1>
+           <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-[-0.05em] text-text">Settings</h1>
           <p className="text-text-muted text-sm mt-1">Manage your account and preferences.</p>
         </div>
         <AnimatePresence>
@@ -144,7 +144,7 @@ export const Settings = () => {
             <User className="w-5 h-5 text-primary" />
           </div>
           <div>
-            <h2 className="text-lg font-display font-bold text-text leading-tight">Profile Information</h2>
+        <h2 className="text-lg font-display font-semibold text-text leading-tight">Profile information</h2>
             <p className="text-xs text-text-muted mt-0.5 font-medium">Update your photo and personal details.</p>
           </div>
         </div>
@@ -243,7 +243,7 @@ export const Settings = () => {
                 <Shield className="w-5 h-5 text-primary/60" />
               </div>
               <div>
-                <p className="text-sm font-bold text-text">Free plan</p>
+                 <p className="text-sm font-semibold text-text">Free plan</p>
                 <p className="text-[10px] text-text-muted font-medium">20 analyses per day</p>
               </div>
             </div>

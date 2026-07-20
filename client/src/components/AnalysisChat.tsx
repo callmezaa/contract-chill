@@ -129,8 +129,11 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className={`w-[350px] max-w-[calc(100vw-32px)] h-[500px] max-h-[70vh] rounded-3xl shadow-2xl border backdrop-blur-xl flex flex-col overflow-hidden mb-1.5 transition-colors duration-500 ${
-              isDark ? 'bg-surface/40 border-white/5 shadow-black/40' : 'bg-white/80 border-slate-200 shadow-primary/5'
+            role="dialog"
+            aria-modal="false"
+            aria-labelledby="analysis-chat-title"
+            className={`w-[350px] max-w-[calc(100vw-32px)] h-[500px] max-h-[70vh] rounded-2xl shadow-2xl border flex flex-col overflow-hidden mb-1.5 transition-colors duration-200 ${
+               isDark ? 'bg-surface border-white/10 shadow-black/40' : 'bg-surface border-border shadow-black/[0.05]'
             }`}
           >
             {/* Header */}
@@ -142,7 +145,7 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
                   <ShieldCheck className="w-4.5 h-4.5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-xs font-display font-bold text-text leading-tight">Ask {persona}</h3>
+                   <h3 id="analysis-chat-title" className="text-xs font-display font-semibold text-text leading-tight">Ask {persona}</h3>
                   <p className="text-[9px] text-text-subtle font-medium">Instant insights</p>
                 </div>
               </div>

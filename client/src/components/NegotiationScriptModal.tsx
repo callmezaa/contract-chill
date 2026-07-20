@@ -97,7 +97,10 @@ export const NegotiationScriptModal = ({ isOpen, onClose, script, clause, explan
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="bg-surface w-full max-w-md rounded-3xl shadow-2xl border border-border overflow-hidden pointer-events-auto flex flex-col max-h-[90vh]"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="negotiation-script-title"
+              className="bg-surface w-full max-w-md rounded-2xl shadow-2xl border border-border overflow-hidden pointer-events-auto flex flex-col max-h-[90vh]"
             >
               {/* Header */}
               <div className="px-6 py-4 border-b border-border flex items-center justify-between bg-surface-2/30 shrink-0">
@@ -106,7 +109,7 @@ export const NegotiationScriptModal = ({ isOpen, onClose, script, clause, explan
                     <MessageSquare className="w-4.5 h-4.5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-display font-bold text-text">Negotiation Script</h3>
+                    <h3 id="negotiation-script-title" className="text-sm font-display font-semibold text-text">Negotiation script</h3>
                     <p className="text-[9px] text-text-subtle font-medium">Ready-to-use template</p>
                   </div>
                 </div>

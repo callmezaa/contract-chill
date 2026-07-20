@@ -30,13 +30,13 @@ export const GlassyBackground = () => {
 
   return (
     <div className={`fixed inset-0 -z-10 transition-colors duration-700 overflow-hidden ${
-      isDark ? 'bg-[#09090b]' : 'bg-[#ffffff]'
+      isDark ? 'bg-[#0b0b0d]' : 'bg-background'
     }`}>
       {/* CSS Background Layer for extra depth */}
       <div className={`absolute inset-0 pointer-events-none ${
-        isDark 
-          ? 'bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.05),transparent)]' 
-          : 'bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.02),transparent)]'
+          isDark
+           ? 'bg-[radial-gradient(circle_at_50%_50%,rgba(0,113,227,0.04),transparent)]'
+           : 'bg-[radial-gradient(circle_at_50%_50%,rgba(29,29,31,0.018),transparent)]'
       }`} />
       
       <Canvas
@@ -78,10 +78,8 @@ export const GlassyBackground = () => {
         <Environment preset="city" />
       </Canvas>
 
-      {/* Overlay for that frosted glass effect on top of 3D */}
-      <div className={`absolute inset-0 backdrop-blur-[120px] pointer-events-none ${
-        isDark ? 'opacity-100' : 'opacity-90'
-      }`} />
+      {/* Keep the ambient layer quiet so content remains crisp. */}
+      <div className="absolute inset-0 backdrop-blur-[80px] pointer-events-none opacity-70" />
     </div>
   );
 };

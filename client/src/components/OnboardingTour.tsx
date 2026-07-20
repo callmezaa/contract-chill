@@ -102,7 +102,10 @@ export const OnboardingTour = ({ onComplete }: { onComplete: () => void }) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-            className={`w-full max-w-[400px] rounded-[1.5rem] p-6 shadow-2xl pointer-events-auto border backdrop-blur-xl ${
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="onboarding-title"
+             className={`w-full max-w-[400px] rounded-2xl p-6 shadow-2xl pointer-events-auto border ${
               isDark 
                 ? 'bg-surface/95 border-white/10 shadow-black/50' 
                 : 'bg-white/95 border-slate-200 shadow-primary/10'
@@ -117,7 +120,7 @@ export const OnboardingTour = ({ onComplete }: { onComplete: () => void }) => {
                   <p className="text-[10px] font-bold text-primary uppercase tracking-wider mb-0.5">
                     Step {currentStep + 1} of {steps.length}
                   </p>
-                  <h3 className="text-base font-display font-bold text-text leading-tight">
+                   <h3 id="onboarding-title" className="text-base font-display font-semibold text-text leading-tight">
                     {step.title}
                   </h3>
                 </div>

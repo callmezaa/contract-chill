@@ -209,7 +209,7 @@ export const Dashboard = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-6 max-w-5xl w-full">
+    <div className="flex flex-col gap-8 max-w-6xl w-full">
       {/* ── Header ───────────────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0, y: -8 }}
@@ -217,10 +217,10 @@ export const Dashboard = () => {
         className="flex items-center justify-between"
       >
         <div>
-          <h1 className="text-2xl font-display font-bold text-text">
-            Hello, {user?.displayName?.split(' ')[0]} 👋
+          <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-[-0.04em] text-text">
+            Good morning, {user?.displayName?.split(' ')[0]}
           </h1>
-          <p className="text-text-muted text-sm mt-0.5">Ready to analyze your next contract?</p>
+          <p className="text-text-muted text-sm mt-2">Understand your next contract before you sign.</p>
         </div>
       </motion.div>
 
@@ -233,12 +233,12 @@ export const Dashboard = () => {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
-          className={`relative border-2 border-dashed rounded-3xl flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 min-h-[360px] ${
+          className={`relative border border-dashed rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer transition-[background-color,border-color,box-shadow] duration-200 min-h-[360px] ${
             isDragging
               ? 'border-primary bg-primary/5 shadow-2xl shadow-primary/10'
-              : isDark
-                ? 'border-white/10 bg-surface hover:border-primary/30 hover:bg-surface-2/30'
-                : 'border-slate-200 bg-white hover:border-primary/30 hover:bg-slate-50/80 shadow-sm'
+                : isDark
+                 ? 'border-white/10 bg-surface hover:border-primary/30 hover:bg-surface-2/30'
+                 : 'border-border bg-surface hover:border-primary/30 hover:bg-surface-2/60 shadow-sm'
           }`}
           onClick={() => fileInputRef.current?.click()}
           onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
@@ -404,8 +404,8 @@ export const Dashboard = () => {
             initial={{ opacity: 0, x: 12 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
-            className={`rounded-2xl border p-4 flex flex-col gap-3 ${
-              isDark ? 'bg-surface border-white/5' : 'bg-white border-slate-200 shadow-sm'
+                   className={`rounded-2xl border p-4 flex flex-col gap-3 ${
+               isDark ? 'bg-surface border-white/10' : 'bg-surface border-border shadow-sm'
             }`}
           >
             <div>
@@ -423,7 +423,7 @@ export const Dashboard = () => {
                     onHoverStart={() => setHoveredPersona(persona.id)}
                     onHoverEnd={() => setHoveredPersona(null)}
                     onClick={() => setSelectedPersona(persona.id as Persona)}
-                    className={`relative flex flex-col items-start gap-1 p-3 rounded-xl border text-left transition-all duration-200 ${
+                   className={`relative flex flex-col items-start gap-1 p-3 rounded-xl border text-left transition-[background-color,border-color,box-shadow,transform] duration-150 ${
                       isActive
                         ? 'border-primary/40 bg-primary/5 shadow-sm shadow-primary/10'
                         : isDark
@@ -489,8 +489,8 @@ export const Dashboard = () => {
                 key={i}
                 onMouseMove={(e) => handleMouseMove(e, i)}
                 onMouseLeave={handleMouseLeave}
-                className={`relative overflow-hidden flex items-center gap-4 px-4 py-3 rounded-2xl border transition-all group ${
-                  isDark ? 'bg-surface border-white/5 hover:border-white/10' : 'bg-white border-slate-200 shadow-sm hover:shadow-md'
+                  className={`relative overflow-hidden flex items-center gap-4 px-4 py-3 rounded-2xl border transition-[background-color,border-color,box-shadow,transform] duration-150 group ${
+                   isDark ? 'bg-surface border-white/10 hover:border-white/15' : 'bg-surface border-border shadow-sm hover:shadow-md'
                 }`}
               >
                 {/* Glassmorphic Interactive Radial Glow Overlay */}

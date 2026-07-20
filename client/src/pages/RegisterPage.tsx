@@ -75,12 +75,12 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div className={`min-h-screen flex w-full items-center justify-center p-4 lg:p-6 transition-colors duration-500 ${isDark ? 'bg-background' : 'bg-slate-50'}`}>
+    <div className="min-h-screen flex w-full items-center justify-center p-4 lg:p-6 bg-background">
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className={`w-full max-w-[960px] flex rounded-[2rem] overflow-hidden shadow-2xl ${isDark ? 'bg-surface shadow-black/50' : 'bg-white shadow-primary/10'}`}
+        className={`w-full max-w-[960px] flex rounded-2xl overflow-hidden border ${isDark ? 'bg-surface border-white/10 shadow-black/30' : 'bg-surface border-border shadow-xl shadow-black/[0.04]'}`}
       >
         {/* Left Side Branding */}
         <div className="hidden lg:flex w-[42%] bg-primary p-8 xl:p-12 flex-col relative overflow-hidden text-white justify-between">
@@ -119,7 +119,7 @@ export const RegisterPage = () => {
           
 
           <div className="mb-5">
-            <h1 className="text-2xl sm:text-3xl font-display font-bold text-text mb-1">Create Account</h1>
+             <h1 className="text-2xl sm:text-3xl font-display font-semibold tracking-[-0.04em] text-text mb-1">Create account</h1>
             <p className="text-[13px] sm:text-[14px] text-text-muted">Analyze your first contract in minutes.</p>
           </div>
 
@@ -127,7 +127,7 @@ export const RegisterPage = () => {
             type="button"
             onClick={handleGoogleLogin} 
             disabled={loading} 
-            className={`w-full py-2.5 px-4 rounded-[12px] border flex items-center justify-center gap-3 transition-all duration-300 font-semibold text-[13px] mb-5 ${isDark ? 'border-white/10 bg-white/5 hover:bg-white/10 text-white' : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700 shadow-sm hover:shadow'}`}
+             className={`w-full py-2.5 px-4 rounded-xl border flex items-center justify-center gap-3 transition-[background-color,border-color,transform] duration-150 font-medium text-[13px] mb-5 ${isDark ? 'border-white/10 bg-white/5 hover:bg-white/10 text-white' : 'border-border bg-surface hover:bg-surface-2 text-text shadow-sm'}`}
           >
              <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
              <span>Continue with Google</span>
@@ -251,7 +251,7 @@ export const RegisterPage = () => {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading}
-              className="w-full py-3 mt-1 rounded-[12px] bg-primary text-white font-bold text-[14px] sm:text-[15px] flex items-center justify-center gap-2 hover:bg-indigo-600 transition-colors disabled:opacity-50 shadow-lg shadow-primary/25"
+               className="w-full py-3 mt-1 rounded-xl bg-primary text-white font-medium text-[14px] sm:text-[15px] flex items-center justify-center gap-2 hover:bg-primary-dark transition-colors disabled:opacity-50 shadow-sm shadow-primary/25"
             >
               <AnimatePresence mode="wait">
                 {loading ? (

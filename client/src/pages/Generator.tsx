@@ -175,10 +175,10 @@ export const Generator = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-6 max-w-6xl w-full mx-auto">
+    <div className="flex flex-col gap-8 max-w-6xl w-full mx-auto">
       {/* Header */}
       <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-1">
-        <h1 className="text-2xl font-display font-bold text-text flex items-center gap-2">
+         <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-[-0.05em] text-text flex items-center gap-3">
           <Wand2 className="w-6 h-6 text-primary" />
           Contract Generator
         </h1>
@@ -190,8 +190,8 @@ export const Generator = () => {
         <motion.div 
           initial={{ opacity: 0, x: -12 }} 
           animate={{ opacity: 1, x: 0 }}
-          className={`lg:col-span-5 p-5 rounded-3xl border flex flex-col gap-5 ${
-            isDark ? 'bg-surface border-white/5' : 'bg-white border-slate-200 shadow-sm'
+             className={`lg:col-span-5 p-5 rounded-2xl border flex flex-col gap-5 ${
+             isDark ? 'bg-surface border-white/10' : 'bg-surface border-border shadow-sm'
           }`}
         >
           <div className="flex items-center justify-between border-b border-border pb-4">
@@ -200,7 +200,7 @@ export const Generator = () => {
                 <PenTool className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="font-bold text-sm">Draft Settings</h3>
+                 <h3 className="font-semibold text-sm">Draft settings</h3>
                 <p className="text-xs text-text-subtle">Fill in the details to generate</p>
               </div>
             </div>

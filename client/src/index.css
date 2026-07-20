@@ -1,9 +1,24 @@
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Variable.woff2') format('woff2');
+  font-display: swap;
+  font-weight: 100 900;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-Variable.woff2') format('woff2');
+  font-display: swap;
+  font-weight: 100 900;
+}
+
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Outfit', sans-serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   
   --color-primary: var(--primary);
   --color-primary-dark: var(--primary-dark);
@@ -14,30 +29,41 @@
   --color-text: var(--text);
   --color-text-muted: var(--text-muted);
   --color-text-subtle: var(--text-subtle);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
 }
 
 :root {
-  --primary: #3b82f6;
-  --primary-dark: #2563eb;
+  --font-geist-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-geist-mono: 'Geist Mono', ui-monospace, monospace;
+  --primary: #0071e3;
+  --primary-dark: #0077ed;
   
-  --background: #ffffff;
-  --surface: #fafafa;
-  --surface-2: #f4f4f5;
-  --border: #e2e8f0;
-  --text: #0f172a;
-  --text-muted: #64748b;
-  --text-subtle: #94a3b8;
+  --background: #f7f7f8;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --surface-2: #f1f1f3;
+  --border: rgba(29, 29, 31, 0.10);
+  --text: #1d1d1f;
+  --text-muted: #6e6e73;
+  --text-subtle: #9a9aa0;
+  --success: #248a3d;
+  --warning: #b26a00;
+  --danger: #d70015;
 }
 
 /* Premium Dark Mode Palette */
 .dark, [data-theme='dark'] {
   --background: #09090b;
-  --surface: #121217;
-  --surface-2: #1e1e24;
+  --surface: #151517;
+  --surface-elevated: #1c1c1f;
+  --surface-2: #232326;
   --border: rgba(255, 255, 255, 0.08);
-  --text: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-subtle: #64748b;
+  --text: #f5f5f7;
+  --text-muted: #a1a1a6;
+  --text-subtle: #6e6e73;
 }
 
 @layer base {
@@ -46,33 +72,57 @@
     scroll-padding-top: 5rem; /* Account for sticky nav */
   }
   body {
-    @apply bg-background text-text antialiased selection:bg-primary/20 selection:text-primary transition-colors duration-300;
+    @apply bg-background text-text antialiased selection:bg-primary/20 selection:text-primary;
+    font-family: var(--font-geist-sans);
+    letter-spacing: -0.011em;
+  }
+
+  button, a, [role='button'] {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button:active, a:active, [role='button']:active {
+    transform: scale(0.985);
+  }
+
+  :focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--primary) 70%, transparent);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-primary text-white font-bold py-2.5 px-5 rounded-xl hover:bg-primary-dark transition-all active:scale-95 shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-primary text-white font-medium py-2.5 px-5 rounded-xl hover:bg-primary-dark transition-[background-color,box-shadow,transform] duration-150 shadow-sm shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed;
   }
   
   .btn-outline {
-    @apply border-2 border-border text-text font-bold py-2 px-5 rounded-xl hover:border-primary/50 hover:bg-surface transition-all active:scale-95;
+    @apply border border-border text-text font-medium py-2.5 px-5 rounded-xl hover:border-primary/30 hover:bg-surface transition-[background-color,border-color,transform] duration-150;
   }
   
   .card {
-    @apply bg-surface border border-border rounded-3xl transition-all duration-300;
+    @apply bg-surface border border-border rounded-2xl transition-[background-color,border-color,box-shadow,transform] duration-200;
   }
 
   .input {
-    @apply w-full bg-surface-2 border border-border rounded-xl py-3 px-4 focus:outline-none focus:border-primary transition-all;
+    @apply w-full bg-surface-2 border border-border rounded-xl py-3 px-4 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-[background-color,border-color,box-shadow] duration-150;
   }
 
   .nav-link {
-    @apply flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-text-muted rounded-xl hover:text-primary hover:bg-primary/5 transition-all;
+    @apply flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-text-muted rounded-xl hover:text-text hover:bg-surface-2 transition-[background-color,color,transform] duration-150;
   }
 
   .nav-link-active {
-    @apply flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-primary bg-primary/5 rounded-xl border border-primary/10 transition-all shadow-sm;
+    @apply flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-primary bg-primary/10 rounded-xl border border-primary/10 transition-[background-color,color,transform] duration-150;
   }
 
   .custom-scrollbar::-webkit-scrollbar {

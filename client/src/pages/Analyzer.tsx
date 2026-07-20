@@ -745,27 +745,27 @@ export const Analyzer = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-64px)] lg:h-[calc(100vh-80px)] flex flex-col lg:flex-row gap-8 bg-transparent lg:overflow-hidden pb-4">
+    <div className="min-h-[calc(100vh-64px)] lg:h-[calc(100vh-80px)] flex flex-col lg:flex-row gap-6 bg-transparent lg:overflow-hidden pb-4">
       {/* Left Panel: PDF Viewer */}
-      <div id="document-preview-left-panel" className={`w-full lg:flex-[1.5] h-[60vh] min-h-[400px] lg:h-full rounded-3xl border overflow-hidden flex flex-col shadow-sm transition-colors duration-500 ${
-        isDark ? 'bg-surface border-white/5' : 'bg-white border-slate-200'
+      <div id="document-preview-left-panel" className={`w-full lg:flex-[1.5] h-[60vh] min-h-[400px] lg:h-full rounded-2xl border overflow-hidden flex flex-col shadow-sm transition-colors duration-300 ${
+        isDark ? 'bg-surface border-white/10' : 'bg-surface border-border'
       }`}>
         <div className={`px-6 py-4 border-b flex items-center justify-between sticky top-0 z-10 ${
-          isDark ? 'bg-surface border-white/5' : 'bg-white border-slate-200'
+          isDark ? 'bg-surface border-white/10' : 'bg-surface border-border'
         }`}>
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-xl bg-primary/5 flex items-center justify-center">
               <FileText className="w-4 h-4 text-primary" />
             </div>
             <div>
-              <h2 className="text-sm font-display font-bold text-text">Document Preview</h2>
+              <h2 className="text-sm font-display font-semibold text-text">Document preview</h2>
               <p className="text-[10px] text-text-subtle font-medium">Full contract visualization</p>
             </div>
           </div>
           {fileUrl && (
             <a href={fileUrl} target="_blank" rel="noopener noreferrer"
-              className={`group flex items-center gap-2 px-4 py-2 rounded-xl border transition-all ${
-                isDark ? 'bg-surface border-white/10 hover:bg-white/5' : 'bg-slate-50 border-slate-200 hover:bg-white'
+               className={`group flex items-center gap-2 px-4 py-2 rounded-xl border transition-[background-color,border-color,transform] duration-150 ${
+                 isDark ? 'bg-surface border-white/10 hover:bg-white/5' : 'bg-surface-2 border-border hover:bg-surface'
               }`}>
               <span className="text-xs font-semibold text-text-muted group-hover:text-primary">Open Original</span>
               <ChevronRight className="w-3.5 h-3.5 text-text-subtle group-hover:text-primary transition-transform group-hover:translate-x-0.5" />
@@ -800,11 +800,11 @@ export const Analyzer = () => {
       >
         {/* Navigation & Status */}
         <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 sticky top-0 py-3 sm:py-4 z-30 border-b mb-2 px-2 transition-colors backdrop-blur-md ${
-          isDark ? 'bg-surface/70 border-white/5' : 'bg-white/70 border-slate-200 shadow-sm'
+          isDark ? 'bg-surface/80 border-white/10' : 'bg-background/80 border-border shadow-sm'
         }`} data-html2canvas-ignore="true">
           {/* Top row on mobile, left on desktop */}
           <div className="flex items-center justify-between w-full sm:w-auto">
-            <Link to="/dashboard" className="flex items-center gap-2 text-text-muted hover:text-primary transition-all text-sm font-medium lowercase">
+            <Link to="/dashboard" className="flex items-center gap-2 text-text-muted hover:text-primary transition-colors text-sm font-medium">
               <ArrowLeft className="w-4 h-4" />
               back
             </Link>
@@ -864,13 +864,13 @@ export const Analyzer = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className={`card p-6 ${isDark ? 'bg-surface border-white/5' : 'bg-white border-slate-200 shadow-sm'}`}
+          className={`card p-6 ${isDark ? 'bg-surface border-white/10' : 'bg-surface border-border shadow-sm'}`}
         >
           <RiskScoreMeter score={riskScore} />
         </motion.div>
 
         {/* Key Clauses Summary */}
-        <div className={`card p-6 ${isDark ? 'bg-surface border-white/5' : 'bg-white border-slate-200 shadow-sm'}`}>
+        <div className={`card p-6 ${isDark ? 'bg-surface border-white/10' : 'bg-surface border-border shadow-sm'}`}>
           <KeyClauses clauses={result?.clauses || []} />
         </div>
 
@@ -927,13 +927,13 @@ export const Analyzer = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className={`card p-7 backdrop-blur-md ${isDark ? 'bg-surface/40 border-white/5' : 'bg-white/80 border-slate-200 shadow-sm'}`}
+          className={`card p-7 ${isDark ? 'bg-surface border-white/10' : 'bg-surface border-border shadow-sm'}`}
         >
           <div className="flex items-center gap-3 mb-5">
             <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
               <Info className="w-5 h-5 text-primary" />
             </div>
-            <h3 className="text-base font-display font-bold text-text">Executive Summary</h3>
+            <h3 className="text-base font-display font-semibold text-text">Executive summary</h3>
           </div>
           <p className="text-[14px] text-text-muted leading-relaxed font-medium">
             {result?.summary}
@@ -989,7 +989,7 @@ export const Analyzer = () => {
                 initial={{ opacity: 0, x: -15 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 + (i * 0.1) }}
-                className={`p-6 rounded-3xl border flex flex-col gap-4 backdrop-blur-sm transition-all group ${
+                 className={`p-6 rounded-2xl border flex flex-col gap-4 transition-[background-color,border-color,box-shadow,transform] duration-150 group ${
                   flag.risk === 'High' 
                     ? isDark ? 'bg-red-500/10 border-red-500/20 shadow-sm shadow-red-500/5' : 'bg-red-50/80 border-red-100 shadow-sm'
                     : isDark ? 'bg-amber-500/10 border-amber-500/20 shadow-sm shadow-amber-500/5' : 'bg-amber-50/80 border-amber-100 shadow-sm'

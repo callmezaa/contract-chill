@@ -29,8 +29,8 @@ export const KeyClauses = ({ clauses }: KeyClausesProps) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between px-2">
-        <h3 className="text-sm font-display font-bold text-text">Key terms at a glance</h3>
-        <span className="text-[10px] font-bold text-text-subtle uppercase tracking-widest">{clauses.length} clauses</span>
+        <h3 className="text-sm font-display font-semibold text-text">Key terms at a glance</h3>
+        <span className="text-[10px] font-medium text-text-subtle uppercase tracking-[0.12em]">{clauses.length} clauses</span>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
@@ -44,7 +44,7 @@ export const KeyClauses = ({ clauses }: KeyClausesProps) => {
               transition={{ delay: i * 0.1 }}
               whileHover={{ y: -3, transition: { duration: 0.2 } }}
               onClick={() => setExpandedIndex(isExpanded ? null : i)}
-              className={`group p-4 bg-surface rounded-2xl border shadow-sm transition-all cursor-pointer relative overflow-hidden ${
+              className={`group p-4 bg-surface rounded-2xl border shadow-sm transition-[border-color,box-shadow,transform] duration-150 cursor-pointer relative overflow-hidden ${
                 isExpanded 
                   ? 'border-primary/50 shadow-md ring-1 ring-primary/20' 
                   : 'border-border/50 hover:border-primary/30 hover:shadow-md'

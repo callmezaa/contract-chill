@@ -55,15 +55,15 @@ export const MiniDemo = () => {
         viewport={{ once: true }}
         className="flex flex-col items-center gap-3 text-center mb-12"
       >
-        <p className="text-xs font-bold tracking-widest text-primary">Live Demo</p>
-        <h2 className="text-3xl md:text-4xl font-display font-bold text-text">Test the magic</h2>
-        <p className="text-text-muted">See how we turn dense legal jargon into plain English instantly.</p>
+        <p className="text-xs font-medium tracking-[0.16em] uppercase text-primary">Live demo</p>
+        <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-[-0.05em] text-text [text-wrap:balance]">See the clarity</h2>
+        <p className="text-text-muted [text-wrap:pretty]">Turn dense legal language into something you can act on.</p>
       </motion.div>
 
-      <div className="bg-white rounded-3xl shadow-xl border border-slate-200 p-2 overflow-hidden flex flex-col md:flex-row relative">
+      <div className="bg-surface rounded-2xl shadow-[0_20px_60px_-28px_rgba(0,0,0,0.28)] border border-border p-2 overflow-hidden flex flex-col md:flex-row relative">
         
         {/* Left side: Jargon */}
-        <div className="flex-1 p-6 md:p-8 flex flex-col bg-slate-50 rounded-2xl">
+        <div className="flex-1 p-6 md:p-8 flex flex-col bg-surface-2 rounded-xl">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-bold text-slate-500">Original Contract Clause</span>
             <span className="text-[10px] bg-slate-200 text-slate-600 px-2 py-1 rounded-md font-medium">Standard NDA</span>
@@ -78,7 +78,7 @@ export const MiniDemo = () => {
             <button 
               onClick={handleTranslate}
               disabled={isTranslating}
-              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all
+               className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-sm transition-[background-color,box-shadow,transform] active:scale-[0.96]
                 ${showResult 
                   ? 'bg-slate-200 text-slate-700 hover:bg-slate-300' 
                   : 'bg-primary text-white hover:bg-primary-hover hover:shadow-lg hover:shadow-primary/20'
@@ -115,7 +115,7 @@ export const MiniDemo = () => {
         </div>
 
         {/* Right side: Plain English */}
-        <div className="flex-1 p-6 md:p-8 flex flex-col justify-center bg-white rounded-2xl">
+        <div className="flex-1 p-6 md:p-8 flex flex-col justify-center bg-surface rounded-xl">
           <AnimatePresence mode="wait">
             {!showResult && !isTranslating && (
               <motion.div 

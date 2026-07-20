@@ -14,9 +14,9 @@ export const RiskScoreMeter = ({ score }: RiskScoreMeterProps) => {
   const needleRotation = -90 + (score * 180) / 100;
 
   const getColor = (s: number) => {
-    if (s < 30) return '#22c55e'; // Green
-    if (s < 60) return '#f59e0b'; // Amber
-    return '#ef4444'; // Red
+    if (s < 30) return '#248a3d';
+    if (s < 60) return '#b26a00';
+    return '#d70015';
   };
 
   const getLabel = (s: number) => {
@@ -26,7 +26,7 @@ export const RiskScoreMeter = ({ score }: RiskScoreMeterProps) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 bg-surface rounded-3xl border border-border/50 shadow-sm overflow-hidden relative">
+    <div className="flex flex-col items-center justify-center p-6 bg-surface rounded-2xl border border-border shadow-sm overflow-hidden relative">
       <div className="relative w-48 h-24 overflow-hidden">
         {/* Gauge background */}
         <svg className="w-48 h-48" viewBox="0 0 100 100">
@@ -86,12 +86,12 @@ export const RiskScoreMeter = ({ score }: RiskScoreMeterProps) => {
         <motion.span 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl font-display font-black text-text"
+           className="text-4xl font-mono font-semibold tracking-[-0.06em] text-text"
         >
           <AnimatedCounter value={score} duration={2} />%
         </motion.span>
         <div className="flex flex-col items-center gap-1 mt-1">
-          <p className="text-[10px] font-bold text-text-subtle tracking-widest uppercase">Overall Risk Score</p>
+           <p className="text-[10px] font-medium text-text-subtle tracking-[0.12em] uppercase">Overall risk score</p>
           <motion.p 
             animate={{ color: getColor(score) }}
             className="text-xs font-bold"

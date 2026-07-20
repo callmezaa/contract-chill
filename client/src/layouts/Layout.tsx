@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, History as HistoryIcon, Settings, LogOut, Shield, Menu, X, ChevronLeft, Wand2 } from 'lucide-react';
+import { LayoutDashboard, History as HistoryIcon, Settings, LogOut, Shield, Menu, X, ChevronLeft, Wand2, Plus } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,20 +23,20 @@ export const Layout = () => {
   const isDark = theme === 'dark';
 
   return (
-    <div className={`min-h-screen w-full flex transition-colors duration-500 overflow-hidden ${isDark ? 'bg-[#09090b]' : 'bg-white'}`}>
+      <div className={`min-h-screen w-full flex transition-colors duration-300 overflow-hidden ${isDark ? 'bg-[#0b0b0d]' : 'bg-background'}`}>
       {/* Sidebar */}
       <motion.aside 
         initial={false}
         animate={{ width: isCollapsed ? 80 : 240 }}
-        className={`hidden md:flex border-r flex-col p-4 gap-6 fixed h-full z-20 transition-all duration-500 ease-in-out ${
-          isDark ? 'bg-surface border-white/5' : 'bg-white border-slate-200 shadow-sm'
+        className={`hidden md:flex border-r flex-col p-4 gap-6 fixed h-full z-20 transition-all duration-300 ease-out ${
+          isDark ? 'bg-surface border-white/10' : 'bg-surface/80 border-border'
         }`}
       >
         {/* Toggle Button */}
         <button 
           onClick={() => setIsCollapsed(!isCollapsed)}
           title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-          className={`absolute -right-3 top-10 w-6 h-6 border rounded-full flex items-center justify-center shadow-sm hover:border-primary transition-colors z-30 ${
+           className={`absolute -right-3 top-10 size-6 border rounded-full flex items-center justify-center shadow-sm hover:border-primary transition-colors z-30 ${
             isDark ? 'bg-surface border-white/10' : 'bg-white border-slate-200'
           }`}
         >
@@ -49,7 +49,7 @@ export const Layout = () => {
           className={`flex items-center gap-3 px-1 py-2 hover:opacity-80 transition-opacity ${isCollapsed ? 'justify-center' : ''}`}
           title="Back to Landing Page"
         >
-          <img src="/logo.png" alt="Logo" className="w-8 h-8 rounded-xl shrink-0 shadow-sm" />
+          <img src="/logo.png" alt="Logo" className="size-8 rounded-xl shrink-0 shadow-sm" />
           {!isCollapsed && (
             <motion.span 
               initial={{ opacity: 0 }}
@@ -61,7 +61,14 @@ export const Layout = () => {
           )}
         </Link>
 
-        {/* Nav Links */}
+         {!isCollapsed && (
+           <Link to="/analyzer" className="flex items-center justify-center gap-2 rounded-xl bg-primary px-3 py-2.5 text-sm font-medium text-white shadow-sm shadow-primary/20 transition hover:bg-primary-dark">
+             <Plus className="size-4" />
+             New analysis
+           </Link>
+         )}
+
+         {/* Nav Links */}
         <nav className="flex-1 flex flex-col gap-1.5">
           {navItems.map(item => (
             <Link
@@ -194,9 +201,9 @@ export const Layout = () => {
 
       {/* Main Content */}
       <main 
-        className={`flex-1 min-w-0 w-0 flex flex-col transition-all duration-500 ease-in-out ml-0 ${isCollapsed ? 'md:ml-[80px]' : 'md:ml-[240px]'} ${isDark ? 'bg-[#09090b]' : 'bg-white'}`}
+         className={`flex-1 min-w-0 w-0 flex flex-col transition-[margin] duration-300 ease-out ml-0 ${isCollapsed ? 'md:ml-[80px]' : 'md:ml-[240px]'} ${isDark ? 'bg-[#0b0b0d]' : 'bg-background'}`}
       >
-        <div className={`flex-1 w-full p-4 sm:p-6 md:p-10 pt-20 md:pt-10 overflow-y-auto overflow-x-hidden ${isDark ? 'bg-[#09090b]' : 'bg-white'}`}>
+         <div className={`flex-1 w-full p-4 sm:p-6 md:p-10 pt-20 md:pt-10 overflow-y-auto overflow-x-hidden ${isDark ? 'bg-[#0b0b0d]' : 'bg-background'}`}>
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}

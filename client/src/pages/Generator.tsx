@@ -6,6 +6,7 @@ import { Wand2, Loader2, Copy, Download, CheckCircle2, PenTool } from 'lucide-re
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { generateContractDraft } from '../services/api';
 import type { GenerateContractParams } from '../services/api';
+import { Button } from '@/components/motion/button';
 import { toast } from 'sonner';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
@@ -205,18 +206,15 @@ export const Generator = () => {
               </div>
             </div>
             {(formData.clientName || formData.projectValue || formData.specialConditions || draft) && (
-              <button 
+              <Button
+                variant="ghost"
+                size="sm"
                 type="button"
                 onClick={handleClear}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition-all active:scale-95 lowercase cursor-pointer ${
-                  isDark 
-                    ? 'bg-surface-2 border-white/10 hover:border-red-500/20 text-text-muted hover:text-red-400' 
-                    : 'bg-slate-50 border-slate-200 hover:border-red-200 text-text-muted hover:text-red-500'
-                }`}
                 title="Clear Draft"
               >
                 clear
-              </button>
+              </Button>
             )}
           </div>
 
@@ -301,10 +299,12 @@ export const Generator = () => {
               />
             </div>
 
-            <button
+            <Button
               type="submit"
+              variant="primary"
+              size="lg"
               disabled={isGenerating}
-              className="mt-2 w-full py-3 px-4 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary-hover active:scale-95 transition-all disabled:opacity-70 disabled:active:scale-100 flex items-center justify-center gap-2"
+              className="mt-2 w-full"
             >
               {isGenerating ? (
                 <>
@@ -317,7 +317,7 @@ export const Generator = () => {
                   Generate Contract
                 </>
               )}
-            </button>
+            </Button>
           </form>
         </motion.div>
 
@@ -333,26 +333,24 @@ export const Generator = () => {
           <div className={`p-4 border-b flex items-center justify-between ${isDark ? 'border-white/5 bg-surface-2/50' : 'border-slate-200 bg-slate-50'}`}>
             <h3 className="font-bold text-sm text-text">Preview</h3>
             <div className="flex items-center gap-2">
-              <button
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={handleCopy}
                 disabled={!draft}
-                className={`p-2 rounded-lg transition-colors flex items-center justify-center disabled:opacity-50 ${
-                  isCopied ? 'bg-green-500/10 text-green-500' : isDark ? 'hover:bg-white/10 text-text' : 'hover:bg-slate-200 text-text'
-                }`}
                 title="Copy to clipboard"
               >
-                {isCopied ? <CheckCircle2 className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-              </button>
-              <button
+                {isCopied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={handleDownloadPDF}
                 disabled={!draft}
-                className={`p-2 rounded-lg transition-colors flex items-center justify-center disabled:opacity-50 ${
-                  isDark ? 'hover:bg-white/10 text-text' : 'hover:bg-slate-200 text-text'
-                }`}
                 title="Download PDF"
               >
                 <Download className="w-4 h-4" />
-              </button>
+              </Button>
             </div>
           </div>
 

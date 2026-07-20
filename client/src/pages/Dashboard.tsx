@@ -14,7 +14,10 @@ import { useTheme } from '../context/ThemeContext';
 import { toast } from 'sonner';
 import { OnboardingTour } from '../components/OnboardingTour';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
-import { AnimatedCounter } from '../components/AnimatedCounter';
+import { Button } from '@/components/motion/button';
+import { NumberTicker } from '@/components/motion/number-ticker';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 const personas = [
   { id: 'Chill Friend',      icon: '☕', desc: 'Casual & direct',    preview: '"Hey, clause 4 is a red flag. I\'d push back on this before signing."'       },
@@ -34,19 +37,6 @@ export const Dashboard = () => {
   const [hoveredPersona, setHoveredPersona] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [showTour, setShowTour] = useState(false);
-  const [mouseCoords, setMouseCoords] = useState<{ x: number; y: number; index: number | null }>({ x: 0, y: 0, index: null });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    setMouseCoords({ x, y, index });
-  };
-
-  const handleMouseLeave = () => {
-    setMouseCoords({ x: 0, y: 0, index: null });
-  };
-
   useDocumentTitle('Dashboard - ContractChill');
 
   useEffect(() => {
@@ -178,33 +168,24 @@ export const Dashboard = () => {
 
   const safePercent = totalAnalyses > 0 ? Math.round((safeCount / totalAnalyses) * 100) : 0;
 
-  const stats = [
+  const statCards = [
     {
-      label: 'red flags found',
-      icon: <AlertTriangle className="w-4 h-4" />,
-      value: redFlagsCount,
-      context: totalAnalyses > 0 ? `from ${totalAnalyses} ${totalAnalyses === 1 ? 'analysis' : 'analyses'}` : 'no data yet',
-      color: 'text-red-500',
-      bg: 'bg-red-500/10',
-      glowColor: isDark ? 'rgba(239, 68, 68, 0.15)' : 'rgba(239, 68, 68, 0.06)',
-    },
-    {
-      label: 'clean contracts',
-      icon: <CheckCircle2 className="w-4 h-4" />,
-      value: safeCount,
-      context: totalAnalyses > 0 ? `${safePercent}% of total` : 'no data yet',
-      color: 'text-green-500',
-      bg: 'bg-green-500/10',
-      glowColor: isDark ? 'rgba(34, 197, 94, 0.15)' : 'rgba(34, 197, 94, 0.06)',
-    },
-    {
-      label: 'analyses done',
-      icon: <Clock className="w-4 h-4" />,
+      label: 'Total Analyses',
       value: totalAnalyses,
-      context: 'all time',
-      color: 'text-primary',
-      bg: 'bg-primary/10',
-      glowColor: isDark ? 'rgba(59, 130, 246, 0.15)' : 'rgba(59, 130, 246, 0.06)',
+      suffix: '',
+      icon: <FileText className="w-4 h-4" />,
+    },
+    {
+      label: 'Risks Found',
+      value: redFlagsCount,
+      suffix: redFlagsCount !== 1 ? 'risks' : 'risk',
+      icon: <AlertTriangle className="w-4 h-4" />,
+    },
+    {
+      label: 'Clean Contracts',
+      value: safeCount,
+      suffix: `${safePercent}% of total`,
+      icon: <CheckCircle2 className="w-4 h-4" />,
     },
   ];
 
@@ -223,6 +204,30 @@ export const Dashboard = () => {
           <p className="text-text-muted text-sm mt-2">Understand your next contract before you sign.</p>
         </div>
       </motion.div>
+
+      {/* ── Stat Cards (Bento Grid Row) ─────────────────── */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {statCards.map((stat, i) => (
+          <Card key={i} className="border-border bg-surface">
+            <CardContent className="flex items-start gap-4 pt-[var(--card-spacing)]">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                {stat.icon}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-text-muted">{stat.label}</p>
+                <p className="text-2xl font-semibold text-text mt-0.5 tabular-nums">
+                  {history ? (
+                    <NumberTicker value={stat.value as number} />
+                  ) : (
+                    <span className="w-12 h-6 bg-surface-2 rounded animate-pulse inline-block" />
+                  )}
+                </p>
+                <p className="text-xs text-text-subtle mt-0.5">{stat.suffix}</p>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
 
       {/* ── Bento Grid ───────────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-4 items-start">
@@ -326,14 +331,14 @@ export const Dashboard = () => {
                 <p className="text-xs text-text-muted">PDF, DOCX, or TXT — up to 10MB</p>
               </div>
 
-              <motion.button
-                whileTap={{ scale: 0.97 }}
-                className={`btn-primary px-8 py-2.5 relative overflow-hidden group transition-all ${isDragging ? 'opacity-0 scale-95' : 'opacity-100'}`}
+              <Button
+                variant="primary"
+                size="md"
+                disabled={isDragging}
                 onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
               >
-                <span className="relative z-10">Browse Files</span>
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-              </motion.button>
+                Browse Files
+              </Button>
 
               {/* Empty State callout — only for new users */}
               {history && history.length === 0 && !isDragging && (
@@ -476,62 +481,7 @@ export const Dashboard = () => {
             </AnimatePresence>
           </motion.div>
 
-          {/* Stats cards */}
-          <motion.div
-            id="tour-stats"
-            initial={{ opacity: 0, x: 12 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.15 }}
-            className="flex flex-col gap-2"
-          >
-            {stats.map((stat, i) => (
-              <div
-                key={i}
-                onMouseMove={(e) => handleMouseMove(e, i)}
-                onMouseLeave={handleMouseLeave}
-                  className={`relative overflow-hidden flex items-center gap-4 px-4 py-3 rounded-2xl border transition-[background-color,border-color,box-shadow,transform] duration-150 group ${
-                   isDark ? 'bg-surface border-white/10 hover:border-white/15' : 'bg-surface border-border shadow-sm hover:shadow-md'
-                }`}
-              >
-                {/* Glassmorphic Interactive Radial Glow Overlay */}
-                {mouseCoords.index === i && (
-                  <div
-                    className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-100 z-0"
-                    style={{
-                      background: `radial-gradient(130px circle at ${mouseCoords.x}px ${mouseCoords.y}px, ${stat.glowColor}, transparent 80%)`
-                    }}
-                  />
-                )}
-
-                <div className={`relative z-10 w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${stat.bg} ${stat.color} transition-transform duration-200 group-hover:scale-110`}>
-                  {stat.icon}
-                </div>
-                <div className="relative z-10 flex-1 min-w-0">
-                  <p className="text-xs text-text-muted font-medium truncate">{stat.label}</p>
-                </div>
-                {!history ? (
-                  <div className="relative z-10 flex flex-col items-end gap-1">
-                    <div className="w-8 h-5 bg-surface-2 rounded animate-pulse" />
-                    <div className="w-14 h-2.5 bg-surface-2 rounded animate-pulse" />
-                  </div>
-                ) : (
-                  <div className="relative z-10 flex flex-col items-end gap-0.5">
-                    <motion.p
-                      key={stat.value}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="text-xl font-display font-black text-text tabular-nums leading-none"
-                    >
-                      <AnimatedCounter value={stat.value as number} />
-                    </motion.p>
-                    <p className="text-[9px] text-text-subtle font-medium tabular-nums">
-                      {stat.context}
-                    </p>
-                  </div>
-                )}
-              </div>
-            ))}
-          </motion.div>
+          {/* Legal disclaimer */}
 
           {/* Legal disclaimer */}
           <div className={`flex items-start gap-2 px-3 py-2.5 rounded-xl border text-[10px] text-text-subtle font-medium leading-relaxed ${
@@ -559,13 +509,14 @@ export const Dashboard = () => {
               <Clock className="w-4 h-4 text-text-muted" />
               <span className="text-sm font-bold text-text">recent activity</span>
             </div>
-            <button
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => navigate('/history')}
-              className="flex items-center gap-1 text-xs font-bold text-primary hover:text-indigo-500 transition-colors group"
             >
               view all
-              <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </button>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Button>
           </div>
 
           {/* Cards */}

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { LandingPage } from './pages/LandingPage';
 import { Dashboard } from './pages/Dashboard';
@@ -15,6 +15,8 @@ import { GlassyBackground } from './components/GlassyBackground';
 import { LegalPage } from './pages/LegalPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { AnimatedRoutes } from './components/AnimatedRoutes';
+import { CommandPalette } from '@/components/motion/command-palette';
+import { LayoutDashboard, FilePenLine, History as HistoryIcon, Settings as SettingsIcon } from 'lucide-react';
 
 import { Component, useState, Suspense, lazy } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
@@ -55,6 +57,20 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 }
 
 
+function CommandPaletteWithNav() {
+  const navigate = useNavigate();
+  return (
+    <CommandPalette
+      items={[
+        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, onSelect: () => navigate('/dashboard') },
+        { id: 'generator', label: 'Generator', icon: FilePenLine, onSelect: () => navigate('/generator') },
+        { id: 'history', label: 'History', icon: HistoryIcon, onSelect: () => navigate('/history') },
+        { id: 'settings', label: 'Settings', icon: SettingsIcon, onSelect: () => navigate('/settings') },
+      ]}
+    />
+  );
+}
+
 function App() {
   const [queryClient] = useState(() => new QueryClient({
     defaultOptions: {
@@ -73,6 +89,7 @@ function App() {
           <GlassyBackground />
           <Router>
               <AnimatedRoutes />
+              <CommandPaletteWithNav />
           </Router>
         </AuthProvider>
       </QueryClientProvider>

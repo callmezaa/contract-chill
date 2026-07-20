@@ -8,6 +8,9 @@ import { api } from '../services/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { Button } from '@/components/motion/button';
+import { Switch } from '@/components/motion/switch';
+import { Card, CardContent } from '@/components/ui/card';
 
 export const Settings = () => {
   const { user } = useAuth();
@@ -138,7 +141,8 @@ export const Settings = () => {
       </div>
 
       {/* Profile Card */}
-      <form onSubmit={handleUpdateProfile} className="card p-8 flex flex-col gap-8 relative overflow-hidden bg-surface border-border/50">
+      <Card className="p-8" size="sm">
+      <form onSubmit={handleUpdateProfile} className="flex flex-col gap-8 relative overflow-hidden">
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center border border-primary/10">
             <User className="w-5 h-5 text-primary" />
@@ -216,20 +220,20 @@ export const Settings = () => {
         </div>
 
         <div className="flex justify-end pt-6 border-t border-border/40">
-          <button
+          <Button
             type="submit"
             disabled={isUpdating || displayName === user?.displayName}
-            className="btn-primary px-10 py-3 flex items-center gap-2.5 disabled:opacity-30 disabled:grayscale transition-all shadow-lg shadow-primary/20 active:scale-95"
           >
             {isUpdating && <Loader2 className="w-4 h-4 animate-spin" />}
-            <span>Save changes</span>
-          </button>
+            Save changes
+          </Button>
         </div>
       </form>
+      </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Subscription Card */}
-        <div className="card p-7 flex flex-col gap-6 bg-surface border-border/50">
+        <Card className="p-7 flex flex-col gap-6" size="sm">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-surface flex items-center justify-center">
               <CreditCard className="w-4.5 h-4.5 text-primary" />
@@ -247,12 +251,12 @@ export const Settings = () => {
                 <p className="text-[10px] text-text-muted font-medium">20 analyses per day</p>
               </div>
             </div>
-            <button className="btn-primary w-full py-2.5 text-xs font-bold shadow-md shadow-primary/10">Upgrade to pro</button>
+            <Button size="sm" className="w-full">Upgrade to pro</Button>
           </div>
-        </div>
+        </Card>
 
         {/* Notifications Card */}
-        <div className="card p-7 flex flex-col gap-6 bg-surface border-border/50">
+        <Card className="p-7 flex flex-col gap-6" size="sm">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-surface flex items-center justify-center">
               <Bell className="w-4.5 h-4.5 text-primary" />
@@ -270,22 +274,17 @@ export const Settings = () => {
                   <p className="text-sm font-bold text-text">{item.title}</p>
                   <p className="text-[10px] text-text-muted font-medium">{item.desc}</p>
                 </div>
-                <div 
-                  onClick={() => toggleNotification(item.id as any)}
-                  className={`w-10 h-5.5 rounded-full relative cursor-pointer transition-all duration-300 ${notifications[item.id as keyof typeof notifications] ? 'bg-primary' : 'bg-surface-2'}`}
-                >
-                  <motion.div 
-                    animate={{ x: notifications[item.id as keyof typeof notifications] ? 18 : 3 }}
-                    className="w-4 h-4 bg-white rounded-full absolute top-0.75 shadow-sm" 
-                  />
-                </div>
+                <Switch
+                  checked={notifications[item.id as keyof typeof notifications]}
+                  onCheckedChange={() => toggleNotification(item.id as any)}
+                />
               </div>
             ))}
           </div>
-        </div>
+        </Card>
 
         {/* Danger Zone Card */}
-        <div className="card p-7 flex flex-col gap-6 bg-red-500/5 border-red-500/20 md:col-span-2 relative overflow-hidden group">
+        <Card className="p-7 flex flex-col gap-6 bg-red-500/5 border-red-500/20 md:col-span-2 relative overflow-hidden group" size="sm">
           <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
           
           <div className="flex items-center gap-3 relative z-10">
@@ -302,15 +301,16 @@ export const Settings = () => {
                 Permanently remove your account, subscription, and all associated data. This action cannot be undone.
               </p>
             </div>
-            <button 
+            <Button
+              variant="primary"
               onClick={handleDeleteAccount}
-              className="flex items-center gap-2.5 px-6 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white text-[13px] font-bold shadow-lg shadow-red-500/20 transition-all active:scale-95 shrink-0"
+              className="bg-red-500 hover:bg-red-600 text-white shrink-0"
             >
               <Trash2 className="w-4 h-4" />
               Delete Account
-            </button>
+            </Button>
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );

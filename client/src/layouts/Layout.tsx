@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, FilePenLine, History, Settings, LogOut, Sun, Moon, Menu, X } from 'lucide-react';
-import { Dock } from '@/components/motion/dock';
 import { Tooltip } from '@/components/motion/tooltip';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/contexts/AuthContext';
@@ -15,19 +14,30 @@ const navItems = [
   { to: '/settings', icon: Settings, label: 'Settings' },
 ];
 
+const useResolvedTheme = () => {
+  const { theme } = useTheme();
+  if (theme !== 'system') return theme;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+};
+
 export const Layout = () => {
   const { user, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+  const { toggleTheme } = useTheme();
+  const resolvedTheme = useResolvedTheme();
+  const navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const resolvedTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+  };
 
   return (
     <div className="flex h-screen bg-background">
-      {/* Desktop Dock Sidebar */}
+      {/* Desktop Sidebar */}
       <nav className="hidden md:flex w-16 flex-col items-center py-4 gap-2 border-r border-border bg-surface shrink-0">
-        <Dock className="flex-col !h-auto !w-auto !gap-2 !border-none !bg-transparent !shadow-none !p-0 !backdrop-blur-none flex-1">
+        <div className="flex-1 flex flex-col items-center gap-2">
           {navItems.map(({ to, icon: Icon, label }) => (
             <Tooltip key={to} content={label} side="right">
               <NavLink to={to} className={({ isActive }) =>
@@ -39,7 +49,7 @@ export const Layout = () => {
               </NavLink>
             </Tooltip>
           ))}
-        </Dock>
+        </div>
 
         <div className="flex flex-col items-center gap-2 pb-4">
           <Tooltip content={resolvedTheme === 'dark' ? 'Light mode' : 'Dark mode'} side="right">
@@ -48,7 +58,7 @@ export const Layout = () => {
             </button>
           </Tooltip>
           <Tooltip content="Sign out" side="right">
-            <button onClick={() => logout()} className="flex items-center justify-center size-10 rounded-xl text-text-muted hover:text-text hover:bg-surface-2 transition-colors">
+            <button onClick={handleLogout} className="flex items-center justify-center size-10 rounded-xl text-text-muted hover:text-text hover:bg-surface-2 transition-colors">
               <LogOut className="size-5" />
             </button>
           </Tooltip>
@@ -64,18 +74,18 @@ export const Layout = () => {
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-14 border-b border-border bg-surface flex items-center justify-between px-4 z-50">
         <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="ContractChill Logo" className="w-6 h-6 rounded-md" />
+          <img src="/logo.png" alt="ContractChill" className="size-6 rounded-md" />
           <span className="font-display font-bold text-sm text-text">ContractChill</span>
         </div>
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 rounded-lg text-text hover:bg-surface-2 transition-colors">
-          {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          {isMobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>
       </div>
 
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -111,7 +121,7 @@ export const Layout = () => {
               <button
                 onClick={async () => {
                   setIsMobileMenuOpen(false);
-                  await logout();
+                  await handleLogout();
                 }}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 hover:text-red-600 hover:bg-red-500/10 transition-colors"
               >

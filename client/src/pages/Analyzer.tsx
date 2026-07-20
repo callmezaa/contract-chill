@@ -28,6 +28,8 @@ import { Worker, Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import { useTheme } from '../context/ThemeContext';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { Button } from '@/components/motion/button';
+import { Badge } from '@/components/ui/badge';
 
 export const Analyzer = () => {
   const { id } = useParams<{ id: string }>();
@@ -763,13 +765,14 @@ export const Analyzer = () => {
             </div>
           </div>
           {fileUrl && (
-            <a href={fileUrl} target="_blank" rel="noopener noreferrer"
-               className={`group flex items-center gap-2 px-4 py-2 rounded-xl border transition-[background-color,border-color,transform] duration-150 ${
-                 isDark ? 'bg-surface border-white/10 hover:bg-white/5' : 'bg-surface-2 border-border hover:bg-surface'
-              }`}>
-              <span className="text-xs font-semibold text-text-muted group-hover:text-primary">Open Original</span>
-              <ChevronRight className="w-3.5 h-3.5 text-text-subtle group-hover:text-primary transition-transform group-hover:translate-x-0.5" />
-            </a>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => window.open(fileUrl, '_blank')}
+            >
+              Open Original
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Button>
           )}
         </div>
         <div className="flex-1 overflow-hidden relative bg-transparent">
@@ -804,47 +807,45 @@ export const Analyzer = () => {
         }`} data-html2canvas-ignore="true">
           {/* Top row on mobile, left on desktop */}
           <div className="flex items-center justify-between w-full sm:w-auto">
-            <Link to="/dashboard" className="flex items-center gap-2 text-text-muted hover:text-primary transition-colors text-sm font-medium">
+            <Button variant="ghost" size="sm" onClick={() => navigate('/dashboard')}>
               <ArrowLeft className="w-4 h-4" />
               back
-            </Link>
+            </Button>
             {/* Ready badge shown on mobile here */}
-            <div className="flex sm:hidden items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 shadow-sm backdrop-blur-sm">
+            <Badge variant="secondary" className="flex sm:hidden gap-1.5 px-3 py-1.5">
               <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-xs font-bold text-green-600 lowercase">ready</span>
-            </div>
+              ready
+            </Badge>
           </div>
 
           {/* Bottom row on mobile, right on desktop */}
           <div className="flex items-center gap-2 w-full sm:w-auto">
-            <button
+            <Button
+              variant="outline"
+              size="sm"
               onClick={handleCopySummary}
-              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl border shadow-sm transition-all group active:scale-95 ${
-                isDark ? 'bg-background/50 border-white/10 hover:border-primary/50 backdrop-blur-sm' : 'bg-white/50 border-slate-200 hover:border-primary/50 backdrop-blur-sm'
-              }`}
               title="copy summary"
             >
-              {isCopied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4 text-text-subtle group-hover:text-primary transition-colors" />}
-              <span className={`text-xs font-bold transition-colors lowercase ${isCopied ? 'text-green-500' : 'text-text-muted group-hover:text-primary'}`}>
+              {isCopied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+              <span className={isCopied ? 'text-green-500' : ''}>
                 {isCopied ? 'copied!' : 'copy'}
               </span>
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
               onClick={handleExportPDF}
-              disabled={isExporting}
-              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl border shadow-sm transition-all group active:scale-95 ${
-                isDark ? 'bg-background/50 border-white/10 hover:border-primary/50 backdrop-blur-sm' : 'bg-white/50 border-slate-200 hover:border-primary/50 backdrop-blur-sm'
-              }`}
+              disabled={isExporting || isCopied ? false : undefined}
               title="export to pdf"
             >
-              {isExporting ? <Loader2 className="w-4 h-4 animate-spin text-primary" /> : <Download className="w-4 h-4 text-text-subtle group-hover:text-primary transition-colors" />}
-              <span className="text-xs font-bold text-text-muted group-hover:text-primary transition-colors lowercase">export pdf</span>
-            </button>
+              {isExporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+              export pdf
+            </Button>
             {/* Ready badge shown on desktop here */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-full bg-green-500/10 border border-green-500/20 shadow-sm backdrop-blur-sm">
+            <Badge variant="secondary" className="hidden sm:flex gap-1.5 px-3 py-2">
               <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-xs font-bold text-green-600 lowercase">ready</span>
-            </div>
+              ready
+            </Badge>
           </div>
         </div>
 
@@ -899,7 +900,7 @@ export const Analyzer = () => {
             {/* Sender Info */}
             <div className="flex items-center gap-2.5 px-1">
               <span className="text-[13px] font-display font-bold text-text">{activePersona || 'AI Analyst'}</span>
-              <span className="text-[9px] font-bold text-primary tracking-wider uppercase px-2 py-0.5 rounded-full bg-primary/10 border border-primary/20">The Verdict</span>
+              <Badge variant="default" className="text-[9px] font-bold tracking-wider uppercase">The Verdict</Badge>
             </div>
             
             {/* Chat Bubble */}
@@ -930,7 +931,7 @@ export const Analyzer = () => {
           className={`card p-7 ${isDark ? 'bg-surface border-white/10' : 'bg-surface border-border shadow-sm'}`}
         >
           <div className="flex items-center gap-3 mb-5">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
               <Info className="w-5 h-5 text-primary" />
             </div>
             <h3 className="text-base font-display font-semibold text-text">Executive summary</h3>
@@ -1004,18 +1005,15 @@ export const Analyzer = () => {
                       {flag.risk} risk
                     </span>
                   </div>
-                  <button
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={() => scrollToAndHighlightClause(flag.clause)}
-                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-[9px] font-bold transition-all shadow-sm active:scale-95 cursor-pointer ${
-                      isDark 
-                        ? 'bg-black/20 border-white/5 text-primary hover:bg-primary/10 hover:border-primary/20' 
-                        : 'bg-white border-slate-200 text-primary hover:bg-primary/5 hover:border-primary/20'
-                    }`}
-                    title="Temukan klausul ini di dokumen"
+                    title="Locate this clause in the document"
                   >
-                    <Compass className="w-3 h-3 text-primary animate-spin-slow" />
+                    <Compass className="w-3 h-3" />
                     Locate Clause
-                  </button>
+                  </Button>
                 </div>
                 
                 <div className={`p-4 rounded-2xl border text-[12px] font-mono leading-relaxed italic shadow-inner ${
@@ -1032,20 +1030,17 @@ export const Analyzer = () => {
                 </div>
 
                 <div className="pt-2">
-                  <button 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={() => {
                       setSelectedFlag(flag);
                       setIsScriptModalOpen(true);
                     }}
-                    className={`w-full py-2.5 rounded-xl text-xs font-medium transition-all duration-300 flex items-center justify-center gap-2 opacity-50 group-hover:opacity-100 ${
-                      isDark 
-                        ? 'text-text-muted hover:text-primary hover:bg-primary/10' 
-                        : 'text-slate-500 hover:text-primary hover:bg-primary/5'
-                    }`}
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                     generate negotiation script
-                  </button>
+                  </Button>
                 </div>
               </motion.div>
             ))}

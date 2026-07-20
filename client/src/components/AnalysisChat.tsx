@@ -289,14 +289,14 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsOpen(!isOpen)}
-          className="relative w-14 h-14 bg-primary text-white rounded-2xl flex items-center justify-center shadow-2xl shadow-primary/30 hover:bg-blue-600 transition-all border-4 border-background z-10"
+          className="relative w-14 h-14 bg-primary text-primary-foreground rounded-2xl flex items-center justify-center shadow-lg hover:bg-primary/90 transition-all z-10"
           title={isOpen ? "close chat" : "ask ai"}
         >
           {/* Pulsing indicator */}
           {!isOpen && (
             <span className="absolute -top-1.5 -right-1.5 flex h-3.5 w-3.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-blue-500 border-2 border-background"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-primary border-2 border-background"></span>
             </span>
           )}
 

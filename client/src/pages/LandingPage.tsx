@@ -3,10 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Sparkles, ArrowRight, CheckCircle,
   FileText, Brain, Clock, Star, ChevronRight,
-  AlertTriangle, MessageSquare, TrendingUp, Lock, Menu, X, ArrowUp
+  AlertTriangle, MessageSquare, TrendingUp, Lock, Menu, X, ArrowUp,
+  Coffee, Scale, Briefcase, Palette, type LucideIcon
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
 import { MiniDemo } from '../components/MiniDemo';
 import { MagneticButton } from '@/components/motion/button';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -52,8 +52,6 @@ const faqs = [
 
 export const LandingPage = () => {
   const navigate = useNavigate();
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
   const [hoveredPersona, setHoveredPersona] = useState<number | null>(null);
   const [activePreview, setActivePreview] = useState<'risk' | 'summary' | 'tips'>('risk');
   const [docTypeIndex, setDocTypeIndex] = useState(0);
@@ -84,10 +82,10 @@ export const LandingPage = () => {
   }, [docTypes.length]);
 
   return (
-    <div className="min-h-screen bg-white flex flex-col font-sans overflow-hidden text-text">
+    <div className="min-h-screen bg-background flex flex-col font-sans overflow-hidden text-text">
 
       {/* ── NAV ─────────────────────────────────────────────── */}
-      <nav className="sticky top-0 z-50 border-b border-black/10 bg-white/85 backdrop-blur-xl">
+      <nav className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 h-[68px] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <img src="/logo.png" alt="ContractChill Logo" className="w-8 h-8 rounded-lg shadow-sm" />
@@ -169,7 +167,7 @@ export const LandingPage = () => {
                         }
                       }, 100);
                     }}
-                    className="text-[15px] font-semibold text-text hover:text-primary transition-colors"
+                    className="text-[15px] font-semibold text-text hover:text-text transition-colors"
                   >
                     {link.label}
                   </a>
@@ -180,7 +178,7 @@ export const LandingPage = () => {
                 <Link
                   to="/login"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-[15px] font-semibold text-text hover:text-primary transition-colors"
+                  className="text-[15px] font-semibold text-text hover:text-text transition-colors"
                 >
                   Login to account
                 </Link>
@@ -188,7 +186,7 @@ export const LandingPage = () => {
                 <Link
                   to="/login"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="btn-primary text-[15px] flex items-center justify-center gap-2 w-full py-3 mt-2 shadow-lg shadow-primary/20"
+                  className="bg-text text-surface text-[15px] flex items-center justify-center gap-2 w-full py-3 mt-2 rounded-xl font-semibold"
                 >
                   Get Started Free
                   <ArrowRight className="w-4 h-4" />
@@ -327,7 +325,7 @@ export const LandingPage = () => {
                       <div className="absolute w-5 h-5 bg-primary/40 rounded-full animate-ping" />
                       <div className="relative w-2.5 h-2.5 bg-primary rounded-full" />
                       {/* Tooltip */}
-                      <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-surface text-text text-[10px] py-1.5 px-3 rounded-lg opacity-0 group-hover/pdf:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg border border-border z-20">
+                      <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-surface text-text text-[10px] py-1.5 px-3 rounded-lg opacity-0 group-hover/pdf:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-sm border border-border z-20">
                         Upload any contract format
                         <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-surface rotate-45 border-l border-t border-border" />
                       </div>
@@ -350,7 +348,7 @@ export const LandingPage = () => {
                         <div className="absolute w-4 h-4 bg-primary/40 rounded-full animate-ping" />
                         <div className="relative w-2 h-2 bg-primary rounded-full" />
                         {/* Tooltip */}
-                        <div className="absolute top-5 -left-2 bg-surface text-text text-[10px] py-1.5 px-3 rounded-lg opacity-0 group-hover/alert:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg border border-border z-20">
+                        <div className="absolute top-5 -left-2 bg-surface text-text text-[10px] py-1.5 px-3 rounded-lg opacity-0 group-hover/alert:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-sm border border-border z-20">
                           AI instantly flags hidden risks
                           <div className="absolute -top-1 left-3 w-2 h-2 bg-surface rotate-45 border-l border-t border-border" />
                         </div>
@@ -383,15 +381,15 @@ export const LandingPage = () => {
                         <div className="absolute w-4 h-4 bg-primary/40 rounded-full animate-ping" />
                         <div className="relative w-2 h-2 bg-primary rounded-full" />
                         {/* Tooltip */}
-                        <div className="absolute top-1/2 right-6 -translate-y-1/2 bg-surface text-text text-[10px] py-1.5 px-3 rounded-lg opacity-0 group-hover/tips:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg border border-border z-20">
+                        <div className="absolute top-1/2 right-6 -translate-y-1/2 bg-surface text-text text-[10px] py-1.5 px-3 rounded-lg opacity-0 group-hover/tips:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-sm border border-border z-20">
                           Get actionable negotiation advice
                           <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 bg-surface rotate-45 border-l border-t border-border" />
                         </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-1.5 mb-2">
-                      <MessageSquare className="w-3.5 h-3.5 text-primary" />
-                      <span className="text-[11px] font-bold text-primary font-sans">Negotiation Tips</span>
+                      <MessageSquare className="w-3.5 h-3.5 text-text" />
+                      <span className="text-[11px] font-bold text-text font-sans">Negotiation Tips</span>
                     </div>
                     <div className="space-y-1.5">
                       <div className="h-1.5 bg-primary/20 rounded-full w-full" />
@@ -403,7 +401,7 @@ export const LandingPage = () => {
             </div>
             
             {/* Floating badges */}
-            <div className="absolute -left-8 top-1/3 hidden lg:flex items-center gap-2 bg-white border border-border rounded-xl px-4 py-3 shadow-xl">
+            <div className="absolute -left-8 top-1/3 hidden lg:flex items-center gap-2 bg-surface border border-border rounded-xl px-4 py-3 shadow-sm">
               <div className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center">
                 <AlertTriangle className="w-4 h-4 text-red-500" />
               </div>
@@ -412,7 +410,7 @@ export const LandingPage = () => {
                 <p className="text-[10px] text-text-subtle font-sans">Review before signing</p>
               </div>
             </div>
-            <div className="absolute -right-8 top-1/2 hidden lg:flex items-center gap-2 bg-white border border-border rounded-xl px-4 py-3 shadow-xl">
+            <div className="absolute -right-8 top-1/2 hidden lg:flex items-center gap-2 bg-surface border border-border rounded-xl px-4 py-3 shadow-sm">
               <div className="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center">
                 <CheckCircle className="w-4 h-4 text-green-500" />
               </div>
@@ -426,9 +424,7 @@ export const LandingPage = () => {
       </section>
 
       {/* ── SOCIAL PROOF STATS ──────────────────────────────── */}
-      <section className={`transition-colors duration-500 ${
-        isDark ? 'bg-surface' : 'bg-white'
-      }`}>
+      <section className="bg-surface transition-colors duration-500">
         <div className="max-w-6xl mx-auto px-6 py-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
@@ -447,8 +443,8 @@ export const LandingPage = () => {
       </section>
 
       {/* ── INTERACTIVE MINI DEMO ───────────────────────────── */}
-      <div className={`transition-colors duration-500 ${isDark ? 'bg-surface' : 'bg-white'}`}>
-        <div className="max-w-6xl mx-auto border-t border-slate-100" />
+      <div className="bg-surface transition-colors duration-500">
+        <div className="max-w-6xl mx-auto border-t border-border" />
         <MiniDemo />
       </div>
 
@@ -511,9 +507,7 @@ export const LandingPage = () => {
       </section>
 
       {/* ── FEATURES ────────────────────────────────────────── */}
-       <section id="benefits" className={`transition-colors duration-500 ${
-        isDark ? 'bg-surface' : 'bg-white'
-      }`}>
+       <section id="benefits" className="bg-surface transition-colors duration-500">
         <div className="max-w-6xl mx-auto px-6 py-24">
           <motion.div
             initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
@@ -531,7 +525,7 @@ export const LandingPage = () => {
             {/* Card 1: Red Flag (Large) */}
             <motion.div
               variants={fadeUp}
-              className="md:col-span-2 lg:col-span-2 bg-surface rounded-2xl border border-border p-8 hover:shadow-lg hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 group overflow-hidden relative flex flex-col md:flex-row gap-8 items-center"
+              className="md:col-span-2 lg:col-span-2 bg-surface rounded-2xl border border-border p-8 hover:shadow-sm hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 group overflow-hidden relative flex flex-col md:flex-row gap-8 items-center"
             >
               <div className="flex-1 z-10 flex flex-col">
                 <div className="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center mb-6">
@@ -541,13 +535,13 @@ export const LandingPage = () => {
                 <p className="text-sm text-text-muted leading-relaxed">Automatically surfaces high-risk clauses like unlimited liability, IP grabs, and unfair termination terms.</p>
               </div>
               {/* Mini UI Illustration */}
-              <div className="flex-1 w-full bg-white rounded-xl shadow-sm border border-slate-100 p-5 transform group-hover:-translate-y-2 group-hover:-translate-x-2 transition-transform duration-500 relative hidden sm:block">
+              <div className="flex-1 w-full bg-surface rounded-xl border border-border p-5 transform group-hover:-translate-y-2 group-hover:-translate-x-2 transition-transform duration-500 relative hidden sm:block">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-2 h-2 rounded-full bg-red-400" />
-                  <div className="h-2 w-24 bg-slate-100 rounded-full" />
+                  <div className="h-2 w-24 bg-surface-2 rounded-full" />
                 </div>
-                <div className="p-3 bg-red-50 border border-red-100 rounded-lg">
-                  <p className="text-[10px] text-red-800 font-bold mb-2">High Risk: IP Ownership</p>
+                <div className="p-3 bg-red-500/5 border border-red-500/10 rounded-lg">
+                  <p className="text-[10px] text-red-500 font-bold mb-2">High Risk: IP Ownership</p>
                   <div className="h-1.5 w-full bg-red-200/60 rounded-full mb-1.5" />
                   <div className="h-1.5 w-4/5 bg-red-200/60 rounded-full mb-1.5" />
                   <div className="h-1.5 w-2/3 bg-red-200/60 rounded-full" />
@@ -556,7 +550,7 @@ export const LandingPage = () => {
             </motion.div>
 
             {/* Card 2: Smart Summarization (Small) */}
-            <motion.div variants={fadeUp} className="bg-surface rounded-2xl border border-border p-8 hover:shadow-lg hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 flex flex-col group">
+            <motion.div variants={fadeUp} className="bg-surface rounded-2xl border border-border p-8 hover:shadow-sm hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 flex flex-col group">
               <div className="w-12 h-12 rounded-2xl bg-violet-50 flex items-center justify-center mb-auto">
                 <Brain className="text-violet-500 w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
               </div>
@@ -565,7 +559,7 @@ export const LandingPage = () => {
             </motion.div>
 
             {/* Card 3: Negotiation Tips (Small) */}
-            <motion.div variants={fadeUp} className="bg-surface rounded-2xl border border-border p-8 hover:shadow-lg hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 flex flex-col group">
+            <motion.div variants={fadeUp} className="bg-surface rounded-2xl border border-border p-8 hover:shadow-sm hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 flex flex-col group">
               <div className="w-12 h-12 rounded-2xl bg-green-50 flex items-center justify-center mb-auto">
                 <TrendingUp className="text-green-500 w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
               </div>
@@ -574,9 +568,9 @@ export const LandingPage = () => {
             </motion.div>
 
             {/* Card 4: Secure & Private (Small) */}
-            <motion.div variants={fadeUp} className="bg-surface rounded-2xl border border-border p-8 hover:shadow-lg hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 flex flex-col group">
-              <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center mb-auto">
-                <Lock className="text-slate-500 w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+            <motion.div variants={fadeUp} className="bg-surface rounded-2xl border border-border p-8 hover:shadow-sm hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 flex flex-col group">
+              <div className="w-12 h-12 rounded-2xl bg-surface flex items-center justify-center mb-auto">
+                <Lock className="text-text-muted w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
               </div>
               <h3 className="text-lg font-display font-bold text-text mb-2 mt-8">Secure & private</h3>
               <p className="text-sm text-text-muted leading-relaxed">Your documents are encrypted and linked only to your Google account. Never shared.</p>
@@ -585,7 +579,7 @@ export const LandingPage = () => {
             {/* Card 5: PDF Viewer (Large) */}
             <motion.div
               variants={fadeUp}
-              className="md:col-span-2 lg:col-span-2 bg-surface rounded-2xl border border-border p-8 hover:shadow-lg hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 group overflow-hidden relative flex flex-col md:flex-row gap-8 items-center"
+              className="md:col-span-2 lg:col-span-2 bg-surface rounded-2xl border border-border p-8 hover:shadow-sm hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 group overflow-hidden relative flex flex-col md:flex-row gap-8 items-center"
             >
               <div className="flex-1 z-10 flex flex-col">
                 <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
@@ -595,14 +589,14 @@ export const LandingPage = () => {
                 <p className="text-sm text-text-muted leading-relaxed">Read the original contract and AI analysis simultaneously in a split-screen layout.</p>
               </div>
               {/* Mini UI Illustration */}
-              <div className="flex-1 w-full bg-white rounded-xl shadow-sm border border-slate-100 flex overflow-hidden transform group-hover:scale-105 transition-transform duration-500 h-36 hidden sm:flex">
-                <div className="flex-1 p-4 border-r border-slate-100 flex flex-col gap-2.5 bg-slate-50/50">
-                  <div className="h-2 w-1/2 bg-slate-200 rounded-full mb-1" />
-                  <div className="h-1.5 w-full bg-slate-200/60 rounded-full" />
-                  <div className="h-1.5 w-full bg-slate-200/60 rounded-full" />
-                  <div className="h-1.5 w-3/4 bg-slate-200/60 rounded-full" />
-                  <div className="h-1.5 w-full bg-slate-200/60 rounded-full mt-2" />
-                  <div className="h-1.5 w-5/6 bg-slate-200/60 rounded-full" />
+              <div className="flex-1 w-full bg-surface rounded-xl border border-border flex overflow-hidden transform group-hover:scale-105 transition-transform duration-500 h-36 hidden sm:flex">
+                <div className="flex-1 p-4 border-r border-border flex flex-col gap-2.5 bg-surface/50">
+                  <div className="h-2 w-1/2 bg-border rounded-full mb-1" />
+                  <div className="h-1.5 w-full bg-border/60 rounded-full" />
+                  <div className="h-1.5 w-full bg-border/60 rounded-full" />
+                  <div className="h-1.5 w-3/4 bg-border/60 rounded-full" />
+                  <div className="h-1.5 w-full bg-border/60 rounded-full mt-2" />
+                  <div className="h-1.5 w-5/6 bg-border/60 rounded-full" />
                 </div>
                 <div className="flex-1 p-4 flex flex-col gap-3">
                   <div className="h-2 w-1/3 bg-primary/30 rounded-full" />
@@ -616,7 +610,7 @@ export const LandingPage = () => {
             </motion.div>
 
             {/* Card 6: Analysis History (Small) */}
-            <motion.div variants={fadeUp} className="bg-surface rounded-2xl border border-border p-8 hover:shadow-lg hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 flex flex-col group">
+            <motion.div variants={fadeUp} className="bg-surface rounded-2xl border border-border p-8 hover:shadow-sm hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 flex flex-col group">
               <div className="w-12 h-12 rounded-2xl bg-orange-50 flex items-center justify-center mb-auto">
                 <Clock className="text-orange-500 w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
               </div>
@@ -644,7 +638,7 @@ export const LandingPage = () => {
         >
           {[
             {
-              emoji: '⚖️',
+              Icon: Scale,
               name: 'Angry Lawyer',
               tone: 'Strict & protective',
               color: 'border-red-500/20 bg-red-500/5',
@@ -653,7 +647,7 @@ export const LandingPage = () => {
               preview: 'Do not sign this! They are trying to steal your IP!'
             },
             {
-              emoji: '☕',
+              Icon: Coffee,
               name: 'Chill Friend',
               tone: 'Casual & simple',
               color: 'border-primary/20 bg-primary/5',
@@ -662,7 +656,7 @@ export const LandingPage = () => {
               preview: 'Bro, this clause is totally chill. You are good to go.'
             },
             {
-              emoji: '💼',
+              Icon: Briefcase,
               name: 'Corporate Mentor',
               tone: 'Strategic & calm',
               color: 'border-border bg-surface',
@@ -671,7 +665,7 @@ export const LandingPage = () => {
               preview: 'This aligns with industry practice, but let us negotiate term 4.'
             },
             {
-              emoji: '🎨',
+              Icon: Palette,
               name: 'Freelancer Senior',
               tone: 'Practical & real',
               color: 'border-violet-500/20 bg-violet-500/5',
@@ -685,7 +679,7 @@ export const LandingPage = () => {
               variants={fadeUp}
               onMouseEnter={() => setHoveredPersona(i)}
               onMouseLeave={() => setHoveredPersona(null)}
-              className={`relative rounded-2xl border ${p.color} p-5 flex flex-col gap-3 hover:shadow-lg hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 cursor-default`}
+              className={`relative rounded-2xl border ${p.color} p-5 flex flex-col gap-3 hover:shadow-sm hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 cursor-default`}
             >
               {/* Speech Bubble */}
               <motion.div
@@ -696,9 +690,9 @@ export const LandingPage = () => {
                   scale: hoveredPersona === i ? 1 : 0.95
                 }}
                 transition={{ duration: 0.2 }}
-                className="absolute -top-14 left-0 right-0 bg-white border border-slate-200 shadow-xl rounded-xl p-3 z-20 pointer-events-none"
+                className="absolute -top-14 left-0 right-0 bg-surface border border-border shadow-sm rounded-xl p-3 z-20 pointer-events-none"
               >
-                <p className="text-[11px] font-medium text-slate-800 italic h-8 leading-relaxed">
+                <p className="text-[11px] font-medium text-text italic h-8 leading-relaxed">
                   {p.preview.split("").map((char, index) => (
                     <motion.span
                       key={index}
@@ -710,10 +704,10 @@ export const LandingPage = () => {
                     </motion.span>
                   ))}
                 </p>
-                <div className="absolute -bottom-1.5 left-8 w-3 h-3 bg-white border-b border-r border-slate-200 transform rotate-45" />
+                <div className="absolute -bottom-1.5 left-8 w-3 h-3 bg-surface border-b border-r border-border transform rotate-45" />
               </motion.div>
 
-              <div className="text-3xl">{p.emoji}</div>
+              <div className="text-3xl"><p.Icon className="w-8 h-8" /></div>
               <div>
                 <h3 className="font-display font-bold text-text text-base">{p.name}</h3>
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${p.badge} tracking-wide`}>
@@ -727,9 +721,7 @@ export const LandingPage = () => {
       </section>
 
       {/* ── TESTIMONIALS ────────────────────────────────────── */}
-      <section className={`transition-colors duration-500 ${
-        isDark ? 'bg-surface' : 'bg-white'
-      }`}>
+      <section className="bg-surface transition-colors duration-500">
         <div className="max-w-6xl mx-auto px-6 py-24">
           <motion.div
             initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
@@ -798,7 +790,7 @@ export const LandingPage = () => {
           {/* Free Plan */}
           <motion.div
             variants={fadeUp}
-             className="bg-surface rounded-2xl border border-border p-8 md:p-10 flex flex-col gap-8 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200"
+             className="bg-surface rounded-2xl border border-border p-8 md:p-10 flex flex-col gap-8 shadow-sm hover:shadow-sm hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200"
           >
             <div>
               <h3 className="text-xl font-display font-bold text-text mb-2">Free</h3>
@@ -829,7 +821,7 @@ export const LandingPage = () => {
           {/* Pro Plan */}
           <motion.div
             variants={fadeUp}
-             className="relative bg-surface rounded-2xl border border-primary/30 p-8 md:p-10 flex flex-col gap-8 shadow-lg shadow-primary/10 hover:shadow-xl hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 group overflow-hidden"
+             className="relative bg-surface rounded-2xl border border-primary/30 p-8 md:p-10 flex flex-col gap-8 shadow-sm hover:shadow-sm hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 group overflow-hidden"
           >
             {/* Glow effect */}
             <div className="absolute inset-x-0 top-0 h-32 bg-primary/5 pointer-events-none" />
@@ -859,7 +851,7 @@ export const LandingPage = () => {
                 </div>
               ))}
             </div>
-            <Link to="/login" className="btn-primary w-full py-3.5 text-center font-bold text-sm relative z-10 shadow-lg shadow-primary/25">
+            <Link to="/login" className="bg-text text-surface w-full py-3.5 text-center font-bold text-sm relative z-10 rounded-xl">
               upgrade to pro
             </Link>
           </motion.div>
@@ -867,7 +859,7 @@ export const LandingPage = () => {
       </section>
 
       {/* ── FAQ ─────────────────────────────────────────────── */}
-      <section id="faq" className={`transition-colors duration-500 ${isDark ? 'bg-surface' : 'bg-slate-50/50'}`}>
+      <section id="faq" className="bg-surface transition-colors duration-500">
         <div className="max-w-3xl mx-auto px-6 py-24">
           <motion.div
             initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
@@ -888,7 +880,7 @@ export const LandingPage = () => {
           className="flex flex-col items-center gap-6 max-w-2xl mx-auto"
         >
           <motion.div variants={fadeUp}>
-            <img src="/logo.png" alt="ContractChill Logo" className="w-16 h-16 rounded-2xl shadow-lg shadow-primary/10" />
+            <img src="/logo.png" alt="ContractChill Logo" className="w-16 h-16 rounded-2xl shadow-sm" />
           </motion.div>
             <motion.h2 variants={fadeUp} className="text-3xl md:text-5xl font-display font-semibold tracking-[-0.06em] text-text leading-tight [text-wrap:balance]">
             Stop signing contracts<br />you don't understand.
@@ -897,7 +889,7 @@ export const LandingPage = () => {
             Join thousands of freelancers and founders who review contracts confidently with ContractChill.
           </motion.p>
           <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3">
-            <Link to="/login" className="btn-primary flex items-center gap-2 group px-8 py-3">
+            <Link to="/login" className="bg-text text-surface flex items-center gap-2 group px-8 py-3 rounded-xl font-semibold">
               Start for free
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
@@ -909,9 +901,7 @@ export const LandingPage = () => {
       </section>
 
       {/* ── FOOTER ──────────────────────────────────────────── */}
-      <footer className={`transition-colors duration-500 ${
-        isDark ? 'bg-surface' : 'bg-white'
-      }`}>
+      <footer className="bg-surface transition-colors duration-500">
         <div className="max-w-6xl mx-auto px-6 py-14">
           <div className="flex flex-col md:flex-row justify-between gap-10 mb-12">
             {/* Brand */}
@@ -979,11 +969,7 @@ export const LandingPage = () => {
             whileTap={{ scale: 0.95 }}
             onClick={scrollToTop}
              aria-label="Back to top"
-             className={`fixed bottom-8 right-8 z-50 size-11 flex items-center justify-center rounded-full shadow-lg transition-[background-color,transform] active:scale-[0.96] ${
-              isDark 
-                ? 'bg-surface/80 border border-white/10 text-white hover:bg-white/10' 
-                : 'bg-white/80 border border-slate-200 text-slate-700 hover:bg-slate-50'
-            }`}
+             className="fixed bottom-8 right-8 z-50 size-11 flex items-center justify-center rounded-full bg-surface border border-border text-text hover:bg-surface-2 shadow-sm transition-[background-color,transform] active:scale-[0.96]"
             title="Back to top"
           >
             <ArrowUp className="w-5 h-5" />

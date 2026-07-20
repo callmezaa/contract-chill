@@ -2,7 +2,7 @@ import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/fire
 import { db } from '../lib/firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { useState, useEffect } from 'react';
-import { FileText, Calendar, ChevronRight, Search, AlertTriangle, CheckCircle2, Trash2 } from 'lucide-react';
+import { FileText, Calendar, ChevronRight, Search, AlertTriangle, CheckCircle2, Trash2, Coffee, Scale, Briefcase, Shield, type LucideIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -217,10 +217,13 @@ export const History = () => {
                     const highRiskCount = item.result?.redFlags?.filter((rf: any) => rf.risk === 'High').length ?? 0;
                     const hasHighRisk = highRiskCount > 0;
                     
-                    const personaIcon =
-                      item.persona === 'Chill Friend' ? '☕' :
-                      item.persona === 'Angry Lawyer' ? '⚖️' :
-                      item.persona === 'Corporate Mentor' ? '💼' : '🛡️';
+                    const personaIconMap: Record<string, LucideIcon> = {
+                      'Chill Friend': Coffee,
+                      'Angry Lawyer': Scale,
+                      'Corporate Mentor': Briefcase,
+                      'Freelancer Senior': Shield,
+                    };
+                    const PersonaIcon = personaIconMap[item.persona] || Shield;
 
                     return (
                       <Link
@@ -244,7 +247,7 @@ export const History = () => {
                                 {item.createdAt?.toDate ? item.createdAt.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Just now'}
                               </div>
                               <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-surface border border-border text-text-subtle lowercase shrink-0">
-                                {personaIcon} {item.persona}
+                                <PersonaIcon className="w-3 h-3 inline-block mr-0.5" /> {item.persona}
                               </span>
                               {hasHighRisk ? (
                                 <span className="flex items-center gap-1 text-[10px] font-bold text-red-500 bg-red-500/10 px-2.5 py-0.5 rounded-full shrink-0">

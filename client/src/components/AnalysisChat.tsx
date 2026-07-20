@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Loader2, ShieldCheck, X, MessageSquare } from 'lucide-react';
+import { Send, Loader2, ShieldCheck, X, MessageSquare, Mail, Shield, Scale, type LucideIcon } from 'lucide-react';
 import { api } from '../services/api';
 import { useTheme } from '../context/ThemeContext';
 
@@ -75,24 +75,24 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
     }
   };
 
-  const suggestedChips = [
+  const suggestedChips: { Icon: LucideIcon; label: string; prompt: string }[] = [
     { 
-      emoji: '✉️', 
+      Icon: Mail,
       label: 'Tulis email penolakan', 
       prompt: `Tuliskan draft email penolakan berisiko tinggi yang profesional dan persuasif dengan gaya bicara khas ${persona}.` 
     },
     { 
-      emoji: '🛡️', 
+      Icon: Shield,
       label: 'Cara revisi klausul', 
       prompt: `Bagaimana cara merevisi klausul paling berisiko dalam kontrak ini agar lebih adil menurut pandangan ${persona}?` 
     },
     { 
-      emoji: '💬', 
+      Icon: MessageSquare,
       label: 'Sederhanakan bahasa', 
       prompt: `Minta ${persona} untuk menerjemahkan bahasa hukum (legalese) yang rumit dalam kontrak ini menjadi penjelasan santai yang mudah dimengerti.` 
     },
     { 
-      emoji: '⚖️', 
+      Icon: Scale,
       label: 'Cari risiko terlewat', 
       prompt: `Menurut pandangan tajam ${persona}, apakah ada jebakan hukum tersembunyi atau hak penting saya yang terlewatkan di dokumen ini?` 
     }
@@ -232,7 +232,7 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
                       : 'bg-white border-slate-200 text-slate-600 hover:text-primary hover:border-primary/30 hover:bg-primary/5'
                   }`}
                 >
-                  <span className="text-[11px]">{chip.emoji}</span>
+                  <chip.Icon className="w-3 h-3" />
                   {chip.label}
                 </button>
               ))}

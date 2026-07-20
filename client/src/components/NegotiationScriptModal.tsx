@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Copy, Check, MessageSquare, Send, MessageCircle, Mail } from 'lucide-react';
+import { X, Copy, Check, MessageSquare, Send, MessageCircle, Mail, Shield, Zap, type LucideIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { Loader2, Sparkles, RefreshCw } from 'lucide-react';
@@ -137,15 +137,16 @@ export const NegotiationScriptModal = ({ isOpen, onClose, script, clause, explan
                   <label className="text-[9px] font-bold text-text-subtle tracking-wider ml-1">Negotiation Style</label>
                   <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-surface-2 border border-border">
                     {[
-                      { id: 'Friendly', label: 'Friendly', icon: '💬' },
-                      { id: 'Assertive', label: 'Assertive', icon: '🛡️' },
-                      { id: 'Tough', label: 'Tough', icon: '⚡' }
+                      { id: 'Friendly' as const, label: 'Friendly', Icon: MessageCircle },
+                      { id: 'Assertive' as const, label: 'Assertive', Icon: Shield },
+                      { id: 'Tough' as const, label: 'Tough', Icon: Zap }
                     ].map((toneOpt) => {
                       const isActive = selectedTone === toneOpt.id;
+                      const ToneIcon = toneOpt.Icon;
                       return (
                         <button
                           key={toneOpt.id}
-                          onClick={() => !isGenerating && handleGenerate(toneOpt.id as any)}
+                          onClick={() => !isGenerating && handleGenerate(toneOpt.id)}
                           disabled={isGenerating}
                           className={`flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-[10px] font-bold transition-all cursor-pointer ${
                             isActive
@@ -153,7 +154,7 @@ export const NegotiationScriptModal = ({ isOpen, onClose, script, clause, explan
                               : 'text-text-subtle hover:text-text hover:bg-background/40 border border-transparent'
                           }`}
                         >
-                          <span>{toneOpt.icon}</span>
+                          <ToneIcon className="w-3.5 h-3.5" />
                           <span>{toneOpt.label}</span>
                         </button>
                       );

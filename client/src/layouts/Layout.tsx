@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, FilePenLine, History, Settings, LogOut, Sun, Moon, Menu, X } from 'lucide-react';
 import { Tooltip } from '@/components/motion/tooltip';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -25,7 +25,6 @@ export const Layout = () => {
   const { toggleTheme } = useTheme();
   const resolvedTheme = useResolvedTheme();
   const navigate = useNavigate();
-  const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
@@ -148,18 +147,7 @@ export const Layout = () => {
       {/* Main Content */}
       <main className="flex-1 min-w-0 w-0 flex flex-col md:ml-0">
         <div className="flex-1 w-full p-4 sm:p-6 md:p-10 pt-20 md:pt-10 overflow-y-auto overflow-x-hidden bg-background">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={location.pathname}
-              initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, y: -10, filter: 'blur(4px)' }}
-              transition={{ duration: 0.2, ease: 'easeInOut' }}
-              className="h-full w-full min-w-0"
-            >
-              <Outlet />
-            </motion.div>
-          </AnimatePresence>
+          <Outlet />
         </div>
       </main>
     </div>

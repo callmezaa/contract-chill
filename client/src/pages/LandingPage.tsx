@@ -8,7 +8,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { MiniDemo } from '../components/MiniDemo';
-import { MagneticButton } from '../components/MagneticButton';
+import { MagneticButton } from '@/components/motion/button';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { Button } from '@/components/motion/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
@@ -84,7 +84,7 @@ export const LandingPage = () => {
   }, [docTypes.length]);
 
   return (
-    <div className="min-h-screen bg-white flex flex-col font-sans overflow-hidden text-[#1d1d1f]">
+    <div className="min-h-screen bg-white flex flex-col font-sans overflow-hidden text-text">
 
       {/* ── NAV ─────────────────────────────────────────────── */}
       <nav className="sticky top-0 z-50 border-b border-black/10 bg-white/85 backdrop-blur-xl">
@@ -106,7 +106,7 @@ export const LandingPage = () => {
               <a
                 key={link.label}
                 href={link.href}
-              className="relative px-4 py-2 text-sm font-medium text-[#6e6e73] transition-colors group hover:text-[#1d1d1f]"
+              className="relative px-4 py-2 text-sm font-medium text-text-muted transition-colors group hover:text-text"
               >
                 {link.label}
                 <span className="absolute bottom-0 left-4 right-4 h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-full" />
@@ -123,10 +123,8 @@ export const LandingPage = () => {
             </Link>
             <div className="hidden sm:block w-[1px] h-5 bg-border" />
             <div className="hidden md:block">
-              <MagneticButton strength={0.15}>
-                <Button size="sm" onClick={() => navigate('/login')}>
-                  Get started <ArrowRight />
-                </Button>
+              <MagneticButton strength={0.15} size="sm" onClick={() => navigate('/login')}>
+                Get started <ArrowRight />
               </MagneticButton>
             </div>
 
@@ -268,17 +266,13 @@ export const LandingPage = () => {
               variants={fadeUp}
               className="flex flex-col sm:flex-row items-center gap-3 mt-5"
             >
-              <MagneticButton strength={0.25}>
-                <Button size="lg" onClick={() => navigate('/login')}>
-                  Start with a contract <ArrowRight />
-                </Button>
+              <MagneticButton strength={0.25} size="lg" onClick={() => navigate('/login')}>
+                Start with a contract <ArrowRight />
               </MagneticButton>
-              <MagneticButton strength={0.15}>
-                <Button variant="outline" size="lg" onClick={() => {
-                  document.querySelector('#how-it-works')?.scrollIntoView({ behavior: 'smooth' });
-                }}>
-                  See how it works
-                </Button>
+              <MagneticButton strength={0.15} variant="outline" size="lg" onClick={() => {
+                document.querySelector('#how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+              }}>
+                See how it works
               </MagneticButton>
             </motion.div>
 
@@ -331,11 +325,11 @@ export const LandingPage = () => {
                   <div className="absolute top-[40%] left-[60%] z-10 cursor-pointer">
                     <div className="relative flex items-center justify-center">
                       <div className="absolute w-5 h-5 bg-primary/40 rounded-full animate-ping" />
-                      <div className="relative w-2.5 h-2.5 bg-primary rounded-full shadow-[0_0_8px_rgba(37,99,235,0.8)]" />
+                      <div className="relative w-2.5 h-2.5 bg-primary rounded-full" />
                       {/* Tooltip */}
-                      <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1.5 px-3 rounded-lg opacity-0 group-hover/pdf:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg z-20">
+                      <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-surface text-text text-[10px] py-1.5 px-3 rounded-lg opacity-0 group-hover/pdf:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg border border-border z-20">
                         Upload any contract format
-                        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45" />
+                        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-surface rotate-45 border-l border-t border-border" />
                       </div>
                     </div>
                   </div>
@@ -354,11 +348,11 @@ export const LandingPage = () => {
                     <div className="absolute -top-1.5 -left-1.5 z-10 cursor-pointer">
                       <div className="relative flex items-center justify-center">
                         <div className="absolute w-4 h-4 bg-primary/40 rounded-full animate-ping" />
-                        <div className="relative w-2 h-2 bg-primary rounded-full shadow-[0_0_8px_rgba(37,99,235,0.8)]" />
+                        <div className="relative w-2 h-2 bg-primary rounded-full" />
                         {/* Tooltip */}
-                        <div className="absolute top-5 -left-2 bg-slate-800 text-white text-[10px] py-1.5 px-3 rounded-lg opacity-0 group-hover/alert:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg z-20">
+                        <div className="absolute top-5 -left-2 bg-surface text-text text-[10px] py-1.5 px-3 rounded-lg opacity-0 group-hover/alert:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg border border-border z-20">
                           AI instantly flags hidden risks
-                          <div className="absolute -top-1 left-3 w-2 h-2 bg-slate-800 rotate-45" />
+                          <div className="absolute -top-1 left-3 w-2 h-2 bg-surface rotate-45 border-l border-t border-border" />
                         </div>
                       </div>
                     </div>
@@ -387,11 +381,11 @@ export const LandingPage = () => {
                     <div className="absolute top-1/2 -right-1.5 -translate-y-1/2 z-10 cursor-pointer">
                       <div className="relative flex items-center justify-center">
                         <div className="absolute w-4 h-4 bg-primary/40 rounded-full animate-ping" />
-                        <div className="relative w-2 h-2 bg-primary rounded-full shadow-[0_0_8px_rgba(37,99,235,0.8)]" />
+                        <div className="relative w-2 h-2 bg-primary rounded-full" />
                         {/* Tooltip */}
-                        <div className="absolute top-1/2 right-6 -translate-y-1/2 bg-slate-800 text-white text-[10px] py-1.5 px-3 rounded-lg opacity-0 group-hover/tips:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg z-20">
+                        <div className="absolute top-1/2 right-6 -translate-y-1/2 bg-surface text-text text-[10px] py-1.5 px-3 rounded-lg opacity-0 group-hover/tips:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg border border-border z-20">
                           Get actionable negotiation advice
-                          <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 bg-slate-800 rotate-45" />
+                          <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 bg-surface rotate-45 border-l border-t border-border" />
                         </div>
                       </div>
                     </div>
@@ -594,7 +588,7 @@ export const LandingPage = () => {
               className="md:col-span-2 lg:col-span-2 bg-surface rounded-2xl border border-border p-8 hover:shadow-lg hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 group overflow-hidden relative flex flex-col md:flex-row gap-8 items-center"
             >
               <div className="flex-1 z-10 flex flex-col">
-                <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
                   <FileText className="text-primary w-6 h-6" />
                 </div>
                 <h3 className="text-xl font-display font-bold text-text mb-3">Side-by-side analysis</h3>

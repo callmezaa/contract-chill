@@ -11,7 +11,6 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { Layout } from './layouts/Layout';
 import { AuthProvider } from './contexts/AuthContext';
 import { Toaster } from 'sonner';
-import { GlassyBackground } from './components/GlassyBackground';
 import { LegalPage } from './pages/LegalPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { AnimatedRoutes } from './components/AnimatedRoutes';
@@ -86,7 +85,6 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <Toaster position="top-center" richColors />
-          <GlassyBackground />
           <Router>
               <AnimatedRoutes />
               <CommandPaletteWithNav />

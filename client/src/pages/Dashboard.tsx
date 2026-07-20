@@ -8,11 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import { analyzeContract } from '../services/api';
 import type { Persona } from '../types/analysis';
 import { db } from '../lib/firebase';
-import { collection, addDoc, serverTimestamp, query, where, getDocs, doc, getDoc, setDoc } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { toast } from 'sonner';
-import { OnboardingTour } from '../components/OnboardingTour';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { Button } from '@/components/motion/button';
 import { NumberTicker } from '@/components/motion/number-ticker';
@@ -36,33 +35,7 @@ export const Dashboard = () => {
   const [selectedPersona, setSelectedPersona] = useState<Persona>('Chill Friend');
   const [hoveredPersona, setHoveredPersona] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [showTour, setShowTour] = useState(false);
   useDocumentTitle('Dashboard - ContractChill');
-
-  useEffect(() => {
-    const checkTour = async () => {
-      if (!user) return;
-      const docRef = doc(db, 'users', user.uid);
-      const docSnap = await getDoc(docRef);
-      if (!docSnap.exists() || !docSnap.data().onboardingCompleted) {
-        const timer = setTimeout(() => setShowTour(true), 1000);
-        return () => clearTimeout(timer);
-      }
-    };
-    checkTour();
-  }, [user]);
-
-  const completeTour = async () => {
-    setShowTour(false);
-    if (user) {
-      try {
-        await setDoc(doc(db, 'users', user.uid), { onboardingCompleted: true }, { merge: true });
-        toast.success("You're all set!", { description: "You've completed the tour. Let's analyze some contracts!" });
-      } catch (err) {
-        console.error('Error saving tour status:', err);
-      }
-    }
-  };
 
   const { data: history } = useQuery({
     queryKey: ['history-stats', user?.uid],
@@ -277,7 +250,7 @@ export const Dashboard = () => {
             /* Loading state */
             <div className="flex flex-col items-center gap-5 relative z-10 py-12">
               <div className="relative">
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${isDark ? 'bg-blue-500/10' : 'bg-blue-50'}`}>
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-primary/10">
                   <Loader2 className="w-8 h-8 text-primary animate-spin" />
                 </div>
                 <motion.div
@@ -306,7 +279,7 @@ export const Dashboard = () => {
                   initial={{ width: 0 }}
                   animate={{ width: '90%' }}
                   transition={{ duration: 15, ease: 'linear' }}
-                  className="h-full bg-primary rounded-full shadow-[0_0_8px_rgba(59,130,246,0.5)]"
+                  className="h-full bg-primary rounded-full"
                 />
               </div>
             </div>
@@ -492,8 +465,6 @@ export const Dashboard = () => {
           </div>
         </div>
       </div>
-
-      {showTour && <OnboardingTour onComplete={completeTour} />}
 
       {/* ── Recent Activity ──────────────────────────────── */}
       {history && history.length > 0 && (

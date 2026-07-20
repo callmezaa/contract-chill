@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { AnimatedCounter } from './AnimatedCounter';
+import { NumberTicker } from '@/components/motion/number-ticker';
 
 interface RiskScoreMeterProps {
   score: number;
@@ -86,7 +86,7 @@ export const RiskScoreMeter = ({ score }: RiskScoreMeterProps) => {
           animate={{ opacity: 1, y: 0 }}
            className="text-4xl font-mono font-semibold tracking-[-0.06em] text-text"
         >
-          <AnimatedCounter value={score} duration={2} />%
+          <NumberTicker value={score} duration={2} />%
         </motion.span>
         <div className="flex flex-col items-center gap-1 mt-1">
            <p className="text-[10px] font-medium text-text-subtle tracking-[0.12em] uppercase">Overall risk score</p>

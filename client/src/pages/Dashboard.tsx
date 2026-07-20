@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Upload, Clock, AlertTriangle, CheckCircle2, Loader2, FileText, ShieldCheck, ChevronRight
+  Upload, Clock, AlertTriangle, CheckCircle2, Loader2, FileText, ShieldCheck, ChevronRight,
+  Coffee, Scale, Briefcase, Shield, Zap, MessageCircle, type LucideIcon,
 } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -10,7 +11,6 @@ import type { Persona } from '../types/analysis';
 import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 import { toast } from 'sonner';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { Button } from '@/components/motion/button';
@@ -18,19 +18,24 @@ import { NumberTicker } from '@/components/motion/number-ticker';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
+const personaIconMap: Record<string, LucideIcon> = {
+  'Chill Friend': Coffee,
+  'Angry Lawyer': Scale,
+  'Corporate Mentor': Briefcase,
+  'Freelancer Senior': Shield,
+};
+
 const personas = [
-  { id: 'Chill Friend',      icon: '☕', desc: 'Casual & direct',    preview: '"Hey, clause 4 is a red flag. I\'d push back on this before signing."'       },
-  { id: 'Angry Lawyer',      icon: '⚖️', desc: 'Strict & protective', preview: '"DO NOT SIGN THIS. They are trying to strip your IP rights completely!"'        },
-  { id: 'Corporate Mentor',  icon: '💼', desc: 'Strategic & formal',  preview: '"From a strategic standpoint, clause 7 presents unacceptable liability exposure."' },
-  { id: 'Freelancer Senior', icon: '🛡️', desc: 'Payment focused',    preview: '"Watch out — no late payment penalty clause. That\'s how clients ghost you."'    },
+  { id: 'Chill Friend',      desc: 'Casual & direct',    preview: '"Hey, clause 4 is a red flag. I\'d push back on this before signing."'       },
+  { id: 'Angry Lawyer',      desc: 'Strict & protective', preview: '"DO NOT SIGN THIS. They are trying to strip your IP rights completely!"'        },
+  { id: 'Corporate Mentor',  desc: 'Strategic & formal',  preview: '"From a strategic standpoint, clause 7 presents unacceptable liability exposure."' },
+  { id: 'Freelancer Senior', desc: 'Payment focused',    preview: '"Watch out — no late payment penalty clause. That\'s how clients ghost you."'    },
 ];
 
 export const Dashboard = () => {
   const { user } = useAuth();
-  const { theme } = useTheme();
   const navigate = useNavigate();
 
-  const isDark = theme === 'dark';
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedPersona, setSelectedPersona] = useState<Persona>('Chill Friend');
   const [hoveredPersona, setHoveredPersona] = useState<string | null>(null);
@@ -211,13 +216,7 @@ export const Dashboard = () => {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
-          className={`relative border border-dashed rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer transition-[background-color,border-color,box-shadow] duration-200 min-h-[360px] ${
-            isDragging
-              ? 'border-primary bg-primary/5 shadow-2xl shadow-primary/10'
-                : isDark
-                 ? 'border-white/10 bg-surface hover:border-primary/30 hover:bg-surface-2/30'
-                 : 'border-border bg-surface hover:border-primary/30 hover:bg-surface-2/60 shadow-sm'
-          }`}
+          className="relative border border-dashed rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer transition-[background-color,border-color,box-shadow] duration-200 min-h-[360px] border-border bg-surface hover:border-primary/30 hover:bg-surface-2/30"
           onClick={() => fileInputRef.current?.click()}
           onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
           onDragLeave={() => setIsDragging(false)}
@@ -290,9 +289,7 @@ export const Dashboard = () => {
               <motion.div
                 animate={isDragging ? { scale: 1.15, y: -4 } : { y: [0, -6, 0] }}
                 transition={isDragging ? {} : { duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-                className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-colors duration-300 ${
-                  isDragging ? 'bg-primary text-white' : isDark ? 'bg-primary/10 text-primary' : 'bg-primary/10 text-primary'
-                }`}
+                className="w-16 h-16 rounded-2xl flex items-center justify-center transition-colors duration-300 bg-primary/10 text-primary"
               >
                 <Upload className="w-8 h-8" />
               </motion.div>
@@ -323,27 +320,23 @@ export const Dashboard = () => {
                 >
                   {/* Divider */}
                   <div className="flex items-center gap-3 w-full">
-                    <div className={`h-px flex-1 ${isDark ? 'bg-white/10' : 'bg-slate-200'}`} />
+                    <div className="h-px flex-1 bg-border" />
                     <span className="text-[10px] text-text-subtle font-bold tracking-widest">your first contract awaits</span>
-                    <div className={`h-px flex-1 ${isDark ? 'bg-white/10' : 'bg-slate-200'}`} />
+                    <div className="h-px flex-1 bg-border" />
                   </div>
 
                   {/* Benefit pills */}
                   <div className="flex flex-wrap justify-center gap-2">
-                    {[
-                      { icon: '⚡', text: 'results in seconds' },
-                      { icon: '🛡️', text: 'flags hidden risks' },
-                      { icon: '💬', text: 'plain-english summary' },
-                    ].map((b) => (
+                    {([
+                      { Icon: Zap, text: 'results in seconds' },
+                      { Icon: Shield, text: 'flags hidden risks' },
+                      { Icon: MessageCircle, text: 'plain-english summary' },
+                    ] as { Icon: LucideIcon; text: string }[]).map((b) => (
                       <span
                         key={b.text}
-                        className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium border ${
-                          isDark
-                            ? 'bg-white/5 border-white/10 text-text-muted'
-                            : 'bg-slate-50 border-slate-200 text-slate-500'
-                        }`}
+                        className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium border bg-surface border-border text-text-muted"
                       >
-                        <span>{b.icon}</span>
+                        <b.Icon className="w-3 h-3" />
                         {b.text}
                       </span>
                     ))}
@@ -382,9 +375,7 @@ export const Dashboard = () => {
             initial={{ opacity: 0, x: 12 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
-                   className={`rounded-2xl border p-4 flex flex-col gap-3 ${
-               isDark ? 'bg-surface border-white/10' : 'bg-surface border-border shadow-sm'
-            }`}
+                   className="rounded-2xl border p-4 flex flex-col gap-3 bg-surface border-border shadow-sm"
           >
             <div>
               <p className="text-xs font-bold text-text-subtle tracking-wide">AI advisor persona</p>
@@ -401,13 +392,7 @@ export const Dashboard = () => {
                     onHoverStart={() => setHoveredPersona(persona.id)}
                     onHoverEnd={() => setHoveredPersona(null)}
                     onClick={() => setSelectedPersona(persona.id as Persona)}
-                   className={`relative flex flex-col items-start gap-1 p-3 rounded-xl border text-left transition-[background-color,border-color,box-shadow,transform] duration-150 ${
-                      isActive
-                        ? 'border-primary/40 bg-primary/5 shadow-sm shadow-primary/10'
-                        : isDark
-                          ? 'border-white/5 bg-white/3 hover:border-primary/20 hover:bg-primary/5'
-                          : 'border-slate-200 bg-slate-50 hover:border-primary/20 hover:bg-primary/3'
-                    }`}
+                   className="relative flex flex-col items-start gap-1 p-3 rounded-xl border text-left transition-[background-color,border-color,box-shadow,transform] duration-150 border-border bg-surface hover:border-primary/20 hover:bg-primary/3"
                   >
                     {isActive && (
                       <motion.div
@@ -440,10 +425,11 @@ export const Dashboard = () => {
                     transition={{ duration: 0.2, ease: 'easeOut' }}
                     className="overflow-hidden"
                   >
-                    <div className={`flex gap-2.5 p-3 rounded-xl border ${
-                      isDark ? 'bg-primary/5 border-primary/10' : 'bg-primary/3 border-primary/10'
-                    }`}>
-                      <span className="text-base shrink-0 mt-0.5">{p.icon}</span>
+                    <div className="flex gap-2.5 p-3 rounded-xl border bg-primary/3 border-primary/10">
+                      {(() => {
+                        const Icon = personaIconMap[p.id];
+                        return Icon ? <Icon className="w-4 h-4 shrink-0 mt-0.5" /> : null;
+                      })()}
                       <p className="text-[11px] text-text-muted leading-relaxed font-medium italic">
                         {p.preview}
                       </p>
@@ -457,9 +443,7 @@ export const Dashboard = () => {
           {/* Legal disclaimer */}
 
           {/* Legal disclaimer */}
-          <div className={`flex items-start gap-2 px-3 py-2.5 rounded-xl border text-[10px] text-text-subtle font-medium leading-relaxed ${
-            isDark ? 'bg-surface border-white/5' : 'bg-slate-50 border-slate-200'
-          }`}>
+          <div className="flex items-start gap-2 px-3 py-2.5 rounded-xl border text-[10px] text-text-subtle font-medium leading-relaxed bg-surface border-border">
             <ShieldCheck className="w-3.5 h-3.5 text-primary/50 shrink-0 mt-0.5" />
             <span>AI analysis is for informational purposes only and does not constitute professional legal advice.</span>
           </div>
@@ -502,10 +486,7 @@ export const Dashboard = () => {
               .map((item: any, i: number) => {
                 const hasHighRisk = item.result?.redFlags?.some((rf: any) => rf.risk === 'High');
                 const highRiskCount = item.result?.redFlags?.filter((rf: any) => rf.risk === 'High').length ?? 0;
-                const personaIcon =
-                  item.persona === 'Chill Friend' ? '☕' :
-                  item.persona === 'Angry Lawyer' ? '⚖️' :
-                  item.persona === 'Corporate Mentor' ? '💼' : '🛡️';
+                const PersonaIcon = personaIconMap[item.persona] || Shield;
                 const date = item.createdAt?.seconds
                   ? new Date(item.createdAt.seconds * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
                   : 'just now';
@@ -519,11 +500,7 @@ export const Dashboard = () => {
                     whileHover={{ y: -1 }}
                     whileTap={{ scale: 0.99 }}
                     onClick={() => navigate(`/analyze/${item.id}`, { state: { result: item.result, persona: item.persona, fileUrl: item.fileUrl } })}
-                    className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl border text-left transition-all duration-200 group ${
-                      isDark
-                        ? 'bg-surface border-white/5 hover:border-white/10 hover:bg-surface-2/50'
-                        : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-md shadow-sm'
-                    }`}
+                    className="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl border text-left transition-all duration-200 group bg-surface border-border hover:border-border"
                   >
                     {/* File icon */}
                     <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
@@ -538,9 +515,9 @@ export const Dashboard = () => {
                         {item.fileName || 'Unnamed contract'}
                       </p>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-[10px] text-text-subtle font-medium">
-                          {personaIcon} {item.persona}
-                        </span>
+                          <span className="text-[10px] text-text-subtle font-medium inline-flex items-center gap-1">
+                            <PersonaIcon className="w-3 h-3" /> {item.persona}
+                          </span>
                         <span className="text-[10px] text-text-subtle/50">·</span>
                         <span className="text-[10px] text-text-subtle font-medium">{date}</span>
                       </div>

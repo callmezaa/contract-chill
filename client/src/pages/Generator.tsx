@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
 import { Wand2, Loader2, Copy, Download, CheckCircle2, PenTool } from 'lucide-react';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -13,8 +12,6 @@ import remarkBreaks from 'remark-breaks';
 
 export const Generator = () => {
   useDocumentTitle('Contract Generator - ContractChill');
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
   const { user } = useAuth();
   
   const [isGenerating, setIsGenerating] = useState(false);
@@ -191,9 +188,7 @@ export const Generator = () => {
         <motion.div 
           initial={{ opacity: 0, x: -12 }} 
           animate={{ opacity: 1, x: 0 }}
-             className={`lg:col-span-5 p-5 rounded-2xl border flex flex-col gap-5 ${
-             isDark ? 'bg-surface border-white/10' : 'bg-surface border-border shadow-sm'
-          }`}
+             className="lg:col-span-5 p-5 rounded-2xl border flex flex-col gap-5 bg-surface border-border"
         >
           <div className="flex items-center justify-between border-b border-border pb-4">
             <div className="flex items-center gap-3">
@@ -226,9 +221,7 @@ export const Generator = () => {
                 title="Select contract type"
                 value={formData.contractType}
                 onChange={(e) => setFormData({...formData, contractType: e.target.value})}
-                className={`p-2.5 rounded-xl border text-sm outline-none transition-colors ${
-                  isDark ? 'bg-surface-2 border-white/10 focus:border-primary' : 'bg-slate-50 border-slate-200 focus:border-primary'
-                }`}
+                className="p-2.5 rounded-xl border text-sm outline-none transition-colors bg-surface-2 border-border focus:border-primary"
               >
                 {contractTypes.map(type => (
                   <option key={type} value={type}>{type}</option>
@@ -246,9 +239,7 @@ export const Generator = () => {
                 placeholder="e.g. Acme Corp"
                 value={formData.clientName}
                 onChange={(e) => setFormData({...formData, clientName: e.target.value})}
-                className={`p-2.5 rounded-xl border text-sm outline-none transition-colors ${
-                  isDark ? 'bg-surface-2 border-white/10 focus:border-primary' : 'bg-slate-50 border-slate-200 focus:border-primary'
-                }`}
+                className="p-2.5 rounded-xl border text-sm outline-none transition-colors bg-surface-2 border-border focus:border-primary"
               />
             </div>
 
@@ -262,9 +253,7 @@ export const Generator = () => {
                 placeholder="e.g. John Doe"
                 value={formData.myName}
                 onChange={(e) => setFormData({...formData, myName: e.target.value})}
-                className={`p-2.5 rounded-xl border text-sm outline-none transition-colors ${
-                  isDark ? 'bg-surface-2 border-white/10 focus:border-primary' : 'bg-slate-50 border-slate-200 focus:border-primary'
-                }`}
+                className="p-2.5 rounded-xl border text-sm outline-none transition-colors bg-surface-2 border-border focus:border-primary"
               />
             </div>
 
@@ -278,9 +267,7 @@ export const Generator = () => {
                 placeholder="e.g. $5,000 USD or Rp 50.000.000"
                 value={formData.projectValue}
                 onChange={(e) => setFormData({...formData, projectValue: e.target.value})}
-                className={`p-2.5 rounded-xl border text-sm outline-none transition-colors ${
-                  isDark ? 'bg-surface-2 border-white/10 focus:border-primary' : 'bg-slate-50 border-slate-200 focus:border-primary'
-                }`}
+                className="p-2.5 rounded-xl border text-sm outline-none transition-colors bg-surface-2 border-border focus:border-primary"
               />
             </div>
 
@@ -293,9 +280,7 @@ export const Generator = () => {
                 placeholder="e.g. 50% upfront payment, max 2 revisions..."
                 value={formData.specialConditions}
                 onChange={(e) => setFormData({...formData, specialConditions: e.target.value})}
-                className={`p-2.5 rounded-xl border text-sm outline-none transition-colors resize-none ${
-                  isDark ? 'bg-surface-2 border-white/10 focus:border-primary' : 'bg-slate-50 border-slate-200 focus:border-primary'
-                }`}
+                className="p-2.5 rounded-xl border text-sm outline-none transition-colors resize-none bg-surface-2 border-border focus:border-primary"
               />
             </div>
 
@@ -325,12 +310,10 @@ export const Generator = () => {
         <motion.div 
           initial={{ opacity: 0, x: 12 }} 
           animate={{ opacity: 1, x: 0 }}
-          className={`lg:col-span-7 flex flex-col rounded-3xl border overflow-hidden min-h-[600px] ${
-            isDark ? 'bg-surface border-white/5' : 'bg-white border-slate-200 shadow-sm'
-          }`}
+          className="lg:col-span-7 flex flex-col rounded-3xl border overflow-hidden min-h-[600px] bg-surface border-border"
         >
           {/* Toolbar */}
-          <div className={`p-4 border-b flex items-center justify-between ${isDark ? 'border-white/5 bg-surface-2/50' : 'border-slate-200 bg-slate-50'}`}>
+          <div className="p-4 border-b flex items-center justify-between border-border bg-surface">
             <h3 className="font-bold text-sm text-text">Preview</h3>
             <div className="flex items-center gap-2">
               <Button
@@ -366,17 +349,13 @@ export const Generator = () => {
                   className="absolute inset-0 p-6 flex flex-col gap-5 select-none pointer-events-none bg-grid-pattern overflow-hidden"
                 >
                   {/* Floating active action badge */}
-                  <div className={`flex items-center gap-2.5 py-2 px-4 rounded-full border shadow-md backdrop-blur-md w-fit mx-auto mt-2 animate-pulse ${
-                    isDark ? 'bg-surface/80 border-white/5' : 'bg-white/80 border-slate-200'
-                  }`}>
+                  <div                     className="flex items-center gap-2.5 py-2 px-4 rounded-full border shadow-md backdrop-blur-md w-fit mx-auto mt-2 animate-pulse bg-surface border-border">
                     <Loader2 className="w-4 h-4 text-primary animate-spin" />
                     <span className="text-[12px] font-bold text-text-muted">AI Drafting Iron-Clad Clauses...</span>
                   </div>
 
                   {/* Mock Legal Document Page */}
-                  <div className={`flex-1 rounded-2xl border p-6 sm:p-8 flex flex-col gap-6 shadow-sm overflow-hidden ${
-                    isDark ? 'bg-surface-2/40 border-white/5' : 'bg-slate-50/50 border-slate-100'
-                  }`}>
+                  <div className="flex-1 rounded-2xl border p-6 sm:p-8 flex flex-col gap-6 shadow-sm overflow-hidden bg-surface border-border">
                     {/* Header */}
                     <div className="flex flex-col gap-2.5 border-b pb-4">
                       <div className="w-2/5 h-3.5 rounded bg-text-subtle/20 animate-pulse" />
@@ -427,7 +406,7 @@ export const Generator = () => {
                   key="content"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="bg-white text-black p-8 rounded-lg shadow-sm border border-slate-200 min-h-full"
+                  className="bg-surface text-text p-8 rounded-lg shadow-sm border border-border min-h-full"
                 >
                   <div ref={resultRef} className="prose prose-sm max-w-none prose-headings:font-display prose-headings:font-bold">
                     <ReactMarkdown remarkPlugins={[remarkBreaks]}>{draft}</ReactMarkdown>
@@ -442,9 +421,7 @@ export const Generator = () => {
                 >
                   <div className="relative flex items-center justify-center">
                     <div className="absolute inset-0 w-20 h-20 bg-primary/10 rounded-full blur-xl animate-pulse" />
-                    <div className={`relative w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transition-transform hover:scale-105 duration-300 border ${
-                      isDark ? 'bg-surface-2 border-white/5' : 'bg-white border-slate-200'
-                    }`}>
+                    <div className="relative w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transition-transform hover:scale-105 duration-300 border bg-surface-2 border-border">
                       <Wand2 className="w-7 h-7 text-primary animate-bounce-slow" />
                     </div>
                   </div>

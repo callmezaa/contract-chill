@@ -149,29 +149,29 @@ export const Analyzer = () => {
           <title>${title}</title>
           <link rel="preconnect" href="https://fonts.googleapis.com">
           <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-          <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
           <style>
             @page { 
               margin: 2cm 1.8cm; 
             }
             body { 
-              font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+              font-family: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
               line-height: 1.6; 
-              color: #1E293B;
+              color: #1B1B18;
               max-width: 21cm;
               margin: 0 auto;
               font-size: 10pt;
-              background: #fff;
+              background: #FBFBFA;
               -webkit-print-color-adjust: exact;
               print-color-adjust: exact;
             }
             .top-bar {
               height: 4px;
-              background: linear-gradient(90deg, #4F46E5 0%, #06B6D4 100%);
+              background: #1B1B18;
               margin-bottom: 25px;
             }
             .header {
-              border-bottom: 1.5px solid #F1F5F9;
+              border-bottom: 1.5px solid #E5E5E2;
               padding-bottom: 18px;
               margin-bottom: 25px;
               display: flex;
@@ -186,19 +186,19 @@ export const Analyzer = () => {
             .logo-hexagon {
               width: 22px;
               height: 22px;
-              background: #4F46E5;
+              background: #1B1B18;
               clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
             }
             .logo-text {
               font-size: 15pt;
               font-weight: 800;
-              color: #1E1B4B;
+              color: #131312;
               letter-spacing: -0.5px;
             }
             .report-title {
               font-size: 8.5pt;
               font-weight: 700;
-              color: #64748B;
+              color: #6E6E6B;
               text-transform: uppercase;
               letter-spacing: 1.5px;
             }
@@ -206,10 +206,10 @@ export const Analyzer = () => {
               display: grid;
               grid-template-columns: repeat(3, 1fr);
               gap: 12px;
-              background-color: #F8FAFC;
+              background-color: #FBFBFA;
               padding: 18px;
               border-radius: 14px;
-              border: 1px solid #F1F5F9;
+              border: 1px solid #E5E5E2;
               margin-bottom: 28px;
             }
             .meta-item {
@@ -221,14 +221,14 @@ export const Analyzer = () => {
             .meta-label {
               font-size: 7.5pt;
               font-weight: 700;
-              color: #64748B;
+              color: #6E6E6B;
               text-transform: uppercase;
               letter-spacing: 0.5px;
             }
             .meta-value {
               font-size: 10pt;
               font-weight: 600;
-              color: #0F172A;
+              color: #131312;
             }
             .score-badge {
               display: inline-flex;
@@ -260,8 +260,8 @@ export const Analyzer = () => {
             }
             h2 { 
               font-size: 12pt; 
-              color: #0F172A; 
-              border-left: 4px solid #4F46E5;
+              color: #131312; 
+              border-left: 4px solid #1B1B18;
               padding-left: 10px;
               margin-bottom: 14px;
               font-weight: 800; 
@@ -272,19 +272,19 @@ export const Analyzer = () => {
               font-weight: 700; 
               margin-top: 0; 
               margin-bottom: 6px; 
-              color: #0F172A; 
+              color: #131312; 
             }
             p { 
               margin-top: 0;
               margin-bottom: 10px; 
               text-align: justify; 
-              color: #334155;
+              color: #1B1B18;
             }
             ul { 
               margin-top: 0;
               margin-bottom: 10px; 
               padding-left: 20px; 
-              color: #334155;
+              color: #1B1B18;
             }
             li { 
               margin-bottom: 6px; 
@@ -292,15 +292,15 @@ export const Analyzer = () => {
             }
             
             .verdict-callout {
-              background: #EEF2FF;
-              border-left: 4px solid #4F46E5;
+              background: #F5F5F2;
+              border-left: 4px solid #1B1B18;
               border-radius: 4px 12px 12px 4px;
               padding: 16px 20px;
               margin-bottom: 25px;
               page-break-inside: avoid;
             }
             .verdict-callout p {
-              color: #3730A3;
+              color: #1B1B18;
               font-weight: 500;
               font-style: italic;
               margin: 0;
@@ -308,8 +308,8 @@ export const Analyzer = () => {
             }
             
             .jargon-card, .clause-card {
-              background: #F8FAFC;
-              border: 1px solid #E2E8F0;
+              background: #FBFBFA;
+              border: 1px solid #E5E5E2;
               border-radius: 12px;
               padding: 14px 18px;
               margin-bottom: 12px;
@@ -318,7 +318,7 @@ export const Analyzer = () => {
             .jargon-term {
               font-family: monospace;
               font-weight: 700;
-              color: #4F46E5;
+              color: #1B1B18;
               margin-bottom: 4px;
               font-size: 9.5pt;
             }
@@ -329,9 +329,9 @@ export const Analyzer = () => {
               margin-bottom: 14px;
               page-break-inside: avoid;
               border-left: 4px solid;
-              border-top: 1px solid #F1F5F9;
-              border-right: 1px solid #F1F5F9;
-              border-bottom: 1px solid #F1F5F9;
+              border-top: 1px solid #E5E5E2;
+              border-right: 1px solid #E5E5E2;
+              border-bottom: 1px solid #E5E5E2;
             }
             .flag-card.high {
               background-color: #FFF5F5;
@@ -362,23 +362,23 @@ export const Analyzer = () => {
             .flag-badge.high { background: #FEE2E2; color: #991B1B; }
             .flag-badge.medium { background: #FEF3C7; color: #92400E; }
             .flag-badge.safe { background: #D1FAE5; color: #065F46; }
-            .flag-number { font-weight: 800; color: #94A3B8; font-size: 9.5pt; }
+            .flag-number { font-weight: 800; color: #6E6E6B; font-size: 9.5pt; }
             .clause-quote {
               font-family: monospace;
-              background: rgba(15, 23, 42, 0.04);
+              background: rgba(27, 27, 24, 0.04);
               padding: 8px 12px;
               border-radius: 6px;
               margin-bottom: 10px;
               font-style: italic;
               font-size: 8.5pt;
-              color: #475569;
+              color: #333330;
             }
 
             @media print {
               body { padding: 0; }
-              .top-bar { background: linear-gradient(90deg, #4F46E5 0%, #06B6D4 100%) !important; }
-              .metadata-grid { background-color: #F8FAFC !important; }
-              .verdict-callout { background: #EEF2FF !important; }
+              .top-bar { background: #1B1B18 !important; }
+              .metadata-grid { background-color: #FBFBFA !important; }
+              .verdict-callout { background: #F5F5F2 !important; }
               .flag-card.high { background-color: #FFF5F5 !important; }
               .flag-card.medium { background-color: #FFFDF5 !important; }
               .flag-card.safe { background-color: #F0FFF4 !important; }
@@ -491,7 +491,7 @@ export const Analyzer = () => {
     return (
       <div className="min-h-[calc(100vh-64px)] lg:h-[calc(100vh-80px)] flex flex-col lg:flex-row gap-8 bg-transparent lg:overflow-hidden pb-4">
         {/* Skeleton Left Panel */}
-        <div className={`w-full lg:flex-[1.5] h-[60vh] min-h-[400px] lg:h-full rounded-3xl border p-6 sm:p-8 flex flex-col gap-6 overflow-hidden ${isDark ? 'bg-surface border-white/5' : 'bg-white border-slate-200'}`}>
+        <div className="w-full lg:flex-[1.5] h-[60vh] min-h-[400px] lg:h-full rounded-3xl border p-6 sm:p-8 flex flex-col gap-6 overflow-hidden bg-surface border-border">
           <div className="flex items-center justify-between border-b pb-4">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-xl bg-surface-2 animate-pulse flex items-center justify-center">
@@ -542,9 +542,7 @@ export const Analyzer = () => {
         {/* Skeleton Right Panel */}
         <div className="w-full lg:w-[480px] shrink-0 flex flex-col gap-5 lg:overflow-y-auto pb-10 lg:pr-2 select-none">
           {/* Scanning status banner */}
-          <div className={`p-4 rounded-2xl border flex items-center justify-between animate-pulse ${
-            isDark ? 'bg-primary/5 border-primary/10' : 'bg-primary/3 border-primary/10'
-          }`}>
+          <div className="p-4 rounded-2xl border flex items-center justify-between animate-pulse bg-primary/3 border-primary/10">
             <div className="flex items-center gap-2.5">
               <Loader2 className="w-4 h-4 text-primary animate-spin" />
               <span className="text-[12px] font-bold text-primary">Running AI Threat Scan...</span>
@@ -553,8 +551,8 @@ export const Analyzer = () => {
           </div>
           
           {/* Risk Gauge Skeleton */}
-          <div className={`p-6 rounded-3xl border flex flex-col items-center gap-4 ${isDark ? 'bg-surface border-white/5' : 'bg-white border-slate-200'}`}>
-            <div className="w-24 h-24 rounded-full border-4 border-dashed border-primary/20 animate-spin-slow flex items-center justify-center">
+          <div className="p-6 rounded-3xl border flex flex-col items-center gap-4 bg-surface border-border">
+            <div className="w-24 h-24 rounded-full border-4 border-dashed border-primary/20 flex items-center justify-center">
               <div className="w-16 h-16 rounded-full bg-surface-2 animate-pulse" />
             </div>
             <div className="w-36 h-3 bg-surface-2 rounded-md animate-pulse" />
@@ -562,7 +560,7 @@ export const Analyzer = () => {
           </div>
 
           {/* Key Red Flags Skeleton */}
-          <div className={`p-6 rounded-3xl border flex flex-col gap-4 ${isDark ? 'bg-surface border-white/5' : 'bg-white border-slate-200 shadow-sm'}`}>
+          <div className="p-6 rounded-3xl border flex flex-col gap-4 bg-surface border-border">
             <div className="w-28 h-3.5 bg-surface-2 rounded-md animate-pulse" />
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
@@ -749,12 +747,8 @@ export const Analyzer = () => {
   return (
     <div className="min-h-[calc(100vh-64px)] lg:h-[calc(100vh-80px)] flex flex-col lg:flex-row gap-6 bg-transparent lg:overflow-hidden pb-4">
       {/* Left Panel: PDF Viewer */}
-      <div id="document-preview-left-panel" className={`w-full lg:flex-[1.5] h-[60vh] min-h-[400px] lg:h-full rounded-2xl border overflow-hidden flex flex-col shadow-sm transition-colors duration-300 ${
-        isDark ? 'bg-surface border-white/10' : 'bg-surface border-border'
-      }`}>
-        <div className={`px-6 py-4 border-b flex items-center justify-between sticky top-0 z-10 ${
-          isDark ? 'bg-surface border-white/10' : 'bg-surface border-border'
-        }`}>
+      <div id="document-preview-left-panel" className="w-full lg:flex-[1.5] h-[60vh] min-h-[400px] lg:h-full rounded-2xl border overflow-hidden flex flex-col shadow-sm transition-colors duration-300 bg-surface border-border">
+        <div className="px-6 py-4 border-b flex items-center justify-between sticky top-0 z-10 bg-surface border-border">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-xl bg-primary/5 flex items-center justify-center">
               <FileText className="w-4 h-4 text-primary" />
@@ -802,9 +796,7 @@ export const Analyzer = () => {
         className="w-full lg:w-[480px] shrink-0 flex flex-col gap-6 lg:overflow-y-auto pb-10 lg:pr-2 custom-scrollbar bg-transparent"
       >
         {/* Navigation & Status */}
-        <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 sticky top-0 py-3 sm:py-4 z-30 border-b mb-2 px-2 transition-colors backdrop-blur-md ${
-          isDark ? 'bg-surface/80 border-white/10' : 'bg-background/80 border-border shadow-sm'
-        }`} data-html2canvas-ignore="true">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sticky top-0 py-3 sm:py-4 z-30 border-b mb-2 px-2 transition-colors backdrop-blur-md bg-surface/80 border-border" data-html2canvas-ignore="true">
           {/* Top row on mobile, left on desktop */}
           <div className="flex items-center justify-between w-full sm:w-auto">
             <Button variant="ghost" size="sm" onClick={() => navigate('/dashboard')}>
@@ -850,7 +842,7 @@ export const Analyzer = () => {
         </div>
 
         {/* PDF Header (Hidden in Web, Visible in PDF) */}
-        <div className="hidden pdf-only flex-col gap-2 mb-8 border-b-2 border-primary/10 pb-6 bg-white">
+        <div className="hidden pdf-only flex-col gap-2 mb-8 border-b-2 border-primary/10 pb-6 bg-surface">
           <div className="flex items-center gap-3">
             <img src="/logo.png" alt="Logo" className="w-10 h-10 rounded-xl" />
             <div>
@@ -865,13 +857,13 @@ export const Analyzer = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className={`card p-6 ${isDark ? 'bg-surface border-white/10' : 'bg-surface border-border shadow-sm'}`}
+          className="card p-6 bg-surface border-border"
         >
           <RiskScoreMeter score={riskScore} />
         </motion.div>
 
         {/* Key Clauses Summary */}
-        <div className={`card p-6 ${isDark ? 'bg-surface border-white/10' : 'bg-surface border-border shadow-sm'}`}>
+        <div className="card p-6 bg-surface border-border">
           <KeyClauses clauses={result?.clauses || []} />
         </div>
 
@@ -884,9 +876,7 @@ export const Analyzer = () => {
         >
           {/* Avatar */}
           <div className="relative shrink-0 mt-1 cursor-default group">
-            <div className={`w-11 h-11 rounded-full flex items-center justify-center shadow-sm backdrop-blur-sm border transition-transform duration-300 group-hover:scale-105 ${
-              isDark ? 'bg-gradient-to-b from-primary/20 to-primary/5 border-primary/20' : 'bg-gradient-to-b from-primary/10 to-primary/5 border-primary/10'
-            }`}>
+            <div className={`w-11 h-11 rounded-full flex items-center justify-center shadow-sm backdrop-blur-sm border transition-transform duration-300 group-hover:scale-105 bg-gradient-to-b from-primary/20 to-primary/5 border-primary/20`}>
               <UserCircle className="w-6 h-6 text-primary" />
             </div>
             {/* Online Indicator */}
@@ -906,11 +896,7 @@ export const Analyzer = () => {
             {/* Chat Bubble */}
             <motion.div 
               whileHover={{ scale: 1.01 }}
-              className={`relative px-5 py-4 shadow-sm transition-all group ${
-                isDark 
-                  ? 'bg-surface/90 border border-white/5 backdrop-blur-md' 
-                  : 'bg-white border border-slate-200'
-              }`}
+              className="relative px-5 py-4 shadow-sm transition-all group bg-surface border border-border"
               style={{
                 borderRadius: '20px',
                 borderTopLeftRadius: '4px'
@@ -928,7 +914,7 @@ export const Analyzer = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className={`card p-7 ${isDark ? 'bg-surface border-white/10' : 'bg-surface border-border shadow-sm'}`}
+          className="card p-7 bg-surface border-border"
         >
           <div className="flex items-center gap-3 mb-5">
             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -947,7 +933,7 @@ export const Analyzer = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
-            className={`card p-7 backdrop-blur-md ${isDark ? 'bg-surface/40 border-primary/10 shadow-primary/5' : 'bg-primary/5 border-primary/10 shadow-sm'}`}
+            className="card p-7 backdrop-blur-md bg-primary/5 border-primary/10"
           >
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20">
@@ -960,7 +946,7 @@ export const Analyzer = () => {
             </div>
             <div className="grid gap-3">
               {result.jargons.map((jargon, i) => (
-                <div key={i} className={`p-4 rounded-2xl border ${isDark ? 'bg-surface border-white/5' : 'bg-white border-slate-200 shadow-sm'}`}>
+                <div key={i} className="p-4 rounded-2xl border bg-surface border-border">
                   <h4 className="text-[13px] font-bold text-primary mb-1 font-mono">"{jargon.term}"</h4>
                   <p className="text-[12px] text-text-muted leading-relaxed font-medium">
                     {jargon.definition}
@@ -1016,9 +1002,7 @@ export const Analyzer = () => {
                   </Button>
                 </div>
                 
-                <div className={`p-4 rounded-2xl border text-[12px] font-mono leading-relaxed italic shadow-inner ${
-                  isDark ? 'bg-black/20 border-white/5 text-text-muted' : 'bg-white/40 border-slate-200 text-slate-600'
-                }`}>
+                <div className="p-4 rounded-2xl border text-[12px] font-mono leading-relaxed italic shadow-inner bg-surface border-border text-text-muted">
                   "{flag.clause}"
                 </div>
                 
@@ -1053,9 +1037,7 @@ export const Analyzer = () => {
         <motion.div 
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`card p-7 shadow-lg backdrop-blur-md ${
-            isDark ? 'bg-surface/40 border-green-500/10 shadow-green-500/5' : 'bg-white/80 border-green-500/20 shadow-green-500/5'
-          }`}
+          className="card p-7 shadow-lg backdrop-blur-md bg-surface border-green-500/10"
         >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center border border-green-500/20">

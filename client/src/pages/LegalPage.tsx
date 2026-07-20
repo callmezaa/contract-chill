@@ -1,14 +1,10 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
 
 export const LegalPage = ({ title }: { title: string }) => {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
-
   return (
-    <div className={`min-h-screen pt-24 pb-12 transition-colors duration-500 ${isDark ? 'bg-surface' : 'bg-white'}`}>
+    <div className="min-h-screen pt-24 pb-12 transition-colors duration-500 bg-surface">
       <div className="max-w-3xl mx-auto px-6">
         <Link to="/" className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-text mb-8 transition-colors">
           <ArrowLeft className="w-4 h-4" />

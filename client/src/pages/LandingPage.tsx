@@ -5,12 +5,12 @@ import {
   FileText, Brain, Clock, Star, ChevronRight,
   AlertTriangle, MessageSquare, TrendingUp, Lock, Menu, X, ArrowUp
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { MiniDemo } from '../components/MiniDemo';
 import { MagneticButton } from '../components/MagneticButton';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
-import { Button } from '../components/ui/button';
+import { Button } from '@/components/motion/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Accordion } from '../components/ui/accordion';
 
@@ -51,6 +51,7 @@ const faqs = [
 ];
 
 export const LandingPage = () => {
+  const navigate = useNavigate();
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const [hoveredPersona, setHoveredPersona] = useState<number | null>(null);
@@ -123,8 +124,8 @@ export const LandingPage = () => {
             <div className="hidden sm:block w-[1px] h-5 bg-border" />
             <div className="hidden md:block">
               <MagneticButton strength={0.15}>
-                <Button asChild size="sm">
-                  <Link to="/login">Get started <ArrowRight data-icon="inline-end" /></Link>
+                <Button size="sm" onClick={() => navigate('/login')}>
+                  Get started <ArrowRight />
                 </Button>
               </MagneticButton>
             </div>
@@ -268,13 +269,15 @@ export const LandingPage = () => {
               className="flex flex-col sm:flex-row items-center gap-3 mt-5"
             >
               <MagneticButton strength={0.25}>
-                <Button asChild size="lg">
-                  <Link to="/login">Start with a contract <ArrowRight data-icon="inline-end" /></Link>
+                <Button size="lg" onClick={() => navigate('/login')}>
+                  Start with a contract <ArrowRight />
                 </Button>
               </MagneticButton>
               <MagneticButton strength={0.15}>
-                <Button asChild variant="outline" size="lg">
-                  <a href="#how-it-works">See how it works</a>
+                <Button variant="outline" size="lg" onClick={() => {
+                  document.querySelector('#how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+                }}>
+                  See how it works
                 </Button>
               </MagneticButton>
             </motion.div>

@@ -3,7 +3,7 @@ FROM node:20-alpine AS client-builder
 WORKDIR /app/client
 
 COPY client/package*.json ./
-RUN npm ci && npm cache clean --force
+RUN npm ci
 COPY client/ ./
 RUN npm run build
 

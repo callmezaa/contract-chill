@@ -5,7 +5,7 @@ import { Tooltip } from '@/components/motion/tooltip';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/context/ThemeContext';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 
 const navItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -73,7 +73,7 @@ export const Layout = () => {
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-14 border-b border-border bg-surface flex items-center justify-between px-4 z-50">
         <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="ContractChill" className="size-6 rounded-md" />
+          <img src="/logo/brandLogo_black.png" alt="ContractChill" className="size-6 rounded-md" />
           <span className="font-display font-bold text-sm text-text">ContractChill</span>
         </div>
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 rounded-lg text-text hover:bg-surface-2 transition-colors">

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import {
   Sparkles, ArrowRight, CheckCircle,
   FileText, Brain, Clock, Star, ChevronRight,
@@ -87,7 +87,7 @@ export const LandingPage = () => {
       <nav className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 h-[68px] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <img src="/logo.png" alt="ContractChill Logo" className="w-8 h-8 rounded-lg shadow-sm" />
+            <img src="/logo/brandLogo_black.png" alt="ContractChill Logo" className="w-8 h-8 rounded-lg shadow-sm" />
             <span className="font-display text-lg font-semibold tracking-[-0.04em]">ContractChill</span>
           </div>
 
@@ -879,7 +879,7 @@ export const LandingPage = () => {
           className="flex flex-col items-center gap-6 max-w-2xl mx-auto"
         >
           <motion.div variants={fadeUp}>
-            <img src="/logo.png" alt="ContractChill Logo" className="w-16 h-16 rounded-2xl shadow-sm" />
+            <img src="/logo/brandLogo_black.png" alt="ContractChill Logo" className="w-16 h-16 rounded-2xl shadow-sm" />
           </motion.div>
             <motion.h2 variants={fadeUp} className="text-3xl md:text-5xl font-display font-semibold tracking-[-0.06em] text-text leading-tight [text-wrap:balance]">
             Stop signing contracts<br />you don't understand.
@@ -906,7 +906,7 @@ export const LandingPage = () => {
             {/* Brand */}
             <div className="flex flex-col gap-4 max-w-xs">
               <div className="flex items-center gap-2">
-                <img src="/logo.png" alt="ContractChill Logo" className="w-7 h-7 rounded-md" />
+                <img src="/logo/brandLogo_black.png" alt="ContractChill Logo" className="w-7 h-7 rounded-md" />
                 <span className="font-display font-bold text-text">ContractChill</span>
               </div>
               <p className="text-sm text-text-muted leading-relaxed">

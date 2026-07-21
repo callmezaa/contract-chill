@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'motion/react';
 import { Suspense, lazy, useEffect } from 'react';
 import { LandingPage } from '../pages/LandingPage';
 import { ProtectedRoute } from './ProtectedRoute';

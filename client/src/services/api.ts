@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'sonner';
 import { auth } from '../lib/firebase';
 import type { AnalysisResult, Persona } from '../types/analysis';
 
@@ -8,7 +9,6 @@ export const api = axios.create({
   baseURL: API_URL,
 });
 
-// Intercept all requests to attach the Firebase ID token
 api.interceptors.request.use(async (config) => {
   if (auth.currentUser) {
     const token = await auth.currentUser.getIdToken();
@@ -18,6 +18,43 @@ api.interceptors.request.use(async (config) => {
 }, (error) => {
   return Promise.reject(error);
 });
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (!error.response) {
+      toast.error('Network error', {
+        description: 'Check your internet connection and try again.',
+      });
+      return Promise.reject(error);
+    }
+
+    const { status } = error.response;
+
+    if (status === 401) {
+      toast.error('Session expired', {
+        description: 'Please sign in again.',
+      });
+      window.location.href = '/login';
+      return Promise.reject(error);
+    }
+
+    if (status === 429) {
+      toast.error('Too many requests', {
+        description: 'Please wait a moment and try again.',
+      });
+      return Promise.reject(error);
+    }
+
+    if (status >= 500) {
+      toast.error('Server error', {
+        description: 'Something went wrong on our end. Please try again later.',
+      });
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export const analyzeContract = async (file: File, persona: Persona): Promise<AnalysisResult & { fileUrl: string }> => {
   const formData = new FormData();

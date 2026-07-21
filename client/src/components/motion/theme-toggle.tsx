@@ -2,8 +2,8 @@
 // beui.dev/components/motion/theme-toggle
 
 import { Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useReducedMotion } from "motion/react";
+import { useTheme } from "@/context/ThemeContext";
+import { useReducedMotion } from "framer-motion";
 import { useEffect, useState, type ComponentPropsWithoutRef } from "react";
 import { ActionSwapIcon } from "@/components/motion/action-swap";
 import { cn } from "@/lib/utils";
@@ -89,7 +89,7 @@ export function useThemeToggle({
   variant = "rectangle",
   start = "bottom-up",
 }: { variant?: ThemeVariant; start?: RectStart } = {}) {
-  const { setTheme, resolvedTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const reduce = useReducedMotion() ?? false;
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -100,17 +100,18 @@ export function useThemeToggle({
     el.textContent = VT_CSS;
     document.head.appendChild(el);
   }, []);
-  const isDark = mounted && resolvedTheme === "dark";
+
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const isDark = mounted && (theme === 'dark' || (theme === 'system' && systemDark));
 
   const toggle = () => {
-    const next = isDark ? "light" : "dark";
-
     if (reduce || !("startViewTransition" in document)) {
-      setTheme(next);
+      toggleTheme();
       return;
     }
 
     const root = document.documentElement;
+    const next = isDark ? "light" : "dark";
 
     if (variant === "rectangle") {
       root.style.setProperty("--beui-vt-from", RECT_FROM[start]);
@@ -124,7 +125,7 @@ export function useThemeToggle({
       document as Document & {
         startViewTransition(cb: () => void): { finished: Promise<void> };
       }
-    ).startViewTransition(() => setTheme(next));
+    ).startViewTransition(() => toggleTheme());
 
     vt.finished.finally(() => {
       delete root.dataset.beuiVt;

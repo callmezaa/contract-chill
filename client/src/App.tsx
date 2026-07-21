@@ -1,23 +1,12 @@
 import { BrowserRouter as Router, useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { LandingPage } from './pages/LandingPage';
-import { Dashboard } from './pages/Dashboard';
-const Analyzer = lazy(() => import('./pages/Analyzer').then(m => ({ default: m.Analyzer })));
-import { History } from './pages/History';
-import { Settings } from './pages/Settings';
-import { LoginPage } from './pages/LoginPage';
-import { RegisterPage } from './pages/RegisterPage';
-import { ProtectedRoute } from './components/ProtectedRoute';
-import { Layout } from './layouts/Layout';
 import { AuthProvider } from './contexts/AuthContext';
 import { Toaster } from 'sonner';
-import { LegalPage } from './pages/LegalPage';
-import { NotFoundPage } from './pages/NotFoundPage';
 import { AnimatedRoutes } from './components/AnimatedRoutes';
 import { CommandPalette } from '@/components/motion/command-palette';
 import { LayoutDashboard, FilePenLine, History as HistoryIcon, Settings as SettingsIcon } from 'lucide-react';
 
-import { Component, useState, Suspense, lazy } from 'react';
+import { Component, useState } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean; error: Error | null }> {

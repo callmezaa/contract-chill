@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { NumberTicker } from '@/components/motion/number-ticker';
 
 interface RiskScoreMeterProps {

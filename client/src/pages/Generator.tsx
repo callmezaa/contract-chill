@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '../contexts/AuthContext';
 import { Wand2, Loader2, Copy, Download, CheckCircle2, PenTool } from 'lucide-react';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';

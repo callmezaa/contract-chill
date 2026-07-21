@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   Upload, Clock, AlertTriangle, CheckCircle2, Loader2, FileText, ShieldCheck, ChevronRight,
   Coffee, Scale, Briefcase, Shield, Zap, MessageCircle,

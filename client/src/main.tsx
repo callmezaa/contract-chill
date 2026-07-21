@@ -21,3 +21,5 @@ createRoot(document.getElementById('root')!).render(
     </ThemeProvider>
   </StrictMode>,
 )
+
+// BUILD: 2026-07-21-v2

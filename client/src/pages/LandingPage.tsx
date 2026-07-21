@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { MiniDemo } from '../components/MiniDemo';
-import { MagneticButton } from '@/components/motion/button';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { Button } from '@/components/motion/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
@@ -121,9 +120,9 @@ export const LandingPage = () => {
             </Link>
             <div className="hidden sm:block w-[1px] h-5 bg-border" />
             <div className="hidden md:block">
-              <MagneticButton strength={0.15} size="sm" onClick={() => navigate('/login')}>
+              <Button variant="primary" size="sm" onClick={() => navigate('/login')}>
                 Get started <ArrowRight />
-              </MagneticButton>
+              </Button>
             </div>
 
             {/* Mobile Menu Toggle */}
@@ -264,14 +263,14 @@ export const LandingPage = () => {
               variants={fadeUp}
               className="flex flex-col sm:flex-row items-center gap-3 mt-5"
             >
-              <MagneticButton strength={0.25} size="lg" onClick={() => navigate('/login')}>
+              <Button variant="primary" size="lg" onClick={() => navigate('/login')}>
                 Start with a contract <ArrowRight />
-              </MagneticButton>
-              <MagneticButton strength={0.15} variant="outline" size="lg" onClick={() => {
+              </Button>
+              <Button variant="outline" size="lg" onClick={() => {
                 document.querySelector('#how-it-works')?.scrollIntoView({ behavior: 'smooth' });
               }}>
                 See how it works
-              </MagneticButton>
+              </Button>
             </motion.div>
 
             {/* Trust Badges */}

@@ -176,24 +176,38 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
                   </p>
                 </div>
               )}
-              {messages.map((m, i) => (
-                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  {m.role === 'ai' && (
-                    <div className="w-7 h-7 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mr-2 mt-auto">
-                      <ShieldCheck className="w-3.5 h-3.5 text-primary" />
+              <motion.div
+                variants={{ show: { transition: { staggerChildren: 0.08 } } }}
+                initial="hidden"
+                animate="show"
+                className="space-y-4"
+              >
+                {messages.map((m, i) => (
+                  <motion.div
+                    key={i}
+                    variants={{
+                      hidden: { opacity: 0, y: 12 },
+                      show: { opacity: 1, y: 0, transition: { duration: 0.2, ease: [0.16, 1, 0.3, 1] } }
+                    }}
+                    className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    {m.role === 'ai' && (
+                      <div className="w-7 h-7 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mr-2 mt-auto">
+                        <ShieldCheck className="w-3.5 h-3.5 text-primary" />
+                      </div>
+                    )}
+                    <div className={`max-w-[85%] p-3 text-[12px] leading-relaxed shadow-sm transition-all ${
+                      m.role === 'user' 
+                        ? 'bg-primary text-white rounded-xl rounded-tr-none font-medium' 
+                        : isDark 
+                          ? 'bg-surface-2/80 text-text border border-white/5 rounded-xl rounded-tl-none font-medium'
+                          : 'bg-white text-text border border-slate-100 rounded-xl rounded-tl-none font-medium'
+                    }`}>
+                      {m.content}
                     </div>
-                  )}
-                  <div className={`max-w-[85%] p-3 text-[12px] leading-relaxed shadow-sm transition-all ${
-                    m.role === 'user' 
-                      ? 'bg-primary text-white rounded-xl rounded-tr-none font-medium' 
-                      : isDark 
-                        ? 'bg-surface-2/80 text-text border border-white/5 rounded-xl rounded-tl-none font-medium'
-                        : 'bg-white text-text border border-slate-100 rounded-xl rounded-tl-none font-medium'
-                  }`}>
-                    {m.content}
-                  </div>
-                </div>
-              ))}
+                  </motion.div>
+                ))}
+              </motion.div>
               {isLoading && (
                 <div className="flex justify-start">
                   <div className="w-7 h-7 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mr-2 mt-auto">

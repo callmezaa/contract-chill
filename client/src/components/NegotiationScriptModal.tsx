@@ -154,7 +154,7 @@ export const NegotiationScriptModal = ({ isOpen, onClose, script, clause, explan
               )}
             </div>
             {currentScript && !isGenerating && (
-              <button onClick={handleCopy} className="absolute top-2 right-2 p-2 bg-surface border border-border rounded-lg shadow-sm hover:border-primary/50 hover:bg-white transition-all group/btn active:scale-90">
+              <button onClick={handleCopy} title="Copy script" className="absolute top-2 right-2 p-2 bg-surface border border-border rounded-lg shadow-sm hover:border-primary/50 hover:bg-white transition-all group/btn active:scale-90">
                 {copied ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3 text-text-subtle group-hover/btn:text-primary transition-colors" />}
               </button>
             )}

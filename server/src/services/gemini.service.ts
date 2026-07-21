@@ -1,12 +1,13 @@
 import { GoogleGenerativeAI, Part } from '@google/generative-ai';
 import dotenv from 'dotenv';
+import type { Persona } from '../types/analysis';
 
 dotenv.config();
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-export type Persona = 'Angry Lawyer' | 'Chill Friend' | 'Corporate Mentor' | 'Freelancer Senior';
+export { Persona };
 
 const PERSONA_PROMPTS: Record<Persona, string> = {
   'Angry Lawyer': `

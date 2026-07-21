@@ -1,149 +1,170 @@
-![Build](https://github.com/koyeb/koyeb-cli/workflows/Release/badge.svg)
+# ContractChill
 
-# Koyeb CLI
+**AI-Powered Legal Document Analyzer** — Instantly review, identify risks, and understand complex contracts with AI-driven analysis. Built for freelancers, founders, and anyone who signs agreements but isn't a lawyer.
 
-The Koyeb CLI (Command Line Interface) is a powerful tool to manage your Koyeb serverless infrastructure directly from your terminal.
+<p>
+  <img alt="React" src="https://img.shields.io/badge/React-19-1B1B18?style=flat-square&logo=react&logoColor=white" />
+  <img alt="Vite" src="https://img.shields.io/badge/Vite-8-1B1B18?style=flat-square&logo=vite&logoColor=white" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-6-1B1B18?style=flat-square&logo=typescript&logoColor=white" />
+  <img alt="Express" src="https://img.shields.io/badge/Express-5-1B1B18?style=flat-square&logo=express&logoColor=white" />
+  <img alt="Firebase" src="https://img.shields.io/badge/Firebase-1B1B18?style=flat-square&logo=firebase&logoColor=white" />
+  <img alt="Gemini" src="https://img.shields.io/badge/Gemini_AI-1B1B18?style=flat-square&logo=googlegemini&logoColor=white" />
+  <img alt="Tailwind" src="https://img.shields.io/badge/Tailwind-4-1B1B18?style=flat-square&logo=tailwindcss&logoColor=white" />
+  <img alt="Framer Motion" src="https://img.shields.io/badge/Framer_Motion-12-1B1B18?style=flat-square&logo=framer&logoColor=white" />
+  <img alt="Deployed on Railway" src="https://img.shields.io/badge/Railway-1B1B18?style=flat-square&logo=railway&logoColor=white" />
+</p>
 
-## Installation
+---
 
-### Download from GitHub
+## Features
 
-The CLI can be installed from pre-compiled binaries for macOS (darwin), Linux and Windows. You can download the appropriate version from the [Releases](https://github.com/koyeb/koyeb-cli/releases) page.
+- **AI-Powered Analysis** — Paste a contract clause or upload a PDF/DOCX/TXT file. Gemini AI returns a structured breakdown in seconds.
+- **4 Personas** — Choose how the AI communicates: *Chill Friend* (casual), *Angry Lawyer* (strict), *Corporate Mentor* (strategic), *Freelancer Senior* (practical). Personas auto-detect English or Indonesian.
+- **Red Flag Detection** — Clauses flagged as High, Medium, or Safe risk with plain-English explanations.
+- **Clause Summaries** — Every clause broken down in clear language.
+- **Jargon Definitions** — Legal terms explained in context.
+- **Negotiation Scripts** — Generate email or chat drafts to negotiate specific clauses, in the persona's tone.
+- **AI Chat** — Follow-up Q&A about any analyzed contract.
+- **Contract Generator** — Draft full contracts from scratch based on project details.
+- **Side-by-Side Viewer** — Original contract and AI analysis displayed simultaneously.
+- **Analysis History** — All past analyses saved in Firestore, searchable and filterable by persona.
+- **Dark / Light / System Theme** — Persistent preference with system detection.
+- **Command Palette** — `⌘K` quick navigation to any page.
 
-### MacOS
+---
 
-You can install the latest version of the Koyeb CLI on macOS using [Homebrew](http://brew.sh/):
+## Tech Stack
 
-```shell
-brew install koyeb/tap/koyeb
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 19, TypeScript 6, Vite 8 |
+| Styling | Tailwind CSS 4, shadcn/ui, beUI |
+| Animation | Framer Motion 12 |
+| Backend | Node.js, Express 5, TypeScript 6 |
+| AI Engine | Google Gemini 2.5 Flash |
+| Auth | Firebase Authentication (email/password + Google) |
+| Database | Firestore (NoSQL) |
+| PDF | react-pdf-viewer, pdf-parse, jspdf |
+| Icons | lucide-react |
+| Notifications | sonner |
+| HTTP | axios (client), cors + helmet (server) |
+| Container | Docker (multi-stage) |
+
+---
+
+## Architecture
+
+```
+contract-chill/
+├── client/                  # React SPA
+│   ├── src/
+│   │   ├── components/      # beUI motion + shadcn/ui components
+│   │   ├── pages/           # Landing, Dashboard, Analyzer, Generator, History, Settings
+│   │   ├── contexts/        # AuthContext (Firebase), ThemeContext
+│   │   ├── hooks/           # Custom React hooks
+│   │   ├── services/        # API client (axios + Firebase auth interceptor)
+│   │   └── lib/             # Firebase client init, easing config
+│   └── vite.config.ts
+├── server/                  # Express API
+│   ├── src/
+│   │   ├── controllers/     # Request handlers
+│   │   ├── services/        # Gemini AI integration with persona prompts
+│   │   ├── middleware/       # Firebase token verification
+│   │   ├── types/           # Shared TypeScript types
+│   │   └── utils/           # AppError, asyncHandler, file helpers
+│   └── index.ts             # Express app setup
+├── Dockerfile               # Multi-stage build
+└── .env.example
 ```
 
-You can upgrade an existing installation of the Koyeb CLI running:
+**Development:** Vite dev server (`:5173`) proxies API calls to Express (`:5000`).
 
-```
-brew upgrade koyeb
-```
+**Production:** Express serves the built client assets from `client/dist/`. All API routes are prefixed with `/api`.
 
-### Living at the Edge
+---
 
-To install the latest `koyeb` binary with go, simply run:
+## Getting Started
 
-```shell
-go get github.com/koyeb/koyeb-cli/cmd/koyeb
-go install github.com/koyeb/koyeb-cli/cmd/koyeb
-```
+### Prerequisites
 
-If you need a go environment, follow the [official Go installation documentation](https://golang.org/doc/install).
+- Node.js 20+
+- Firebase project (Auth + Firestore enabled)
+- Google Gemini API key ([get one here](https://aistudio.google.com/))
 
+### Setup
 
-## Getting started
+```bash
+# Clone the repository
+git clone https://github.com/your-org/contract-chill.git
+cd contract-chill
 
-### Initial configuration
+# Install dependencies
+cd client && npm install && cd ..
+cd server && npm install && cd ..
 
-Generate an API token and run `koyeb login` to create a new configuration file.
-
-```shell
-➜ koyeb login
-? Do you want to create a new configuration file in (/Users/kbot/.koyeb.yaml)? [y/N]
-✗ Enter your personal access token. You can create a new token here (https://app.koyeb.com/user/settings/api/): *************
-INFO[0006] Creating new configuration in /Users/kbot/.koyeb.yaml
-```
-
-### General usage
-
-```shell
-➜ koyeb --help
-Koyeb CLI
-
-Usage:
-  koyeb [command]
-
-Available Commands:
-  apps                 Apps
-  archives             Archives
-  completion           Generate completion script
-  databases            Databases
-  deploy               Deploy a directory to Koyeb
-  deployments          Deployments
-  domains              Domains
-  help                 Help about any command
-  instances            Instances
-  login                Login to your Koyeb account
-  metrics              Metrics
-  organizations        Organization
-  regional-deployments Regional deployments
-  secrets              Secrets
-  services             Services
-  version              Get version
-  volumes              Manage persistent volumes
-
-Flags:
-  -c, --config string         config file (default is $HOME/.koyeb.yaml)
-  -d, --debug                 enable the debug output
-      --debug-full            do not hide sensitive information (tokens) in the debug output
-      --force-ascii           only output ascii characters (no unicode emojis)
-      --full                  do not truncate output
-  -h, --help                  help for koyeb
-      --organization string   organization ID
-  -o, --output output         output format (yaml,json,table)
-      --token string          API token
-      --url string            url of the api (default "https://app.koyeb.com")
-
-Use "koyeb [command] --help" for more information about a command.
+# Copy environment variables and fill in your values
+cp .env.example client/.env
+cp .env.example server/.env
 ```
 
+Refer to [`.env.example`](.env.example) for all required variables.
 
-### Enabling shell auto-completion
+### Run locally
 
-`koyeb` has auto-completion support for `bash`, `zsh` and `fish`.
-
-#### Bash
-
-You can easily do `source <(koyeb completion bash)` to add completion to your current Bash session.
-
-To load completions for all sessions, simply add the auto-completion script to your `bash_completion.d` folder.
-
-On Linux:
-
-```shell
-koyeb completion bash > /etc/bash_completion.d/koyeb
+```bash
+# From root — starts both client (:5173) and server (:5000)
+# (or use two terminals: cd client && npm run dev + cd server && npm run dev)
 ```
 
-On MacOs:
+Open [http://localhost:5173](http://localhost:5173).
 
-```shell
-koyeb completion bash > /usr/local/etc/bash_completion.d/koyeb
+---
+
+## Docker
+
+```bash
+docker build -t contract-chill .
+docker run -p 8080:8080 --env-file .env contract-chill
 ```
 
-You will need to start a new shell for this setup to take effect.
+Multi-stage build stages:
 
-#### Zsh
+1. **client-builder** — builds the React SPA
+2. **server-builder** — compiles TypeScript server
+3. **runner** — production image with `node:20-alpine`, serves Express + static client
 
-If shell completion is not already enabled in your environment you will need to enable it.  You can execute the following once:
+---
 
-```shell
-echo "autoload -U compinit; compinit" >> ~/.zshrc
-```
+## Deployment
 
-To automatically load completions for all your shell session, execute once:
+Deployed on [Railway](https://railway.app) via the included `Dockerfile`.
 
-```shell
-koyeb completion zsh > "${fpath[1]}/_koyeb"
-```
+1. Connect your GitHub repository to Railway
+2. Set all environment variables from `.env.example` in the Railway dashboard
+3. Railway auto-detects the `Dockerfile` and deploys on push to main
 
-You will need to start a new shell for this setup to take effect.
+Environment variables required in production:
 
-#### Fish
+| Variable | Description |
+|----------|-------------|
+| `GEMINI_API_KEY` | Google Gemini API key |
+| `FIREBASE_SERVICE_ACCOUNT` | Firebase Admin SDK service account JSON |
+| `VITE_FIREBASE_*` | Firebase Web SDK config values |
+| `PORT` | Server port (Railway sets this automatically) |
+| `NODE_ENV` | Set to `production` |
 
-You can easily run `koyeb completion fish | source` to add completions to your current Fish session.
+---
 
-To automatically load completions for all your shell session, execute once:
+## Design
 
-```shell
-koyeb completion fish > ~/.config/fish/completions/koyeb.fish
-```
+- **Font:** Geist Variable (sans) + Geist Mono (code)
+- **Palette:** Warm monochrome — off-white backgrounds, near-black text, subtle warm-gray borders
+- **Components:** beUI motion components + shadcn/ui base components
+- **Animations:** Framer Motion — page transitions, stagger reveals, micro-interactions
+- **Theme:** Light, Dark, and System modes persisted in localStorage
 
-## Contribute
+---
 
-Checkout [CONTRIBUTING.md](CONTRIBUTING.md)
+## License
 
+MIT

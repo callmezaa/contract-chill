@@ -2,7 +2,7 @@
 // beui.dev/components/motion/text-animation
 
 import { motion, type Transition, useInView, useReducedMotion } from "motion/react";
-import { useRef, type ElementType, type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import { EASE_OUT } from "@/lib/ease";
 import { cn } from "@/lib/utils";
 
@@ -10,7 +10,6 @@ type SplitMode = "word" | "char";
 
 export interface TextRevealProps {
   text: string | string[];
-  as?: ElementType;
   className?: string;
   split?: SplitMode;
   stagger?: number;
@@ -27,7 +26,6 @@ const DEFAULT_SPRING = { stiffness: 140, damping: 26, mass: 1.2 };
 
 export function TextReveal({
   text,
-  as: Comp = "span",
   className,
   split = "word",
   stagger = 0.09,
@@ -39,7 +37,7 @@ export function TextReveal({
   whileInView = false,
   children,
 }: TextRevealProps) {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once, amount: 0.4 });
   const reduce = useReducedMotion();
   const shouldAnimate = whileInView ? inView : true;
@@ -51,7 +49,7 @@ export function TextReveal({
   const lineCounts = new Map<string, number>();
 
   return (
-    <Comp ref={ref} className={cn("block", className)}>
+    <span ref={ref} className={cn("block", className)}>
       {lines.map((line) => {
         const units = split === "word" ? line.split(" ") : Array.from(line);
         const lineCount = lineCounts.get(line) ?? 0;
@@ -101,6 +99,6 @@ export function TextReveal({
         );
       })}
       {children}
-    </Comp>
+    </span>
   );
 }

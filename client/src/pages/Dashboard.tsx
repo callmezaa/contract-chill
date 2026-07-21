@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Upload, Clock, AlertTriangle, CheckCircle2, Loader2, FileText, ShieldCheck, ChevronRight,
-  Coffee, Scale, Briefcase, Shield, Zap, MessageCircle, type LucideIcon,
+  Coffee, Scale, Briefcase, Shield, Zap, MessageCircle,
 } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -19,18 +19,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Loader } from '@/components/motion/loader';
 
-const personaIconMap: Record<string, LucideIcon> = {
-  'Chill Friend': Coffee,
-  'Angry Lawyer': Scale,
-  'Corporate Mentor': Briefcase,
-  'Freelancer Senior': Shield,
-};
-
 const personas = [
-  { id: 'Chill Friend',      desc: 'Casual & direct',    preview: '"Hey, clause 4 is a red flag. I\'d push back on this before signing."'       },
-  { id: 'Angry Lawyer',      desc: 'Strict & protective', preview: '"DO NOT SIGN THIS. They are trying to strip your IP rights completely!"'        },
-  { id: 'Corporate Mentor',  desc: 'Strategic & formal',  preview: '"From a strategic standpoint, clause 7 presents unacceptable liability exposure."' },
-  { id: 'Freelancer Senior', desc: 'Payment focused',    preview: '"Watch out — no late payment penalty clause. That\'s how clients ghost you."'    },
+  { id: 'Chill Friend',      desc: 'Casual & direct',    icon: Coffee,    preview: '"Hey, clause 4 is a red flag. I\'d push back on this before signing."'       },
+  { id: 'Angry Lawyer',      desc: 'Strict & protective', icon: Scale,     preview: '"DO NOT SIGN THIS. They are trying to strip your IP rights completely!"'        },
+  { id: 'Corporate Mentor',  desc: 'Strategic & formal',  icon: Briefcase, preview: '"From a strategic standpoint, clause 7 presents unacceptable liability exposure."' },
+  { id: 'Freelancer Senior', desc: 'Payment focused',    icon: Shield,    preview: '"Watch out — no late payment penalty clause. That\'s how clients ghost you."'    },
 ];
 
 export const Dashboard = () => {
@@ -332,7 +325,7 @@ export const Dashboard = () => {
                       { Icon: Zap, text: 'results in seconds' },
                       { Icon: Shield, text: 'flags hidden risks' },
                       { Icon: MessageCircle, text: 'plain-english summary' },
-                    ] as { Icon: LucideIcon; text: string }[]).map((b) => (
+                    ]).map((b) => (
                       <span
                         key={b.text}
                         className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium border bg-surface border-border text-text-muted"
@@ -402,7 +395,7 @@ export const Dashboard = () => {
                         transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                       />
                     )}
-                    <span className="text-lg leading-none">{persona.icon}</span>
+                    <persona.icon className="w-5 h-5 text-primary" />
                     <p className={`text-[11px] font-bold leading-tight ${isActive ? 'text-primary' : 'text-text'}`}>
                       {persona.id}
                     </p>
@@ -428,7 +421,7 @@ export const Dashboard = () => {
                   >
                     <div className="flex gap-2.5 p-3 rounded-xl border bg-primary/3 border-primary/10">
                       {(() => {
-                        const Icon = personaIconMap[p.id];
+                        const Icon = personas.find(x => x.id === p.id)?.icon;
                         return Icon ? <Icon className="w-4 h-4 shrink-0 mt-0.5" /> : null;
                       })()}
                       <p className="text-[11px] text-text-muted leading-relaxed font-medium italic">
@@ -487,7 +480,7 @@ export const Dashboard = () => {
               .map((item: any, i: number) => {
                 const hasHighRisk = item.result?.redFlags?.some((rf: any) => rf.risk === 'High');
                 const highRiskCount = item.result?.redFlags?.filter((rf: any) => rf.risk === 'High').length ?? 0;
-                const PersonaIcon = personaIconMap[item.persona] || Shield;
+                const PersonaIcon = personas.find(x => x.id === item.persona)?.icon || Shield;
                 const date = item.createdAt?.seconds
                   ? new Date(item.createdAt.seconds * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
                   : 'just now';

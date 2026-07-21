@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { Button } from '@/components/motion/button';
 import { Input } from '@/components/motion/input';
+import { Loader } from '@/components/motion/loader';
 
 export const History = () => {
   const { user } = useAuth();
@@ -184,23 +185,8 @@ export const History = () => {
       {/* List */}
       <div className="flex flex-col gap-6">
         {isLoading ? (
-          <div className="flex flex-col gap-3">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="card p-5 border border-border flex items-center justify-between">
-                <div className="flex items-center gap-4 w-full">
-                  <div className="w-10 h-10 rounded-xl bg-surface-2 animate-pulse shrink-0" />
-                  <div className="flex flex-col gap-2.5 w-full max-w-[240px]">
-                    <div className="h-4 bg-surface-2 rounded-md animate-pulse w-3/4" />
-                    <div className="flex items-center gap-2">
-                      <div className="h-3.5 bg-surface-2 rounded-md animate-pulse w-16" />
-                      <div className="h-3.5 bg-surface-2 rounded-full animate-pulse w-20" />
-                      <div className="h-3.5 bg-surface-2 rounded-full animate-pulse w-14" />
-                    </div>
-                  </div>
-                </div>
-                <div className="w-4 h-4 bg-surface-2 rounded animate-pulse shrink-0" />
-              </div>
-            ))}
+          <div className="flex items-center justify-center py-20">
+            <Loader variant="bars" size={32} />
           </div>
         ) : filtered && filtered.length > 0 ? (
           groupOrder.map(groupName => {

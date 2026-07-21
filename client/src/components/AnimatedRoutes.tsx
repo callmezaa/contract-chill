@@ -7,6 +7,7 @@ import { Layout } from '../layouts/Layout';
 import { LegalPage } from '../pages/LegalPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
 import { PageTransition } from './PageTransition';
+import { LoadingFallback } from '../components/LoadingFallback';
 
 // Lazy load heavy dashboard, generator, and configuration pages
 const Dashboard = lazy(() => import('../pages/Dashboard').then(m => ({ default: m.Dashboard })));
@@ -30,11 +31,7 @@ export const AnimatedRoutes = () => {
   const routeKey = isAppRoute ? 'app-layout' : location.pathname;
 
   const lazyLoad = (Component: React.ComponentType) => (
-    <Suspense fallback={
-      <div className="min-h-[50vh] flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    }>
+    <Suspense fallback={<LoadingFallback />}>
       <Component />
     </Suspense>
   );

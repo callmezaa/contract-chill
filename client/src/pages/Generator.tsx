@@ -7,6 +7,7 @@ import { generateContractDraft } from '../services/api';
 import type { GenerateContractParams } from '../services/api';
 import { Button } from '@/components/motion/button';
 import { toast } from 'sonner';
+import { Loader } from '@/components/motion/loader';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
 
@@ -346,60 +347,10 @@ export const Generator = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 p-6 flex flex-col gap-5 select-none pointer-events-none bg-grid-pattern overflow-hidden"
+                  className="absolute inset-0 flex flex-col items-center justify-center gap-4"
                 >
-                  {/* Floating active action badge */}
-                  <div                     className="flex items-center gap-2.5 py-2 px-4 rounded-full border shadow-md backdrop-blur-md w-fit mx-auto mt-2 animate-pulse bg-surface border-border">
-                    <Loader2 className="w-4 h-4 text-primary animate-spin" />
-                    <span className="text-[12px] font-bold text-text-muted">AI Drafting Iron-Clad Clauses...</span>
-                  </div>
-
-                  {/* Mock Legal Document Page */}
-                  <div className="flex-1 rounded-2xl border p-6 sm:p-8 flex flex-col gap-6 shadow-sm overflow-hidden bg-surface border-border">
-                    {/* Header */}
-                    <div className="flex flex-col gap-2.5 border-b pb-4">
-                      <div className="w-2/5 h-3.5 rounded bg-text-subtle/20 animate-pulse" />
-                      <div className="w-1/4 h-2 rounded bg-text-subtle/10 animate-pulse" />
-                    </div>
-
-                    {/* Body Clauses */}
-                    <div className="flex-1 flex flex-col gap-5 overflow-hidden">
-                      {/* Clause 1 */}
-                      <div className="flex flex-col gap-2.5">
-                        <div className="w-12 h-3 rounded bg-text-subtle/20 animate-pulse" />
-                        <div className="w-full h-2 rounded bg-text-subtle/10 animate-pulse" />
-                        <div className="w-11/12 h-2 rounded bg-text-subtle/10 animate-pulse" />
-                        <div className="w-4/5 h-2 rounded bg-text-subtle/10 animate-pulse" />
-                      </div>
-
-                      {/* Clause 2 */}
-                      <div className="flex flex-col gap-2.5">
-                        <div className="w-16 h-3 rounded bg-text-subtle/20 animate-pulse" />
-                        <div className="w-11/12 h-2 rounded bg-text-subtle/10 animate-pulse" />
-                        <div className="w-full h-2 rounded bg-text-subtle/10 animate-pulse" />
-                        <div className="w-2/3 h-2 rounded bg-text-subtle/10 animate-pulse" />
-                      </div>
-
-                      {/* Clause 3 */}
-                      <div className="flex flex-col gap-2.5">
-                        <div className="w-14 h-3 rounded bg-text-subtle/20 animate-pulse" />
-                        <div className="w-full h-2 rounded bg-text-subtle/10 animate-pulse" />
-                        <div className="w-5/6 h-2 rounded bg-text-subtle/10 animate-pulse" />
-                      </div>
-                    </div>
-
-                    {/* Signature lines */}
-                    <div className="flex justify-between border-t pt-4 mt-auto">
-                      <div className="flex flex-col gap-1.5">
-                        <div className="w-20 h-1.5 rounded bg-text-subtle/20 animate-pulse" />
-                        <div className="w-12 h-1 rounded bg-text-subtle/10 animate-pulse" />
-                      </div>
-                      <div className="flex flex-col gap-1.5">
-                        <div className="w-20 h-1.5 rounded bg-text-subtle/20 animate-pulse" />
-                        <div className="w-12 h-1 rounded bg-text-subtle/10 animate-pulse" />
-                      </div>
-                    </div>
-                  </div>
+                  <Loader variant="comet" size={64} />
+                  <span className="text-[12px] font-bold text-text-muted animate-pulse">AI Drafting Iron-Clad Clauses...</span>
                 </motion.div>
               ) : draft ? (
                 <motion.div

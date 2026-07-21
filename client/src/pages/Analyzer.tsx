@@ -30,6 +30,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { Button } from '@/components/motion/button';
 import { Badge } from '@/components/ui/badge';
+import { Loader } from '@/components/motion/loader';
 
 export const Analyzer = () => {
   const { id } = useParams<{ id: string }>();
@@ -489,91 +490,8 @@ export const Analyzer = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-[calc(100vh-64px)] lg:h-[calc(100vh-80px)] flex flex-col lg:flex-row gap-8 bg-transparent lg:overflow-hidden pb-4">
-        {/* Skeleton Left Panel */}
-        <div className="w-full lg:flex-[1.5] h-[60vh] min-h-[400px] lg:h-full rounded-3xl border p-6 sm:p-8 flex flex-col gap-6 overflow-hidden bg-surface border-border">
-          <div className="flex items-center justify-between border-b pb-4">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-surface-2 animate-pulse flex items-center justify-center">
-                <FileText className="w-4 h-4 text-text-subtle/50" />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <div className="w-32 h-3.5 rounded bg-surface-2 animate-pulse" />
-                <div className="w-24 h-2 rounded bg-surface-2 animate-pulse opacity-50" />
-              </div>
-            </div>
-            <div className="w-28 h-8 rounded-xl bg-surface-2 animate-pulse" />
-          </div>
-
-          <div className="flex-1 flex flex-col gap-6 overflow-hidden mt-2 select-none">
-            {/* Title Line */}
-            <div className="w-2/5 h-4 bg-surface-2 rounded-md animate-pulse" />
-            
-            {/* Paragraph 1 */}
-            <div className="flex flex-col gap-3">
-              <div className="w-full h-3 bg-surface-2 rounded-md animate-pulse" />
-              <div className="w-[95%] h-3 bg-surface-2 rounded-md animate-pulse" />
-              <div className="w-[92%] h-3 bg-surface-2 rounded-md animate-pulse" />
-              <div className="w-[85%] h-3 bg-surface-2 rounded-md animate-pulse" />
-            </div>
-
-            {/* Paragraph 2 */}
-            <div className="flex flex-col gap-3">
-              <div className="w-full h-3 bg-surface-2 rounded-md animate-pulse" />
-              <div className="w-[98%] h-3 bg-surface-2 rounded-md animate-pulse" />
-              <div className="w-[90%] h-3 bg-surface-2 rounded-md animate-pulse" />
-              <div className="w-[60%] h-3 bg-surface-2 rounded-md animate-pulse" />
-            </div>
-
-            {/* Signature block */}
-            <div className="flex justify-between mt-auto border-t border-dashed pt-6">
-              <div className="flex flex-col gap-2.5">
-                <div className="w-32 h-3 bg-surface-2 rounded-md animate-pulse" />
-                <div className="w-20 h-2 bg-surface-2 rounded-md animate-pulse" />
-              </div>
-              <div className="flex flex-col gap-2.5">
-                <div className="w-32 h-3 bg-surface-2 rounded-md animate-pulse" />
-                <div className="w-20 h-2 bg-surface-2 rounded-md animate-pulse" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Skeleton Right Panel */}
-        <div className="w-full lg:w-[480px] shrink-0 flex flex-col gap-5 lg:overflow-y-auto pb-10 lg:pr-2 select-none">
-          {/* Scanning status banner */}
-          <div className="p-4 rounded-2xl border flex items-center justify-between animate-pulse bg-primary/3 border-primary/10">
-            <div className="flex items-center gap-2.5">
-              <Loader2 className="w-4 h-4 text-primary animate-spin" />
-              <span className="text-[12px] font-bold text-primary">Running AI Threat Scan...</span>
-            </div>
-            <div className="w-12 h-4 rounded-full bg-primary/20" />
-          </div>
-          
-          {/* Risk Gauge Skeleton */}
-          <div className="p-6 rounded-3xl border flex flex-col items-center gap-4 bg-surface border-border">
-            <div className="w-24 h-24 rounded-full border-4 border-dashed border-primary/20 flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-surface-2 animate-pulse" />
-            </div>
-            <div className="w-36 h-3 bg-surface-2 rounded-md animate-pulse" />
-            <div className="w-24 h-2.5 bg-surface-2 rounded-md animate-pulse opacity-50" />
-          </div>
-
-          {/* Key Red Flags Skeleton */}
-          <div className="p-6 rounded-3xl border flex flex-col gap-4 bg-surface border-border">
-            <div className="w-28 h-3.5 bg-surface-2 rounded-md animate-pulse" />
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-3">
-                <div className="w-4 h-4 rounded bg-red-500/20 animate-pulse shrink-0" />
-                <div className="flex-1 h-3 bg-surface-2 rounded-md animate-pulse" />
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-4 h-4 rounded bg-yellow-500/20 animate-pulse shrink-0" />
-                <div className="flex-1 h-3 bg-surface-2 rounded-md animate-pulse" />
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="min-h-[calc(100vh-64px)] lg:h-[calc(100vh-80px)] flex items-center justify-center bg-transparent">
+        <Loader variant="morph" size={48} label="Analyzing contract..." />
       </div>
     );
   }

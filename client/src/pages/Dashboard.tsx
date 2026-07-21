@@ -17,6 +17,7 @@ import { Button } from '@/components/motion/button';
 import { NumberTicker } from '@/components/motion/number-ticker';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Loader } from '@/components/motion/loader';
 
 const personaIconMap: Record<string, LucideIcon> = {
   'Chill Friend': Coffee,
@@ -197,7 +198,7 @@ export const Dashboard = () => {
                   {history ? (
                     <NumberTicker value={stat.value as number} />
                   ) : (
-                    <span className="w-12 h-6 bg-surface-2 rounded animate-pulse inline-block" />
+                    <Loader variant="spinner" size={20} />
                   )}
                 </p>
                 <p className="text-xs text-text-subtle mt-0.5">{stat.suffix}</p>

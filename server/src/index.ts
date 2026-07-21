@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
@@ -6,6 +6,7 @@ import path from 'path';
 import fs from 'fs';
 
 import analysisRoutes from './routes/analysis.routes';
+import { AppError } from './utils/app-error';
 
 dotenv.config();
 
@@ -48,6 +49,22 @@ if (process.env.NODE_ENV === 'production') {
     res.json({ message: 'Contract-Chill API is running in development mode' });
   });
 }
+
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  if (err instanceof AppError) {
+    return res.status(err.statusCode).json({
+      success: false,
+      error: err.message,
+      code: err.code,
+    });
+  }
+
+  console.error('Unhandled error:', err);
+  res.status(500).json({
+    success: false,
+    error: 'Internal server error',
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`[server]: Server is running at http://localhost:${PORT}`);

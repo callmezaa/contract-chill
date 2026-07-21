@@ -6,6 +6,7 @@ import fs from 'fs';
 import crypto from 'crypto';
 import { AnalysisController } from '../controllers/analysis.controller';
 import { requireAuth, AuthenticatedRequest } from '../middleware/auth.middleware';
+import { asyncHandler } from '../utils/async-handler';
 
 const router = Router();
 
@@ -67,10 +68,10 @@ const actionLimiter = rateLimit({
 router.post('/analyze', requireAuth, analyzeLimiter, upload.single('contract'), (req, res, next) => {
   console.log('API /analyze hit!');
   next();
-}, AnalysisController.analyze);
+}, asyncHandler(AnalysisController.analyze));
 
-router.post('/chat', requireAuth, actionLimiter, AnalysisController.chat);
-router.post('/generate-script', requireAuth, actionLimiter, AnalysisController.generateScript);
-router.post('/generate-contract', requireAuth, actionLimiter, AnalysisController.generateContract);
+router.post('/chat', requireAuth, actionLimiter, asyncHandler(AnalysisController.chat));
+router.post('/generate-script', requireAuth, actionLimiter, asyncHandler(AnalysisController.generateScript));
+router.post('/generate-contract', requireAuth, actionLimiter, asyncHandler(AnalysisController.generateContract));
 
 export default router;

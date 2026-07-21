@@ -35,6 +35,11 @@ app.use('/uploads', express.static(uploadsDir));
 // API Routes
 app.use('/api', analysisRoutes);
 
+// Health check for Railway
+app.get('/health', (_req: Request, res: Response) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 // Serve Static Frontend Assets in Production
 if (process.env.NODE_ENV === 'production') {
   const clientDistPath = path.join(__dirname, '../../client/dist');

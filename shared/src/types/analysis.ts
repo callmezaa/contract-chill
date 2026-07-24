@@ -1,7 +1,5 @@
 export type RiskLevel = 'High' | 'Medium' | 'Safe';
 
-export type Persona = 'Angry Lawyer' | 'Chill Friend' | 'Corporate Mentor' | 'Freelancer Senior';
-
 export interface RedFlag {
   clause: string;
   risk: RiskLevel;
@@ -17,3 +15,5 @@ export interface AnalysisResult {
   jargons?: { term: string; definition: string }[];
   personaExplanation: string;
 }
+
+export type Persona = 'Angry Lawyer' | 'Chill Friend' | 'Corporate Mentor' | 'Freelancer Senior';

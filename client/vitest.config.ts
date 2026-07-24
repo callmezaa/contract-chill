@@ -9,6 +9,7 @@ export default defineConfig({
     css: true,
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@chill/shared': path.resolve(__dirname, '../shared/src'),
     },
   },
 })

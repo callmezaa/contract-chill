@@ -8,8 +8,14 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "ignoreDeprecations": "6.0",
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vitest/globals"],
+    "baseUrl": ".",
+    "paths": {
+      "@chill/shared": ["../shared/dist"]
+    }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/test", "**/*.test.ts"]
 }

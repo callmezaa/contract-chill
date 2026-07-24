@@ -1,13 +1,34 @@
 {
   "name": "contract-chill",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server",
+    "shared"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm-run-all --parallel dev:client dev:server",
+    "dev:client": "npm run dev -w client",
+    "dev:server": "npm run dev -w server",
+    "build": "npm-run-all --sequential build:shared build:client build:server",
+    "build:client": "npm run build -w client",
+    "build:server": "npm run build -w server",
+    "build:shared": "npm run build -w shared",
+    "test": "npm-run-all --parallel test:client test:server",
+    "test:client": "npm run test:run -w client",
+    "test:server": "npm run test:run -w server",
+    "test:run": "npm-run-all --parallel test:run:client test:run:server",
+    "test:run:client": "npm run test:run -w client",
+    "test:run:server": "npm run test:run -w server",
+    "lint": "npm run lint -w client",
+    "clean": "npm-run-all --parallel clean:client clean:server clean:shared",
+    "clean:client": "rm -rf client/dist",
+    "clean:server": "rm -rf server/dist",
+    "clean:shared": "rm -rf shared/dist"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs"
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  },
+  "license": "ISC"
 }

@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI, Part } from '@google/generative-ai';
 import dotenv from 'dotenv';
-import type { Persona } from '../types/analysis';
+import type { Persona } from '@chill/shared';
 
 dotenv.config();
 

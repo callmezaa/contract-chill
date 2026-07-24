@@ -7,7 +7,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { analyzeContract } from '../services/api';
-import type { Persona } from '../types/analysis';
+import type { Persona } from '@chill/shared';
 import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';

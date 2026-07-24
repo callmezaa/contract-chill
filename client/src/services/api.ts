@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toast } from 'sonner';
 import { auth } from '../lib/firebase';
-import type { AnalysisResult, Persona } from '../types/analysis';
+import type { AnalysisResult, Persona } from '@chill/shared';
 
 export const API_URL = import.meta.env.DEV ? 'http://localhost:5000/api' : '/api';
 

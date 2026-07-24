@@ -9,7 +9,8 @@
     "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@chill/shared": ["../shared/src"]
     },
 
     /* Bundler mode */

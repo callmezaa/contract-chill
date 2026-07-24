@@ -23,7 +23,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { useState, useEffect, useRef } from 'react';
 import { NegotiationScriptModal } from '../components/NegotiationScriptModal';
-import type { AnalysisResult, Persona, RedFlag } from '../types/analysis';
+import type { AnalysisResult, Persona, RedFlag } from '@chill/shared';
 import { Worker, Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import { useTheme } from '../context/ThemeContext';
@@ -689,7 +689,7 @@ export const Analyzer = () => {
         </div>
         <div className="flex-1 overflow-hidden relative bg-transparent">
           {fileUrl ? (
-            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
               <div className="h-full">
                 <Viewer fileUrl={fileUrl} />
               </div>

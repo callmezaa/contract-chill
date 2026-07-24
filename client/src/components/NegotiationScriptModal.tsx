@@ -2,7 +2,7 @@ import { Copy, Check, MessageSquare, Send, MessageCircle, Mail, Shield, Zap } fr
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { Loader2, Sparkles, RefreshCw } from 'lucide-react';
-import type { Persona } from '../types/analysis';
+import type { Persona } from '@chill/shared';
 import { generateNegotiationScript } from '../services/api';
 import { MorphingModal } from '@/components/motion/morphing-modal';
 

@@ -46,6 +46,8 @@ COPY --from=server-builder /app/server/dist ./server/dist
 COPY --from=client-builder /app/client/dist ./client/dist
 COPY server/package*.json ./server/
 
+RUN mkdir -p /app/server/uploads && chown nodeuser:nodejs /app/server/uploads
+
 USER nodeuser
 
 EXPOSE 8080

@@ -1,4 +1,4 @@
-import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, query, where, getDocs, deleteDoc, doc, orderBy, limit, startAfter } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { useState, useEffect } from 'react';
@@ -10,6 +10,8 @@ import { Button } from '@/components/motion/button';
 import { Input } from '@/components/motion/input';
 import { Loader } from '@/components/motion/loader';
 
+const PAGE_SIZE = 10;
+
 export const History = () => {
   const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
@@ -17,6 +19,9 @@ export const History = () => {
 
   const [history, setHistory] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [lastDoc, setLastDoc] = useState<any>(null);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   useDocumentTitle('Analysis History - ContractChill');
 
@@ -27,11 +32,15 @@ export const History = () => {
         setIsLoading(true);
         const q = query(
           collection(db, 'analyses'),
-          where('userId', '==', user.uid)
+          where('userId', '==', user.uid),
+          orderBy('createdAt', 'desc'),
+          limit(PAGE_SIZE)
         );
         const snap = await getDocs(q);
         const results = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
-        setHistory(results.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)));
+        setHistory(results);
+        setLastDoc(snap.docs[snap.docs.length - 1] ?? null);
+        setHasMore(snap.docs.length === PAGE_SIZE);
       } catch (err) {
         console.error('History fetch error:', err);
       } finally {
@@ -40,6 +49,29 @@ export const History = () => {
     };
     fetchHistory();
   }, [user]);
+
+  const loadMore = async () => {
+    if (!hasMore || isLoadingMore || !lastDoc || !user) return;
+    try {
+      setIsLoadingMore(true);
+      const q = query(
+        collection(db, 'analyses'),
+        where('userId', '==', user.uid),
+        orderBy('createdAt', 'desc'),
+        startAfter(lastDoc),
+        limit(PAGE_SIZE)
+      );
+      const snap = await getDocs(q);
+      const results = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
+      setHistory(prev => [...prev, ...results]);
+      setLastDoc(snap.docs[snap.docs.length - 1] ?? null);
+      setHasMore(snap.docs.length === PAGE_SIZE);
+    } catch (err) {
+      console.error('Load more error:', err);
+    } finally {
+      setIsLoadingMore(false);
+    }
+  };
 
   const handleDelete = async (e: React.MouseEvent, id: string) => {
     e.preventDefault();
@@ -176,7 +208,7 @@ export const History = () => {
           {/* Dynamic Result Count */}
           {(searchQuery || activeFilter !== 'All') && (
             <div className="text-[10px] font-bold text-text-subtle whitespace-nowrap shrink-0 mt-[-4px]">
-              showing <span className="text-primary">{filtered.length}</span> of {history.length}
+              showing <span className="text-primary">{filtered.length}</span> of {history.length} loaded
             </div>
           )}
         </div>
@@ -303,6 +335,34 @@ export const History = () => {
               Clear all filters
             </Button>
           </div>
+        )}
+
+        {/* Load More */}
+        {!isLoading && filtered && filtered.length > 0 && hasMore && (
+          <div className="flex justify-center pt-2">
+            <Button
+              variant="outline"
+              size="md"
+              onClick={loadMore}
+              disabled={isLoadingMore}
+            >
+              {isLoadingMore ? (
+                <>
+                  <Loader variant="spinner" size={16} className="mr-2" />
+                  Loading...
+                </>
+              ) : (
+                'Load more'
+              )}
+            </Button>
+          </div>
+        )}
+
+        {/* All loaded indicator */}
+        {!isLoading && !hasMore && history.length > PAGE_SIZE && (
+          <p className="text-center text-xs text-text-subtle py-4">
+            All {history.length} analyses loaded
+          </p>
         )}
       </div>
     </div>

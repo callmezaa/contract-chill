@@ -17,6 +17,7 @@ const Settings = lazy(() => import('../pages/Settings').then(m => ({ default: m.
 const LoginPage = lazy(() => import('../pages/LoginPage').then(m => ({ default: m.LoginPage })));
 const RegisterPage = lazy(() => import('../pages/RegisterPage').then(m => ({ default: m.RegisterPage })));
 const Analyzer = lazy(() => import('../pages/Analyzer').then(m => ({ default: m.Analyzer })));
+const Analytics = lazy(() => import('../pages/Analytics').then(m => ({ default: m.Analytics })));
 
 export const AnimatedRoutes = () => {
   const location = useLocation();
@@ -27,7 +28,7 @@ export const AnimatedRoutes = () => {
   }, [location.pathname]);
 
   // Group all app routes under the same key so Layout doesn't unmount
-  const isAppRoute = ['/dashboard', '/generator', '/history', '/settings', '/analyze'].some(p => location.pathname.startsWith(p));
+  const isAppRoute = ['/dashboard', '/generator', '/history', '/settings', '/analytics', '/analyze'].some(p => location.pathname.startsWith(p));
   const routeKey = isAppRoute ? 'app-layout' : location.pathname;
 
   const lazyLoad = (Component: React.ComponentType) => (
@@ -52,6 +53,7 @@ export const AnimatedRoutes = () => {
             <Route path="/generator" element={lazyLoad(Generator)} />
             <Route path="/history" element={lazyLoad(History)} />
             <Route path="/settings" element={lazyLoad(Settings)} />
+            <Route path="/analytics" element={lazyLoad(Analytics)} />
             <Route path="/analyze/:id" element={lazyLoad(Analyzer)} />
           </Route>
         </Route>

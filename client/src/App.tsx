@@ -5,7 +5,7 @@ import { Toaster } from 'sonner';
 import { AnimatedRoutes } from './components/AnimatedRoutes';
 import { CommandPalette } from '@/components/motion/command-palette';
 import { InstallPrompt } from '@/components/InstallPrompt';
-import { LayoutDashboard, FilePenLine, History as HistoryIcon, Settings as SettingsIcon } from 'lucide-react';
+import { LayoutDashboard, FilePenLine, History as HistoryIcon, Settings as SettingsIcon, BarChart3 } from 'lucide-react';
 
 import { Component, useState } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
@@ -59,6 +59,7 @@ function CommandPaletteWithNav() {
         { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, onSelect: () => navigate('/dashboard') },
         { id: 'generator', label: 'Generator', icon: FilePenLine, onSelect: () => navigate('/generator') },
         { id: 'history', label: 'History', icon: HistoryIcon, onSelect: () => navigate('/history') },
+        { id: 'analytics', label: 'Analytics', icon: BarChart3, onSelect: () => navigate('/analytics') },
         { id: 'settings', label: 'Settings', icon: SettingsIcon, onSelect: () => navigate('/settings') },
       ]}
     />

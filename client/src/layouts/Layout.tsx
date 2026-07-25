@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, FilePenLine, History, Settings, LogOut, Sun, Moon, Menu, X, Globe } from 'lucide-react';
+import { LayoutDashboard, FilePenLine, History, Settings, LogOut, Sun, Moon, Menu, X, Globe, BarChart3 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Tooltip } from '@/components/motion/tooltip';
@@ -13,6 +13,7 @@ const navItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/generator', icon: FilePenLine, label: 'Generator' },
   { to: '/history', icon: History, label: 'History' },
+  { to: '/analytics', icon: BarChart3, label: 'Analytics' },
   { to: '/settings', icon: Settings, label: 'Settings' },
 ];
 

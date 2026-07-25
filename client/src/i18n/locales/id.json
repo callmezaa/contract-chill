@@ -521,5 +521,24 @@
     "freelancers": "Freelancer",
     "founders": "Founder",
     "creators": "Kreator"
+  },
+  "analytics": {
+    "title": "Analitik",
+    "subtitle": "Wawasan dari analisis kontrak Anda",
+    "totalAnalyses": "Total Analisis",
+    "avgRiskScore": "Rata-rata Skor Risiko",
+    "safeRate": "Tingkat Aman",
+    "riskDistribution": "Distribusi Risiko",
+    "personaPopularity": "Popularitas Persona",
+    "activityTimeline": "Timeline Aktivitas (8 Minggu Terakhir)",
+    "topRedFlags": "Red Flag Utama",
+    "totalFlags": "total flag",
+    "highRisk": "Tinggi",
+    "mediumRisk": "Sedang",
+    "safeRisk": "Aman",
+    "noData": "Belum ada data",
+    "noFlagsYet": "Belum terdeteksi red flag",
+    "emptyTitle": "Belum ada analisis",
+    "emptyDescription": "Mulai analisis kontrak untuk melihat wawasan analitik di sini."
   }
 }

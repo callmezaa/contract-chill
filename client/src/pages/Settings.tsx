@@ -11,8 +11,10 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { Button } from '@/components/motion/button';
 import { Switch } from '@/components/motion/switch';
 import { Card, CardContent } from '@/components/ui/card';
+import { useTranslation } from 'react-i18next';
 
 export const Settings = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [displayName, setDisplayName] = useState(user?.displayName || '');
   const [isUpdating, setIsUpdating] = useState(false);
@@ -24,7 +26,7 @@ export const Settings = () => {
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  useDocumentTitle('Settings - ContractChill');
+  useDocumentTitle(t('settings.title'));
 
   useEffect(() => {
     const loadSettings = async () => {
@@ -47,10 +49,13 @@ export const Settings = () => {
       await setDoc(doc(db, 'users', user.uid), {
         notifications: newNotifications
       }, { merge: true });
-      toast.success(`${key === 'analysis' ? 'Analysis' : 'Weekly'} notifications ${!notifications[key] ? 'enabled' : 'disabled'}`);
+      toast.success(t('settings.toasts.settingsSaved', {
+        type: key === 'analysis' ? t('settings.notifications.analysisComplete') : t('settings.notifications.weeklySummary'),
+        status: !notifications[key] ? 'enabled' : 'disabled'
+      }));
     } catch (error) {
       console.error('Error saving settings:', error);
-      toast.error('Failed to save settings');
+      toast.error(t('settings.toasts.settingsSaveFailed'));
     }
   };
 
@@ -63,10 +68,10 @@ export const Settings = () => {
       await updateProfile(user, { displayName });
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 3000);
-      toast.success('Profile updated successfully');
+      toast.success(t('settings.toasts.profileUpdated'));
     } catch (error) {
       console.error('Error updating profile:', error);
-      toast.error('Failed to update profile');
+      toast.error(t('settings.toasts.profileUpdateFailed'));
     } finally {
       setIsUpdating(false);
     }
@@ -84,11 +89,11 @@ export const Settings = () => {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       await updateProfile(user, { photoURL: data.photoURL });
-      toast.success('Photo uploaded successfully');
+      toast.success(t('settings.toasts.photoUploaded'));
       window.location.reload(); 
     } catch (error) {
       console.error('Error uploading photo:', error);
-      toast.error('Failed to upload photo');
+      toast.error(t('settings.toasts.photoUploadFailed'));
     } finally {
       setIsUploading(false);
     }
@@ -97,23 +102,19 @@ export const Settings = () => {
   const handleDeleteAccount = async () => {
     if (!user) return;
     
-    const confirmed = window.confirm(
-      'Are you absolutely sure you want to delete your account?\n\nThis action cannot be undone. All your data, analysis history, and active subscriptions will be permanently erased.'
-    );
+    const confirmed = window.confirm(t('settings.deleteConfirm'));
     
     if (!confirmed) return;
 
     try {
-      // In a production app, we would first delete the user's data from Firestore and Storage here.
-      // For this implementation, we will delete the Auth user.
       await deleteUser(user);
-      toast.success('Account deleted permanently');
+      toast.success(t('settings.toasts.accountDeleted'));
     } catch (error: any) {
       console.error('Error deleting account:', error);
       if (error.code === 'auth/requires-recent-login') {
-        toast.error('Security Check', { description: 'Please log out and log back in before deleting your account.' });
+        toast.error(t('settings.toasts.securityCheck'), { description: t('settings.toasts.securityCheckDesc') });
       } else {
-        toast.error('Failed to delete account', { description: 'Please contact support if the issue persists.' });
+        toast.error(t('settings.toasts.deleteFailed'), { description: t('settings.toasts.deleteFailedDesc') });
       }
     }
   };
@@ -122,8 +123,8 @@ export const Settings = () => {
     <div className="flex flex-col gap-8 max-w-4xl">
       <div className="flex justify-between items-center">
         <div>
-           <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-[-0.05em] text-text">Settings</h1>
-          <p className="text-text-muted text-sm mt-1">Manage your account and preferences.</p>
+           <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-[-0.05em] text-text">{t('settings.header')}</h1>
+          <p className="text-text-muted text-sm mt-1">{t('settings.subtitle')}</p>
         </div>
         <AnimatePresence>
           {showSuccess && (
@@ -134,7 +135,7 @@ export const Settings = () => {
               className="flex items-center gap-2 text-green-500 bg-green-500/10 px-4 py-2 rounded-xl border border-green-500/20 text-sm font-medium shadow-sm"
             >
               <CheckCircle2 className="w-4 h-4" />
-              Changes saved
+              {t('settings.changesSaved')}
             </motion.div>
           )}
         </AnimatePresence>
@@ -148,8 +149,8 @@ export const Settings = () => {
             <User className="w-5 h-5 text-primary" />
           </div>
           <div>
-        <h2 className="text-lg font-display font-semibold text-text leading-tight">Profile information</h2>
-            <p className="text-xs text-text-muted mt-0.5 font-medium">Update your photo and personal details.</p>
+        <h2 className="text-lg font-display font-semibold text-text leading-tight">{t('settings.profile.title')}</h2>
+            <p className="text-xs text-text-muted mt-0.5 font-medium">{t('settings.profile.subtitle')}</p>
           </div>
         </div>
 
@@ -173,7 +174,7 @@ export const Settings = () => {
               {/* Hover Overlay */}
               <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center gap-1.5 opacity-0 group-hover:opacity-100 transition-all duration-300">
                 <Camera className="w-5 h-5 text-white/90" />
-                <span className="text-[10px] font-bold text-white/90 tracking-wide">change photo</span>
+                <span className="text-[10px] font-bold text-white/90 tracking-wide">{t('settings.profile.changePhoto')}</span>
               </div>
 
               {/* Uploading State */}
@@ -195,19 +196,19 @@ export const Settings = () => {
 
           <div className="flex-1 grid grid-cols-1 gap-6 w-full">
             <div className="flex flex-col gap-2">
-              <label className="text-xs font-bold text-text-subtle ml-1">Display name</label>
+              <label className="text-xs font-bold text-text-subtle ml-1">{t('settings.profile.displayName')}</label>
               <input
                 type="text"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 className="input px-5 py-3.5 bg-background focus:ring-4 focus:ring-primary/5 transition-all text-sm font-semibold border-border/50 hover:border-primary/20"
-                placeholder="Your name"
+                placeholder={t('settings.profile.displayNamePlaceholder')}
                 required
                 title="Display Name"
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-xs font-bold text-text-subtle ml-1">Email address</label>
+              <label className="text-xs font-bold text-text-subtle ml-1">{t('settings.profile.emailAddress')}</label>
               <input
                 type="text"
                 value={user?.email || ''}
@@ -225,7 +226,7 @@ export const Settings = () => {
             disabled={isUpdating || displayName === user?.displayName}
           >
             {isUpdating && <Loader2 className="w-4 h-4 animate-spin" />}
-            Save changes
+            {t('common.buttons.saveChanges')}
           </Button>
         </div>
       </form>
@@ -238,7 +239,7 @@ export const Settings = () => {
             <div className="w-9 h-9 rounded-xl bg-surface flex items-center justify-center">
               <CreditCard className="w-4.5 h-4.5 text-primary" />
             </div>
-            <h2 className="text-base font-display font-bold text-text">Subscription</h2>
+            <h2 className="text-base font-display font-bold text-text">{t('settings.subscription.title')}</h2>
           </div>
 
           <div className="p-5 rounded-2xl bg-surface/50 border border-border/40 hover:border-primary/10 transition-all flex flex-col gap-4">
@@ -247,11 +248,11 @@ export const Settings = () => {
                 <Shield className="w-5 h-5 text-primary/60" />
               </div>
               <div>
-                 <p className="text-sm font-semibold text-text">Free plan</p>
-                <p className="text-[10px] text-text-muted font-medium">20 analyses per day</p>
+                 <p className="text-sm font-semibold text-text">{t('settings.subscription.freePlan')}</p>
+                <p className="text-[10px] text-text-muted font-medium">{t('settings.subscription.analysesPerDay')}</p>
               </div>
             </div>
-            <Button size="sm" className="w-full">Upgrade to pro</Button>
+            <Button size="sm" className="w-full">{t('settings.subscription.upgradeButton')}</Button>
           </div>
         </Card>
 
@@ -261,13 +262,13 @@ export const Settings = () => {
             <div className="w-9 h-9 rounded-xl bg-surface flex items-center justify-center">
               <Bell className="w-4.5 h-4.5 text-primary" />
             </div>
-            <h2 className="text-base font-display font-bold text-text">Notifications</h2>
+            <h2 className="text-base font-display font-bold text-text">{t('settings.notifications.title')}</h2>
           </div>
           
           <div className="flex flex-col gap-4 mt-1">
             {[
-              { id: 'analysis', title: 'Analysis complete', desc: 'Notify when scan finishes' },
-              { id: 'weekly', title: 'Weekly summary', desc: 'Your contract insights' }
+              { id: 'analysis', title: t('settings.notifications.analysisComplete'), desc: t('settings.notifications.analysisCompleteDesc') },
+              { id: 'weekly', title: t('settings.notifications.weeklySummary'), desc: t('settings.notifications.weeklySummaryDesc') }
             ].map((item) => (
               <div key={item.id} className="flex items-center justify-between group">
                 <div>
@@ -291,14 +292,14 @@ export const Settings = () => {
             <div className="w-9 h-9 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
               <AlertTriangle className="w-4.5 h-4.5 text-red-500" />
             </div>
-            <h2 className="text-base font-display font-bold text-red-500">Danger Zone</h2>
+            <h2 className="text-base font-display font-bold text-red-500">{t('settings.dangerZone.title')}</h2>
           </div>
           
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative z-10">
             <div>
-              <p className="text-sm font-bold text-text">Delete Account</p>
+              <p className="text-sm font-bold text-text">{t('settings.dangerZone.deleteAccount')}</p>
               <p className="text-[12px] text-text-muted mt-1 max-w-sm leading-relaxed">
-                Permanently remove your account, subscription, and all associated data. This action cannot be undone.
+                {t('settings.dangerZone.deleteDescription')}
               </p>
             </div>
             <Button
@@ -307,7 +308,7 @@ export const Settings = () => {
               className="bg-red-500 hover:bg-red-600 text-white shrink-0"
             >
               <Trash2 className="w-4 h-4" />
-              Delete Account
+              {t('common.buttons.deleteAccount')}
             </Button>
           </div>
         </Card>

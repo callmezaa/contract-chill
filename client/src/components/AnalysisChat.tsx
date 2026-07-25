@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Send, Loader2, ShieldCheck, X, MessageSquare, Mail, Shield, Scale, type LucideIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { api } from '../services/api';
 import { useTheme } from '../context/ThemeContext';
 
@@ -16,6 +17,7 @@ interface AnalysisChatProps {
 }
 
 export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisChatProps) => {
+  const { t } = useTranslation();
   const { theme } = useTheme();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -69,7 +71,7 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
       setMessages(prev => [...prev, { role: 'ai', content: response.data.response }]);
     } catch (error) {
       console.error('Chat error:', error);
-      setMessages(prev => [...prev, { role: 'ai', content: "Sorry, I'm having trouble connecting right now. Can you try again?" }]);
+      setMessages(prev => [...prev, { role: 'ai', content: t('chat.connectionError') }]);
     } finally {
       setIsLoading(false);
     }
@@ -78,22 +80,22 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
   const suggestedChips: { Icon: LucideIcon; label: string; prompt: string }[] = [
     { 
       Icon: Mail,
-      label: 'Tulis email penolakan', 
+      label: t('chat.suggestedChips.writeRejectionEmail'), 
       prompt: `Tuliskan draft email penolakan berisiko tinggi yang profesional dan persuasif dengan gaya bicara khas ${persona}.` 
     },
     { 
       Icon: Shield,
-      label: 'Cara revisi klausul', 
+      label: t('chat.suggestedChips.howToReviseClause'), 
       prompt: `Bagaimana cara merevisi klausul paling berisiko dalam kontrak ini agar lebih adil menurut pandangan ${persona}?` 
     },
     { 
       Icon: MessageSquare,
-      label: 'Sederhanakan bahasa', 
+      label: t('chat.suggestedChips.simplifyLanguage'), 
       prompt: `Minta ${persona} untuk menerjemahkan bahasa hukum (legalese) yang rumit dalam kontrak ini menjadi penjelasan santai yang mudah dimengerti.` 
     },
     { 
       Icon: Scale,
-      label: 'Cari risiko terlewat', 
+      label: t('chat.suggestedChips.findMissedRisks'), 
       prompt: `Menurut pandangan tajam ${persona}, apakah ada jebakan hukum tersembunyi atau hak penting saya yang terlewatkan di dokumen ini?` 
     }
   ];
@@ -115,7 +117,7 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
       setMessages(prev => [...prev, { role: 'ai', content: response.data.response }]);
     } catch (error) {
       console.error('Chat error:', error);
-      setMessages(prev => [...prev, { role: 'ai', content: "Sorry, I'm having trouble connecting right now. Can you try again?" }]);
+      setMessages(prev => [...prev, { role: 'ai', content: t('chat.connectionError') }]);
     } finally {
       setIsLoading(false);
     }
@@ -145,8 +147,8 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
                   <ShieldCheck className="w-4.5 h-4.5 text-primary" />
                 </div>
                 <div>
-                   <h3 id="analysis-chat-title" className="text-xs font-display font-semibold text-text leading-tight">Ask {persona}</h3>
-                  <p className="text-[9px] text-text-subtle font-medium">Instant insights</p>
+                   <h3 id="analysis-chat-title" className="text-xs font-display font-semibold text-text leading-tight">{t('chat.title', { persona })}</h3>
+                  <p className="text-[9px] text-text-subtle font-medium">{t('chat.subtitle')}</p>
                 </div>
               </div>
               <button 
@@ -154,7 +156,7 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
                 className={`p-1.5 rounded-lg transition-colors text-text-subtle ${
                   isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50'
                 }`}
-                title="Close chat"
+                title={t('chat.closeChat')}
               >
                 <X className="w-4 h-4" />
               </button>
@@ -172,7 +174,7 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
                     <MessageSquare className="w-5 h-5 text-text-subtle opacity-20" />
                   </div>
                   <p className="text-[11px] text-text-muted font-medium leading-relaxed">
-                    Ask me anything about this contract.
+                    {t('chat.askAnything')}
                   </p>
                 </div>
               )}
@@ -217,7 +219,7 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
                     isDark ? 'bg-surface-2/80 border-white/5' : 'bg-white border-slate-100'
                   }`}>
                     <Loader2 className="w-3 h-3 animate-spin text-primary" />
-                    <span className="text-[11px] font-semibold text-text-muted">Thinking...</span>
+                    <span className="text-[11px] font-semibold text-text-muted">{t('common.labels.thinking')}</span>
                   </div>
                 </div>
               )}
@@ -261,7 +263,7 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask a question..."
+                  placeholder={t('chat.placeholder')}
                   className={`w-full border rounded-xl pl-3.5 pr-10 py-2.5 text-[12px] text-text placeholder:text-text-subtle focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all ${
                     isDark ? 'bg-black/40 border-white/10' : 'bg-slate-50 border-slate-200'
                   }`}
@@ -270,7 +272,7 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
                   type="submit"
                   disabled={isLoading || !input.trim()}
                   className="absolute right-1.5 top-1.5 p-1.5 bg-primary text-white rounded-lg hover:bg-primary-dark transition-all disabled:opacity-40"
-                  title="Send message"
+                  
                 >
                   <Send className="w-3.5 h-3.5" />
                 </button>
@@ -294,7 +296,7 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
                   : 'bg-white border border-slate-200 text-slate-600 shadow-slate-200/50'
               }`}
             >
-              ask me anything about this contract!
+              {t('chat.tooltip')}
             </motion.div>
           )}
         </AnimatePresence>
@@ -304,7 +306,7 @@ export const AnalysisChat = ({ fileUrl, previousAnalysis, persona }: AnalysisCha
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsOpen(!isOpen)}
           className="relative w-14 h-14 bg-primary text-primary-foreground rounded-2xl flex items-center justify-center shadow-lg hover:bg-primary/90 transition-all z-10"
-          title={isOpen ? "close chat" : "ask ai"}
+          title={isOpen ? t('chat.closeChatTitle') : t('chat.openChat')}
         >
           {/* Pulsing indicator */}
           {!isOpen && (

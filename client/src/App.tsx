@@ -9,9 +9,11 @@ import { LayoutDashboard, FilePenLine, History as HistoryIcon, Settings as Setti
 
 import { Component, useState } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
+import { withTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 
-class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean; error: Error | null }> {
-  constructor(props: { children: ReactNode }) {
+class ErrorBoundaryInner extends Component<{ children: ReactNode; t: TFunction }, { hasError: boolean; error: Error | null }> {
+  constructor(props: { children: ReactNode; t: TFunction }) {
     super(props);
     this.state = { hasError: false, error: null };
   }
@@ -26,9 +28,10 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 
   render() {
     if (this.state.hasError) {
+      const { t } = this.props;
       return (
         <div className="min-h-screen flex flex-col items-center justify-center p-10 bg-red-50 text-red-900">
-          <h1 className="text-2xl font-bold mb-4">Application Crash</h1>
+          <h1 className="text-2xl font-bold mb-4">{t('errors.applicationCrash')}</h1>
           <pre className="bg-white p-6 rounded-xl border border-red-200 text-xs overflow-auto max-w-full">
             {this.state.error?.stack}
           </pre>
@@ -36,7 +39,7 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
             onClick={() => window.location.href = '/dashboard'}
             className="mt-6 px-6 py-2 bg-red-600 text-white rounded-lg font-bold"
           >
-            Back to Dashboard
+            {t('common.buttons.backToDashboard')}
           </button>
         </div>
       );
@@ -44,6 +47,8 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
     return this.props.children;
   }
 }
+
+const ErrorBoundary = withTranslation()(ErrorBoundaryInner);
 
 
 function CommandPaletteWithNav() {

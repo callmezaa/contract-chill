@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { motion } from 'motion/react';
 import {
   AlertTriangle,
@@ -33,6 +34,7 @@ import { Badge } from '@/components/ui/badge';
 import { Loader } from '@/components/motion/loader';
 
 export const Analyzer = () => {
+  const { t, i18n } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { theme } = useTheme();
   const location = useLocation();
@@ -51,12 +53,12 @@ export const Analyzer = () => {
   
   const isDark = theme === 'dark';
 
-  useDocumentTitle(isLoading ? 'Analyzing Contract...' : 'Analysis Result - ContractChill');
+  useDocumentTitle(isLoading ? t('analyzer.loadingTitle') : t('analyzer.title'));
 
   const handleCopySummary = async () => {
     if (!data?.result?.summary) return;
     try {
-      const textToCopy = `ContractChill Analysis Summary:\n\n${data.result.summary}\n\nKey Red Flags:\n${data.result.redFlags?.map(rf => `- [${rf.risk}] ${rf.clause}: ${rf.explanation}`).join('\n') || 'None detected.'}`;
+      const textToCopy = `${t('common.appName')} Analysis Summary:\n\n${data.result.summary}\n\nKey Red Flags:\n${data.result.redFlags?.map(rf => `- [${rf.risk}] ${rf.clause}: ${rf.explanation}`).join('\n') || 'None detected.'}`;
       await navigator.clipboard.writeText(textToCopy);
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
@@ -79,12 +81,12 @@ export const Analyzer = () => {
 
     const { result, persona } = data;
     const title = `ContractChill_Analysis_${id || 'Report'}`;
+    const locale = i18n.language === 'id' ? 'id-ID' : 'en-US';
     
-    // Formatting Jargons
     const jargonsHtml = result.jargons && result.jargons.length > 0 
       ? `
         <div class="section">
-          <h2>Jargon Translator</h2>
+          <h2>${t('analyzer.exportJargons')}</h2>
           <div class="grid">
             ${result.jargons.map(j => `
               <div class="jargon-card">
@@ -96,11 +98,10 @@ export const Analyzer = () => {
         </div>
       ` : '';
 
-    // Formatting Red Flags
     const redFlagsHtml = result.redFlags && result.redFlags.length > 0 
       ? `
         <div class="section">
-          <h2>Critical Risks & Red Flags</h2>
+          <h2>${t('analyzer.exportRedFlags')}</h2>
           <div class="grid">
             ${result.redFlags.map((flag, idx) => `
               <div class="flag-card ${flag.risk.toLowerCase()}">
@@ -109,29 +110,27 @@ export const Analyzer = () => {
                   <span class="flag-number">#${idx + 1}</span>
                 </div>
                 <div class="clause-quote">"${flag.clause}"</div>
-                <p><strong>Verdict / Explanation:</strong> ${flag.explanation}</p>
+                <p><strong>${t('analyzer.exportVerdictExplanation')}:</strong> ${flag.explanation}</p>
               </div>
             `).join('')}
           </div>
         </div>
       ` : '';
 
-    // Formatting Negotiation Suggestions
     const suggestionsHtml = result.negotiationSuggestions && result.negotiationSuggestions.length > 0 
       ? `
         <div class="section">
-          <h2>Strategic Negotiation Suggestions</h2>
+          <h2>${t('analyzer.exportSuggestions')}</h2>
           <ul>
             ${result.negotiationSuggestions.map(s => `<li>${s}</li>`).join('')}
           </ul>
         </div>
       ` : '';
 
-    // Formatting Key Clauses
     const clausesHtml = result.clauses && result.clauses.length > 0 
       ? `
         <div class="section">
-          <h2>Key Clauses Checked</h2>
+          <h2>${t('analyzer.exportClauses')}</h2>
           <div class="grid">
             ${result.clauses.map(c => `
               <div class="clause-card">
@@ -394,39 +393,39 @@ export const Analyzer = () => {
           <div class="header">
             <div class="logo-area">
               <div class="logo-hexagon"></div>
-              <span class="logo-text">ContractChill</span>
+              <span class="logo-text">${t('common.appName')}</span>
             </div>
-            <div class="report-title">AI Legal Analysis Report</div>
+            <div class="report-title">${t('analyzer.exportPdfTitle')}</div>
           </div>
 
           <div class="metadata-grid">
             <div class="meta-item">
-              <span class="meta-label">Date analyzed</span>
-              <span class="meta-value">${new Date().toLocaleDateString('id-ID')}</span>
+              <span class="meta-label">${t('analyzer.exportDateAnalyzed')}</span>
+              <span class="meta-value">${new Date().toLocaleDateString(locale)}</span>
             </div>
             <div class="meta-item">
-              <span class="meta-label">AI Analyst Persona</span>
+              <span class="meta-label">${t('analyzer.exportAiPersona')}</span>
               <span class="meta-value">${persona}</span>
             </div>
             <div class="meta-item">
-              <span class="meta-label">Overall Risk Score</span>
+              <span class="meta-label">${t('analyzer.exportRiskScore')}</span>
               <div>
                 <span class="score-badge ${riskScore >= 70 ? 'high' : riskScore >= 30 ? 'medium' : 'safe'}">
-                  ${riskScore}% ${riskScore >= 70 ? 'High' : riskScore >= 30 ? 'Medium' : 'Low'} Risk
+                  ${riskScore}% ${riskScore >= 70 ? t('analyzer.riskScore.highRisk') : riskScore >= 30 ? t('analyzer.riskScore.moderate') : t('analyzer.riskScore.safe')}
                 </span>
               </div>
             </div>
           </div>
 
           <div class="section">
-            <h2>The Verdict</h2>
+            <h2>${t('analyzer.exportVerdict')}</h2>
             <div class="verdict-callout">
               <p>"${result.personaExplanation}"</p>
             </div>
           </div>
 
           <div class="section">
-            <h2>Executive Summary</h2>
+            <h2>${t('analyzer.exportSummary')}</h2>
             <p>${result.summary}</p>
           </div>
 
@@ -491,7 +490,7 @@ export const Analyzer = () => {
   if (isLoading) {
     return (
       <div className="min-h-[calc(100vh-64px)] lg:h-[calc(100vh-80px)] flex items-center justify-center bg-transparent">
-        <Loader variant="morph" size={48} label="Analyzing contract..." />
+        <Loader variant="morph" size={48} label={t('analyzer.analyzingContract')} />
       </div>
     );
   }
@@ -514,17 +513,12 @@ export const Analyzer = () => {
   const scrollToAndHighlightClause = (clause: string) => {
     if (!clause) return;
 
-    // Get the left preview panel container to strictly restrict the search area
     const leftPanel = document.getElementById('document-preview-left-panel');
     if (!leftPanel) return;
 
-    // Find text elements inside the left panel container
-    // We prioritize PDF text spans (.rpv-core__text-span) for high-fidelity matching inside PDFs
     let textElements = leftPanel.querySelectorAll('.rpv-core__text-span');
     
-    // Fallback for non-PDF files (e.g., standard text/markdown previews)
     if (textElements.length === 0) {
-      // Find deepest text nodes only (elements with no child elements)
       const allElements = leftPanel.querySelectorAll('p, pre, span, div');
       const leaves: Element[] = [];
       allElements.forEach(el => {
@@ -535,19 +529,12 @@ export const Analyzer = () => {
       textElements = leaves as any;
     }
 
-    // Normalize clause for searching (strip whitespace and punctuation)
     const cleanClause = clause.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
     
-    // Split the clause into words, clean them, and filter out short words
     const words = clause.split(/\s+/)
                         .map(w => w.replace(/[^a-zA-Z0-9]/g, '').toLowerCase())
                         .filter(w => w.length >= 4);
 
-    // We try multiple matching strategies from strongest to loosest:
-    // 1. Long chunk of 30 characters (very specific)
-    // 2. First two words joined (e.g. "seluruhbiaya") - robust against end-of-line breaks
-    // 3. The single longest and most unique word in the clause (e.g. "tanggung") - robust against heavy fragmentation
-    // 4. First 15 characters
     const searchStrategies: string[] = [];
     
     if (cleanClause.length > 5) {
@@ -569,7 +556,6 @@ export const Analyzer = () => {
 
     let targetElement: HTMLElement | null = null;
 
-    // Run matching strategies
     for (const searchStr of searchStrategies) {
       if (targetElement) break;
       if (!searchStr) continue;
@@ -586,7 +572,6 @@ export const Analyzer = () => {
     }
 
     if (targetElement) {
-      // Find the scrollable parent container of the target text element
       const getScrollParent = (node: HTMLElement | null): HTMLElement | null => {
         if (!node) return null;
         
@@ -609,8 +594,6 @@ export const Analyzer = () => {
         const parentRect = scrollParent.getBoundingClientRect();
         const elementRect = targetElement.getBoundingClientRect();
         
-        // Calculate the center scroll position:
-        // Current scroll + relative element position from top of parent - half of parent height (to center it)
         const targetScrollTop = scrollParent.scrollTop + (elementRect.top - parentRect.top) - (parentRect.height / 2) + (elementRect.height / 2);
         
         scrollParent.scrollTo({
@@ -618,32 +601,27 @@ export const Analyzer = () => {
           behavior: 'smooth'
         });
       } else {
-        // Fallback to standard scrollIntoView if no scroll parent is identified
         targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
       
-      // Backup original styles
       const originalBg = targetElement.style.backgroundColor;
       const originalTransition = targetElement.style.transition;
       const originalBoxShadow = targetElement.style.boxShadow;
       const originalBorderRadius = targetElement.style.borderRadius;
       const originalPadding = targetElement.style.padding;
 
-      // Apply dynamic neon glowing animation styles
       targetElement.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
-      targetElement.style.backgroundColor = 'rgba(239, 68, 68, 0.35)'; // Muted red glow
+      targetElement.style.backgroundColor = 'rgba(239, 68, 68, 0.35)';
       targetElement.style.boxShadow = '0 0 18px rgba(239, 68, 68, 0.7), inset 0 0 6px rgba(239, 68, 68, 0.3)';
       targetElement.style.borderRadius = '6px';
       targetElement.style.padding = '3px 6px';
 
-      // Slight delay pulse effect
       setTimeout(() => {
         if (targetElement) {
           targetElement.style.backgroundColor = 'rgba(239, 68, 68, 0.55)';
         }
       }, 200);
 
-      // Restore style after 3.5 seconds
       setTimeout(() => {
         if (targetElement) {
           targetElement.style.backgroundColor = originalBg;
@@ -654,9 +632,9 @@ export const Analyzer = () => {
         }
       }, 3500);
 
-      toast.success('Clausa ditemukan & disorot di dokumen! 🗺️');
+      toast.success(t('analyzer.clauseFound'));
     } else {
-      toast.info('Clausa terdeteksi, silakan cari di panel pratinjau dokumen.', {
+      toast.info(t('analyzer.clauseDetected'), {
         description: `"${clause.length > 50 ? clause.substring(0, 50) + '...' : clause}"`
       });
     }
@@ -672,8 +650,8 @@ export const Analyzer = () => {
               <FileText className="w-4 h-4 text-primary" />
             </div>
             <div>
-              <h2 className="text-sm font-display font-semibold text-text">Document preview</h2>
-              <p className="text-[10px] text-text-subtle font-medium">Full contract visualization</p>
+              <h2 className="text-sm font-display font-semibold text-text">{t('analyzer.documentPreview.title')}</h2>
+              <p className="text-[10px] text-text-subtle font-medium">{t('analyzer.documentPreview.subtitle')}</p>
             </div>
           </div>
           {fileUrl && (
@@ -682,7 +660,7 @@ export const Analyzer = () => {
               size="sm"
               onClick={() => window.open(fileUrl, '_blank')}
             >
-              Open Original
+              {t('common.buttons.openOriginal')}
               <ChevronRight className="w-3.5 h-3.5" />
             </Button>
           )}
@@ -700,8 +678,8 @@ export const Analyzer = () => {
                 <FileText className="w-8 h-8 opacity-20" />
               </div>
               <div className="text-center">
-                <p className="text-base font-display font-bold text-text">Document not found</p>
-                <p className="text-sm opacity-60 mt-1">Please try re-uploading the file</p>
+                <p className="text-base font-display font-bold text-text">{t('analyzer.documentPreview.notFound')}</p>
+                <p className="text-sm opacity-60 mt-1">{t('analyzer.documentPreview.notFoundDesc')}</p>
               </div>
             </div>
           )}
@@ -715,30 +693,27 @@ export const Analyzer = () => {
       >
         {/* Navigation & Status */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sticky top-0 py-3 sm:py-4 z-30 border-b mb-2 px-2 transition-colors backdrop-blur-md bg-surface/80 border-border" data-html2canvas-ignore="true">
-          {/* Top row on mobile, left on desktop */}
           <div className="flex items-center justify-between w-full sm:w-auto">
             <Button variant="ghost" size="sm" onClick={() => navigate('/dashboard')}>
               <ArrowLeft className="w-4 h-4" />
-              back
+              {t('analyzer.navigation.back')}
             </Button>
-            {/* Ready badge shown on mobile here */}
             <Badge variant="secondary" className="flex sm:hidden gap-1.5 px-3 py-1.5">
               <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-              ready
+              {t('analyzer.navigation.ready')}
             </Badge>
           </div>
 
-          {/* Bottom row on mobile, right on desktop */}
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <Button
               variant="outline"
               size="sm"
               onClick={handleCopySummary}
-              title="copy summary"
+              title={t('analyzer.navigation.copy')}
             >
               {isCopied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
               <span className={isCopied ? 'text-green-500' : ''}>
-                {isCopied ? 'copied!' : 'copy'}
+                {isCopied ? t('analyzer.navigation.copied') : t('analyzer.navigation.copy')}
               </span>
             </Button>
             <Button
@@ -746,15 +721,14 @@ export const Analyzer = () => {
               size="sm"
               onClick={handleExportPDF}
               disabled={isExporting || isCopied ? false : undefined}
-              title="export to pdf"
+              title={t('analyzer.navigation.exportPdf')}
             >
               {isExporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
-              export pdf
+              {t('analyzer.navigation.exportPdf')}
             </Button>
-            {/* Ready badge shown on desktop here */}
             <Badge variant="secondary" className="hidden sm:flex gap-1.5 px-3 py-2">
               <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-              ready
+              {t('analyzer.navigation.ready')}
             </Badge>
           </div>
         </div>
@@ -764,8 +738,8 @@ export const Analyzer = () => {
           <div className="flex items-center gap-3">
             <img src="/logo/brandLogo_black.png" alt="Logo" className="w-10 h-10 rounded-xl" />
             <div>
-              <h1 className="text-2xl font-display font-bold text-text">Contract Analysis</h1>
-              <p className="text-xs text-text-subtle">Generated by ContractChill AI • {new Date().toLocaleDateString()}</p>
+              <h1 className="text-2xl font-display font-bold text-text">{t('analyzer.contractAnalysis')}</h1>
+              <p className="text-xs text-text-subtle">{t('analyzer.generatedBy')} • {new Date().toLocaleDateString(i18n.language === 'id' ? 'id-ID' : 'en-US')}</p>
             </div>
           </div>
         </div>
@@ -792,26 +766,21 @@ export const Analyzer = () => {
           transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
           className="flex items-start gap-3.5 w-full mb-2"
         >
-          {/* Avatar */}
           <div className="relative shrink-0 mt-1 cursor-default group">
             <div className={`w-11 h-11 rounded-full flex items-center justify-center shadow-sm backdrop-blur-sm border transition-transform duration-300 group-hover:scale-105 bg-gradient-to-b from-primary/20 to-primary/5 border-primary/20`}>
               <UserCircle className="w-6 h-6 text-primary" />
             </div>
-            {/* Online Indicator */}
             <div className={`absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full ring-2 shadow-sm ${
               isDark ? 'ring-background' : 'ring-white'
             }`} />
           </div>
 
-          {/* Message Content */}
           <div className="flex flex-col gap-1.5 flex-1 max-w-[85%]">
-            {/* Sender Info */}
             <div className="flex items-center gap-2.5 px-1">
-              <span className="text-[13px] font-display font-bold text-text">{activePersona || 'AI Analyst'}</span>
-              <Badge variant="default" className="text-[9px] font-bold tracking-wider uppercase">The Verdict</Badge>
+              <span className="text-[13px] font-display font-bold text-text">{activePersona || t('analyzer.personaVerdict.aiAnalyst')}</span>
+              <Badge variant="default" className="text-[9px] font-bold tracking-wider uppercase">{t('analyzer.personaVerdict.theVerdict')}</Badge>
             </div>
             
-            {/* Chat Bubble */}
             <motion.div 
               whileHover={{ scale: 1.01 }}
               className="relative px-5 py-4 shadow-sm transition-all group bg-surface border border-border"
@@ -821,7 +790,7 @@ export const Analyzer = () => {
               }}
             >
               <p className="text-[13.5px] text-text-muted leading-relaxed font-medium">
-                {result?.personaExplanation || "I've analyzed the document. Here are my findings."}
+                {result?.personaExplanation || t('analyzer.personaVerdict.defaultExplanation')}
               </p>
             </motion.div>
           </div>
@@ -838,7 +807,7 @@ export const Analyzer = () => {
             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
               <Info className="w-5 h-5 text-primary" />
             </div>
-            <h3 className="text-base font-display font-semibold text-text">Executive summary</h3>
+            <h3 className="text-base font-display font-semibold text-text">{t('analyzer.executiveSummary.title')}</h3>
           </div>
           <p className="text-[14px] text-text-muted leading-relaxed font-medium">
             {result?.summary}
@@ -858,8 +827,8 @@ export const Analyzer = () => {
                 <BookOpen className="w-5 h-5 text-primary" />
               </div>
               <div>
-                <h3 className="text-base font-display font-bold text-text">Jargon Translator</h3>
-                <p className="text-[10px] text-text-subtle font-medium">Complex legal terms, simplified.</p>
+                <h3 className="text-base font-display font-bold text-text">{t('analyzer.jargonTranslator.title')}</h3>
+                <p className="text-[10px] text-text-subtle font-medium">{t('analyzer.jargonTranslator.subtitle')}</p>
               </div>
             </div>
             <div className="grid gap-3">
@@ -880,10 +849,10 @@ export const Analyzer = () => {
           <div className="flex items-center justify-between px-2">
             <h3 className="text-sm font-display font-bold text-text flex items-center gap-2.5">
               <AlertTriangle className="w-5 h-5 text-red-500" />
-              Critical Risks
+              {t('analyzer.criticalRisks.title')}
             </h3>
             <span className="text-[11px] font-bold bg-red-500/10 text-red-500 px-3 py-1 rounded-full border border-red-500/20">
-              {result?.redFlags?.length || 0} issues detected
+              {t('analyzer.criticalRisks.issuesDetected', { count: result?.redFlags?.length || 0 })}
             </span>
           </div>
 
@@ -906,17 +875,17 @@ export const Analyzer = () => {
                     <span className={`text-[10px] font-bold tracking-wider ${
                       flag.risk === 'High' ? 'text-red-600' : 'text-amber-600'
                     }`}>
-                      {flag.risk} risk
+                      {flag.risk === 'High' ? t('analyzer.criticalRisks.highRisk') : t('analyzer.criticalRisks.mediumRisk')}
                     </span>
                   </div>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => scrollToAndHighlightClause(flag.clause)}
-                    title="Locate this clause in the document"
+                    title={t('common.buttons.locateClause')}
                   >
                     <Compass className="w-3 h-3" />
-                    Locate Clause
+                    {t('common.buttons.locateClause')}
                   </Button>
                 </div>
                 
@@ -941,7 +910,7 @@ export const Analyzer = () => {
                     }}
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
-                    generate negotiation script
+                    {t('common.buttons.generateNegotiationScript')}
                   </Button>
                 </div>
               </motion.div>
@@ -961,7 +930,7 @@ export const Analyzer = () => {
             <div className="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center border border-green-500/20">
               <CheckCircle2 className="w-5 h-5 text-green-500" />
             </div>
-            <h3 className="text-base font-display font-bold text-text">Negotiation Strategy</h3>
+            <h3 className="text-base font-display font-bold text-text">{t('analyzer.negotiationStrategy.title')}</h3>
           </div>
           <div className="space-y-4">
             {result?.negotiationSuggestions?.map((tip, i) => (

@@ -1,0 +1,673 @@
+{
+  "common": {
+    "appName": "ContractChill",
+    "buttons": {
+      "getStarted": "Get started",
+      "getStartedFree": "Get Started Free",
+      "startFree": "Start for free",
+      "startWithContract": "Start with a contract",
+      "seeHowItWorks": "See how it works",
+      "signIn": "Sign In",
+      "signUp": "Sign Up",
+      "signOut": "Sign out",
+      "login": "Login",
+      "loginToAccount": "Login to account",
+      "continueWithGoogle": "Continue with Google",
+      "forgotPassword": "Forgot Password?",
+      "saveChanges": "Save changes",
+      "upgradeToPro": "Upgrade to pro",
+      "generateContract": "Generate Contract",
+      "generateNow": "Generate Now",
+      "browseFiles": "Browse Files",
+      "viewAll": "view all",
+      "loadMore": "Load more",
+      "clear": "clear",
+      "copy": "copy",
+      "copied": "copied!",
+      "copyScript": "Copy Script",
+      "exportPdf": "export pdf",
+      "close": "Close",
+      "install": "Install",
+      "notNow": "Not now",
+      "goHome": "Go Home",
+      "backToDashboard": "Back to Dashboard",
+      "deleteAccount": "Delete Account",
+      "analyzeAContract": "Analyze a Contract",
+      "openOriginal": "Open Original",
+      "locateClause": "Locate Clause",
+      "generateNegotiationScript": "generate negotiation script"
+    },
+    "labels": {
+      "ready": "ready",
+      "back": "back",
+      "clean": "clean",
+      "risk": "risk",
+      "risks": "risks",
+      "highRisk": "high risk",
+      "safe": "safe",
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "thisWeek": "This week",
+      "earlier": "Earlier",
+      "justNow": "just now",
+      "loading": "Loading...",
+      "thinking": "Thinking...",
+      "analyzing": "Analyzing...",
+      "preview": "Preview",
+      "all": "all"
+    },
+    "fileInfo": {
+      "pdfDocxTxt": "PDF, DOCX, or TXT — up to 10MB",
+      "unsupportedFormat": "We only support PDF, DOCX, and TXT files for now.",
+      "fileTooLarge": "Please upload a document smaller than 10MB."
+    },
+    "nav": {
+      "howItWorks": "How it works",
+      "benefits": "Benefits",
+      "personas": "Personas",
+      "pricing": "Pricing",
+      "faq": "FAQ",
+      "dashboard": "Dashboard",
+      "generator": "Generator",
+      "history": "History",
+      "settings": "Settings"
+    },
+    "tooltips": {
+      "lightMode": "Light mode",
+      "darkMode": "Dark mode"
+    }
+  },
+
+  "landing": {
+    "title": "ContractChill | AI Legal Assistant for Everyone",
+    "hero": {
+      "badge": "AI contract clarity, without the legalese",
+      "titlePrefix": "Your",
+      "titleSuffix": "finally in plain English.",
+      "docTypes": ["contracts", "NDAs", "freelance agreements", "term sheets"],
+      "subtitle": "Upload any legal contract and get an instant AI-powered breakdown — red flags, clause summaries, and negotiation tips. In seconds.",
+      "trustBadges": {
+        "noCreditCard": "No credit card required",
+        "pdfDocxSupport": "PDF & DOCX support",
+        "resultsInSeconds": "Results in seconds"
+      }
+    },
+    "preview": {
+      "uploadTooltip": "Upload any contract format",
+      "riskTooltip": "AI instantly flags hidden risks",
+      "tipsTooltip": "Get actionable negotiation advice",
+      "highRiskClause": "High Risk Clause",
+      "aiSummary": "AI Summary",
+      "negotiationTips": "Negotiation Tips",
+      "redFlagsFound": "3 Red Flags Found",
+      "reviewBeforeSigning": "Review before signing",
+      "analysisReady": "Analysis Ready",
+      "completedInSeconds": "Completed in 8 seconds"
+    },
+    "stats": {
+      "contractsAnalyzed": "Contracts Analyzed",
+      "aiPersonas": "AI Personas",
+      "averageAnalysisTime": "Average Analysis Time",
+      "userSatisfaction": "User Satisfaction"
+    },
+    "miniDemo": {
+      "sectionLabel": "Live demo",
+      "title": "See the clarity",
+      "subtitle": "Turn dense legal language into something you can act on.",
+      "originalClause": "Original Contract Clause",
+      "standardNda": "Standard NDA",
+      "translateButton": "Translate to plain English",
+      "analyzing": "Analyzing...",
+      "resetDemo": "Reset Demo",
+      "clickTranslate": "Click translate to see the magic happen",
+      "geminiThinking": "Gemini AI is thinking...",
+      "simplifiedByAi": "Simplified by AI"
+    },
+    "howItWorks": {
+      "sectionLabel": "How it works",
+      "title": "Three steps to clarity",
+      "subtitle": "No legal background needed. Just upload and let AI do the heavy lifting.",
+      "steps": [
+        {
+          "title": "Upload your contract",
+          "desc": "Drop a PDF, DOCX, or TXT file. We support contracts up to 10MB in size."
+        },
+        {
+          "title": "AI reads and analyzes",
+          "desc": "Google Gemini AI scans every clause, identifies risks, and prepares a full breakdown."
+        },
+        {
+          "title": "Review in plain English",
+          "desc": "Get a structured analysis with red flags, summaries, and negotiation tips."
+        }
+      ]
+    },
+    "features": {
+      "sectionLabel": "Features",
+      "title": "Everything you need",
+      "subtitle": "Designed for freelancers, founders, and anyone who signs contracts.",
+      "redFlagDetection": {
+        "title": "Red flag detection",
+        "desc": "Automatically surfaces high-risk clauses like unlimited liability, IP grabs, and unfair termination terms."
+      },
+      "smartSummarization": {
+        "title": "Smart summarization",
+        "desc": "Converts dense legal text into clear, concise summaries you can read in under 2 minutes."
+      },
+      "negotiationTips": {
+        "title": "Negotiation tips",
+        "desc": "Get actionable suggestions on what to push back on and how to phrase your counteroffer."
+      },
+      "securePrivate": {
+        "title": "Secure & private",
+        "desc": "Your documents are encrypted and linked only to your Google account. Never shared."
+      },
+      "sideBySideAnalysis": {
+        "title": "Side-by-side analysis",
+        "desc": "Read the original contract and AI analysis simultaneously in a split-screen layout."
+      },
+      "analysisHistory": {
+        "title": "Analysis history",
+        "desc": "All your past analyses are saved in the cloud, accessible anytime from any device."
+      }
+    },
+    "personas": {
+      "sectionLabel": "AI Personas",
+      "title": "Choose your advisor",
+      "subtitle": "Same contract, four different perspectives. Pick the one that fits how you think.",
+      "angryLawyer": {
+        "name": "Angry Lawyer",
+        "tone": "Strict & protective",
+        "desc": "Points out every risk with high intensity. Not afraid to say \"do not sign this.\"",
+        "preview": "Do not sign this! They are trying to steal your IP!"
+      },
+      "chillFriend": {
+        "name": "Chill Friend",
+        "tone": "Casual & simple",
+        "desc": "Explains things like you're chatting over coffee. Zero jargon, maximum clarity.",
+        "preview": "Bro, this clause is totally chill. You are good to go."
+      },
+      "corporateMentor": {
+        "name": "Corporate Mentor",
+        "tone": "Strategic & calm",
+        "desc": "Focuses on long-term implications, business strategy, and professional growth.",
+        "preview": "This aligns with industry practice, but let us negotiate term 4."
+      },
+      "freelancerSenior": {
+        "name": "Freelancer Senior",
+        "tone": "Practical & real",
+        "desc": "Knows every scope creep trick in the book. Protects your time, rates, and IP.",
+        "preview": "Watch out for scope creep here. Ask for 50% upfront."
+      }
+    },
+    "testimonials": {
+      "sectionLabel": "Testimonials",
+      "title": "Trusted by creators",
+      "items": [
+        {
+          "quote": "I almost signed a contract with an IP clause that would have transferred ownership of ALL my future work. ContractChill caught it immediately.",
+          "name": "Dimas R.",
+          "role": "UI/UX Designer, Jakarta"
+        },
+        {
+          "quote": "The 'Chill Friend' persona explained a 30-page SaaS agreement in about 2 minutes. I understood every clause for the first time in my life.",
+          "name": "Putri A.",
+          "role": "Indie Developer"
+        },
+        {
+          "quote": "As a freelancer, I use this before signing every client contract. The negotiation tips alone have helped me add better payment terms to my deals.",
+          "name": "Kevin S.",
+          "role": "Brand Consultant"
+        }
+      ]
+    },
+    "pricing": {
+      "sectionLabel": "Pricing",
+      "title": "Simple, transparent pricing",
+      "subtitle": "Start for free, upgrade when you need more power.",
+      "free": {
+        "name": "Free",
+        "price": "$0",
+        "period": "/forever",
+        "description": "Perfect for trying out contractchill.",
+        "features": [
+          "20 analyses per day",
+          "2 basic AI personas",
+          "standard support",
+          "up to 10MB file size"
+        ],
+        "cta": "get started free"
+      },
+      "pro": {
+        "name": "Pro",
+        "badge": "most popular",
+        "price": "$12",
+        "period": "/month",
+        "description": "for professionals who sign contracts often.",
+        "features": [
+          "unlimited analyses",
+          "all 4 premium AI personas",
+          "priority email support",
+          "export analysis to PDF",
+          "save negotiation history"
+        ],
+        "cta": "upgrade to pro"
+      }
+    },
+    "faq": {
+      "sectionLabel": "FAQ",
+      "title": "Frequently asked questions",
+      "items": [
+        {
+          "q": "is my document private and secure?",
+          "a": "absolutely. we use industry-standard encryption to process your documents. your files are only used to generate the analysis and are never shared, sold, or used to train public ai models. you can delete your analysis history at any time."
+        },
+        {
+          "q": "does this replace a real lawyer?",
+          "a": "no. contractchill is an ai assistant designed to help you understand legal jargon, spot obvious red flags, and prepare for negotiations. it is not a substitute for professional legal advice. for high-stakes agreements, we always recommend consulting a qualified attorney."
+        },
+        {
+          "q": "what document formats do you support?",
+          "a": "currently, we support standard text-based formats including pdf, docx, and txt up to 10mb. please note that image-only pdfs (scanned documents without selectable text) or password-protected files cannot be analyzed."
+        },
+        {
+          "q": "how accurate is the ai analysis?",
+          "a": "our system is powered by google gemini ai and is highly capable of identifying standard legal risks and summarizing complex clauses. however, like all ai, it may occasionally miss nuanced context specific to your unique business situation."
+        },
+        {
+          "q": "what are the different ai personas?",
+          "a": "we offer four distinct perspectives: the 'chill friend' for simple summaries, the 'angry lawyer' for aggressive risk detection, the 'corporate mentor' for strategic business advice, and the 'freelancer senior' for independent worker protections."
+        }
+      ]
+    },
+    "finalCta": {
+      "title": "Stop signing contracts you don't understand.",
+      "subtitle": "Join thousands of freelancers and founders who review contracts confidently with ContractChill.",
+      "button": "Start for free",
+      "disclaimer": "No credit card needed. Powered by Google Gemini AI."
+    },
+    "footer": {
+      "description": "AI-powered contract analysis for freelancers, founders, and anyone who signs legal documents.",
+      "privacyNote": "Your documents are private and encrypted",
+      "product": "Product",
+      "useCases": "Use Cases",
+      "legal": "Legal",
+      "freelancers": "Freelancers",
+      "founders": "Founders",
+      "creators": "Creators",
+      "privacyPolicy": "Privacy policy",
+      "termsOfService": "Terms of service",
+      "copyright": "© {{year}} ContractChill. All rights reserved. AI analysis is not a substitute for professional legal advice.",
+      "poweredBy": "Powered by",
+      "googleGemini": "Google Gemini",
+      "backToTop": "Back to top"
+    }
+  },
+
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to your account",
+      "orContinueWithEmail": "Or continue with email",
+      "emailPlaceholder": "Email Address",
+      "passwordPlaceholder": "Password",
+      "signingIn": "Signing In...",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign Up",
+      "errors": {
+        "invalidCredentials": "invalid email or password. please try again.",
+        "googleFailed": "Google sign-in failed. Please try again.",
+        "resetLinkFailed": "Failed to send reset link.",
+        "enterEmailFirst": "Please enter your email address first."
+      },
+      "resetLinkSent": "Reset link sent!",
+      "resetLinkSentDesc": "Check your email for the password reset link."
+    },
+    "register": {
+      "title": "Create account",
+      "subtitle": "Analyze your first contract in minutes.",
+      "orSignUpWithEmail": "Or sign up with email",
+      "namePlaceholder": "Full Name",
+      "emailPlaceholder": "Email Address",
+      "passwordPlaceholder": "Password",
+      "creating": "Creating...",
+      "alreadyHaveAccount": "Already have an account?",
+      "signInLink": "Sign in",
+      "errors": {
+        "passwordTooShort": "Password must be at least 6 characters.",
+        "registrationFailed": "Registration failed. Try a different email.",
+        "googleFailed": "Google login failed"
+      }
+    }
+  },
+
+  "dashboard": {
+    "title": "Dashboard - ContractChill",
+    "greeting": "Good morning, {{name}}",
+    "subtitle": "Understand your next contract before you sign.",
+    "stats": {
+      "totalAnalyses": "Total Analyses",
+      "risksFound": "Risks Found",
+      "cleanContracts": "Clean Contracts",
+      "percentOfTotal": "{{percent}}% of total"
+    },
+    "upload": {
+      "dropHere": "Drop your contract here",
+      "dropItHere": "Drop it here!",
+      "firstContractAwaits": "your first contract awaits",
+      "resultsInSeconds": "results in seconds",
+      "flagsHiddenRisks": "flags hidden risks",
+      "plainEnglishSummary": "plain-english summary",
+      "socialProof": "Trusted by <bold>2,400+</bold> freelancers & founders to catch what lawyers miss."
+    },
+    "personaSelector": {
+      "label": "AI advisor persona",
+      "description": "Choose who analyzes your contract",
+      "chillFriend": {
+        "id": "Chill Friend",
+        "desc": "Casual & direct",
+        "preview": "\"Hey, clause 4 is a red flag. I'd push back on this before signing.\""
+      },
+      "angryLawyer": {
+        "id": "Angry Lawyer",
+        "desc": "Strict & protective",
+        "preview": "\"DO NOT SIGN THIS. They are trying to strip your IP rights completely!\""
+      },
+      "corporateMentor": {
+        "id": "Corporate Mentor",
+        "desc": "Strategic & formal",
+        "preview": "\"From a strategic standpoint, clause 7 presents unacceptable liability exposure.\""
+      },
+      "freelancerSenior": {
+        "id": "Freelancer Senior",
+        "desc": "Payment focused",
+        "preview": "\"Watch out — no late payment penalty clause. That's how clients ghost you.\""
+      }
+    },
+    "disclaimer": "AI analysis is for informational purposes only and does not constitute professional legal advice.",
+    "recentActivity": {
+      "title": "recent activity",
+      "unnamedContract": "Unnamed contract"
+    },
+    "loading": {
+      "extractingText": "Extracting text...",
+      "extractingTextDesc": "Reading document content",
+      "sendingToAi": "Sending to AI...",
+      "sendingToAiDesc": "Securely transferring to Gemini",
+      "analyzingClauses": "Analyzing clauses...",
+      "analyzingClausesDesc": "Scanning for hidden risks",
+      "structuringReport": "Structuring report...",
+      "structuringReportDesc": "Formatting final insights"
+    },
+    "errors": {
+      "analysisFailed": "Analysis failed. Please check your document and try again."
+    },
+    "toasts": {
+      "analysisComplete": "Analysis complete!",
+      "analysisCompleteDesc": "Your contract has been scanned for risks."
+    }
+  },
+
+  "analyzer": {
+    "title": "Analysis Result - ContractChill",
+    "loadingTitle": "Analyzing Contract...",
+    "analyzingContract": "Analyzing contract...",
+    "documentPreview": {
+      "title": "Document preview",
+      "subtitle": "Full contract visualization",
+      "notFound": "Document not found",
+      "notFoundDesc": "Please try re-uploading the file"
+    },
+    "navigation": {
+      "back": "back",
+      "ready": "ready",
+      "copy": "copy",
+      "copied": "copied!",
+      "exportPdf": "export pdf"
+    },
+    "riskScore": {
+      "overallRiskScore": "Overall risk score",
+      "safe": "Safe",
+      "moderate": "Moderate",
+      "highRisk": "High Risk"
+    },
+    "keyClauses": {
+      "title": "Key Clauses Checked"
+    },
+    "personaVerdict": {
+      "aiAnalyst": "AI Analyst",
+      "theVerdict": "The Verdict",
+      "defaultExplanation": "I've analyzed the document. Here are my findings."
+    },
+    "executiveSummary": {
+      "title": "Executive summary"
+    },
+    "jargonTranslator": {
+      "title": "Jargon Translator",
+      "subtitle": "Complex legal terms, simplified."
+    },
+    "criticalRisks": {
+      "title": "Critical Risks",
+      "issuesDetected": "{{count}} issues detected",
+      "highRisk": "High risk",
+      "mediumRisk": "Medium risk"
+    },
+    "negotiationStrategy": {
+      "title": "Negotiation Strategy"
+    },
+    "clauseFound": "Clause found & highlighted in document!",
+    "clauseDetected": "Clause detected, please search in the document preview panel.",
+    "exportPdfTitle": "AI Legal Analysis Report",
+    "exportDateAnalyzed": "Date analyzed",
+    "exportAiPersona": "AI Analyst Persona",
+    "exportRiskScore": "Overall Risk Score",
+    "exportVerdict": "The Verdict",
+    "exportSummary": "Executive Summary",
+    "exportRedFlags": "Critical Risks & Red Flags",
+    "exportVerdictExplanation": "Verdict / Explanation",
+    "exportSuggestions": "Strategic Negotiation Suggestions",
+    "exportClauses": "Key Clauses Checked",
+    "exportJargons": "Jargon Translator",
+    "contractAnalysis": "Contract Analysis",
+    "generatedBy": "Generated by ContractChill AI"
+  },
+
+  "generator": {
+    "title": "Contract Generator - ContractChill",
+    "header": "Contract Generator",
+    "subtitle": "Automatically draft professional, legally sound contracts powered by AI.",
+    "form": {
+      "draftSettings": "Draft settings",
+      "fillDetails": "Fill in the details to generate",
+      "contractType": "Contract Type",
+      "clientName": "Client Name (Party A)",
+      "clientNamePlaceholder": "e.g. Acme Corp",
+      "yourName": "Your Name / Agency (Party B)",
+      "yourNamePlaceholder": "e.g. John Doe",
+      "projectValue": "Project Value / Compensation",
+      "projectValuePlaceholder": "e.g. $5,000 USD or Rp 50.000.000",
+      "specialConditions": "Special Conditions (Optional)",
+      "specialConditionsPlaceholder": "e.g. 50% upfront payment, max 2 revisions...",
+      "generatingDraft": "Generating Draft..."
+    },
+    "contractTypes": [
+      "Freelance Services Agreement",
+      "Non-Disclosure Agreement (NDA)",
+      "Software Development Contract",
+      "Retainer Agreement",
+      "Creative Agency Contract"
+    ],
+    "emptyState": {
+      "title": "Drafting Arena Ready",
+      "description": "Fill out the generator details on the left, then click 'Generate Contract' to create your draft."
+    },
+    "loading": "AI Drafting Iron-Clad Clauses...",
+    "toasts": {
+      "formCleared": "Form cleared",
+      "missingFields": "Missing fields",
+      "missingFieldsDesc": "Please fill in all required fields.",
+      "contractGenerated": "Contract Generated!",
+      "contractGeneratedDesc": "Your pro-freelancer draft is ready.",
+      "generationFailed": "Generation Failed",
+      "copiedToClipboard": "Copied to clipboard",
+      "failedToOpenPrint": "Failed to open print window",
+      "failedToOpenPrintDesc": "Please allow pop-ups for this site."
+    }
+  },
+
+  "history": {
+    "title": "Analysis History - ContractChill",
+    "header": "Analysis history",
+    "subtitle": "Review all your previous contract analyses.",
+    "summaryPills": {
+      "total": "{{count}} total",
+      "highRisk": "{{count}} high risk",
+      "safe": "{{count}} safe"
+    },
+    "search": {
+      "placeholder": "Search by file name..."
+    },
+    "filters": {
+      "all": "all",
+      "highRisk": "high risk",
+      "safe": "safe",
+      "chillFriend": "chill friend",
+      "angryLawyer": "angry lawyer",
+      "corporateMentor": "corporate mentor",
+      "freelancerSenior": "freelancer senior"
+    },
+    "showingResults": "showing <highlight>{{count}}</highlight> of {{total}} loaded",
+    "emptyStates": {
+      "noAnalyses": {
+        "title": "No analyses yet",
+        "description": "Your analyzed contracts will magically appear here. Let's get started!"
+      },
+      "noResults": {
+        "title": "No matching results",
+        "description": "We couldn't find any documents matching your current search or filters."
+      }
+    },
+    "clearAllFilters": "Clear all filters",
+    "allLoaded": "All {{count}} analyses loaded",
+    "deleteConfirm": "Are you sure you want to delete this analysis?",
+    "toasts": {
+      "deletedSuccess": "History deleted successfully",
+      "deletedSuccessDesc": "The analysis has been removed from your account.",
+      "deleteFailed": "Failed to delete history"
+    }
+  },
+
+  "settings": {
+    "title": "Settings - ContractChill",
+    "header": "Settings",
+    "subtitle": "Manage your account and preferences.",
+    "changesSaved": "Changes saved",
+    "profile": {
+      "title": "Profile information",
+      "subtitle": "Update your photo and personal details.",
+      "displayName": "Display name",
+      "displayNamePlaceholder": "Your name",
+      "emailAddress": "Email address",
+      "changePhoto": "change photo"
+    },
+    "subscription": {
+      "title": "Subscription",
+      "freePlan": "Free plan",
+      "analysesPerDay": "20 analyses per day",
+      "upgradeButton": "Upgrade to pro"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "analysisComplete": "Analysis complete",
+      "analysisCompleteDesc": "Notify when scan finishes",
+      "weeklySummary": "Weekly summary",
+      "weeklySummaryDesc": "Your contract insights"
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "deleteAccount": "Delete Account",
+      "deleteDescription": "Permanently remove your account, subscription, and all associated data. This action cannot be undone."
+    },
+    "deleteConfirm": "Are you absolutely sure you want to delete your account?\n\nThis action cannot be undone. All your data, analysis history, and active subscriptions will be permanently erased.",
+    "toasts": {
+      "profileUpdated": "Profile updated successfully",
+      "profileUpdateFailed": "Failed to update profile",
+      "photoUploaded": "Photo uploaded successfully",
+      "photoUploadFailed": "Failed to upload photo",
+      "settingsSaved": "{{type}} notifications {{status}}",
+      "settingsSaveFailed": "Failed to save settings",
+      "accountDeleted": "Account deleted permanently",
+      "deleteFailed": "Failed to delete account",
+      "deleteFailedDesc": "Please contact support if the issue persists.",
+      "securityCheck": "Security Check",
+      "securityCheckDesc": "Please log out and log back in before deleting your account."
+    }
+  },
+
+  "chat": {
+    "title": "Ask {{persona}}",
+    "subtitle": "Instant insights",
+    "closeChat": "Close chat",
+    "askAnything": "Ask me anything about this contract.",
+    "placeholder": "Ask a question...",
+    "tooltip": "ask me anything about this contract!",
+    "openChat": "ask ai",
+    "closeChatTitle": "close chat",
+    "connectionError": "Sorry, I'm having trouble connecting right now. Can you try again?",
+    "suggestedChips": {
+      "writeRejectionEmail": "Tulis email penolakan",
+      "howToReviseClause": "Cara revisi klausul",
+      "simplifyLanguage": "Sederhanakan bahasa",
+      "findMissedRisks": "Cari risiko terlewat"
+    }
+  },
+
+  "negotiationScript": {
+    "title": "Negotiation script",
+    "subtitle": "Ready-to-use template",
+    "targetClause": "Target Clause",
+    "negotiationStyle": "Negotiation Style",
+    "tones": {
+      "friendly": "Friendly",
+      "assertive": "Assertive",
+      "tough": "Tough"
+    },
+    "aiSuggestedScript": "AI Suggested Script",
+    "geminiWriting": "Gemini is writing...",
+    "oldAnalysis": "Old Analysis",
+    "generateScriptNow": "Generate script now",
+    "smartShareHub": "Smart Share Hub",
+    "sendToWhatsApp": "Send to WhatsApp",
+    "sendPdfToEmail": "Send PDF to Email",
+    "infoNote": "AI scripts are best used as a starting point for professional communication.",
+    "copied": "Copied",
+    "toasts": {
+      "scriptUpdated": "Negotiation script ({{tone}}) updated successfully!",
+      "updateFailed": "Failed to update script",
+      "scriptCopied": "Script copied to clipboard!",
+      "whatsappShare": "Opening WhatsApp Share shortcut...",
+      "emailSending": "Preparing official PDF script with Contract-Chill stamp...",
+      "emailSuccess": "Official PDF script sent to your registered email 📧",
+      "emailFailed": "Failed to send email."
+    }
+  },
+
+  "install": {
+    "title": "Install Contract Chill",
+    "description": "Access your contracts offline. Get the full app experience on your device.",
+    "dismiss": "Dismiss"
+  },
+
+  "errors": {
+    "applicationCrash": "Application Crash",
+    "notFound": {
+      "title": "404",
+      "message": "This page doesn't exist."
+    }
+  },
+
+  "legal": {
+    "backToHome": "Back to home",
+    "englishNote": "This document is provided in English."
+  }
+}

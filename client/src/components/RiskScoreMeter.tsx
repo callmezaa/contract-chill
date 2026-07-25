@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { NumberTicker } from '@/components/motion/number-ticker';
 
 interface RiskScoreMeterProps {
@@ -6,6 +7,7 @@ interface RiskScoreMeterProps {
 }
 
 export const RiskScoreMeter = ({ score }: RiskScoreMeterProps) => {
+  const { t } = useTranslation();
   const radius = 40;
   const dashArray = Math.PI * radius;
   const dashOffset = dashArray - (dashArray * score) / 100;
@@ -20,9 +22,9 @@ export const RiskScoreMeter = ({ score }: RiskScoreMeterProps) => {
   };
 
   const getLabel = (s: number) => {
-    if (s < 30) return 'Safe';
-    if (s < 60) return 'Moderate';
-    return 'High Risk';
+    if (s < 30) return t('analyzer.riskScore.safe');
+    if (s < 60) return t('analyzer.riskScore.moderate');
+    return t('analyzer.riskScore.highRisk');
   };
 
   const colorClass = getColorClass(score);
@@ -89,7 +91,7 @@ export const RiskScoreMeter = ({ score }: RiskScoreMeterProps) => {
           <NumberTicker value={score} duration={2} />%
         </motion.span>
         <div className="flex flex-col items-center gap-1 mt-1">
-           <p className="text-[10px] font-medium text-text-subtle tracking-[0.12em] uppercase">Overall risk score</p>
+           <p className="text-[10px] font-medium text-text-subtle tracking-[0.12em] uppercase">{t('analyzer.riskScore.overallRiskScore')}</p>
           <motion.p 
             className={`text-xs font-bold ${colorClass}`}
           >

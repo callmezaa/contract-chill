@@ -6,13 +6,32 @@ import { FileText, Calendar, ChevronRight, Search, AlertTriangle, CheckCircle2, 
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/motion/button';
 import { Input } from '@/components/motion/input';
 import { Loader } from '@/components/motion/loader';
 
 const PAGE_SIZE = 10;
 
+const GROUP_KEYS: Record<string, string> = {
+  'Today': 'common.labels.today',
+  'Yesterday': 'common.labels.yesterday',
+  'This week': 'common.labels.thisWeek',
+  'Earlier': 'common.labels.earlier',
+};
+
+const FILTER_KEYS: Record<string, string> = {
+  'All': 'history.filters.all',
+  'High Risk': 'history.filters.highRisk',
+  'Safe': 'history.filters.safe',
+  'Chill Friend': 'history.filters.chillFriend',
+  'Angry Lawyer': 'history.filters.angryLawyer',
+  'Corporate Mentor': 'history.filters.corporateMentor',
+  'Freelancer Senior': 'history.filters.freelancerSenior',
+};
+
 export const History = () => {
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
@@ -23,7 +42,7 @@ export const History = () => {
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  useDocumentTitle('Analysis History - ContractChill');
+  useDocumentTitle(t('history.title'));
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -77,14 +96,14 @@ export const History = () => {
     e.preventDefault();
     e.stopPropagation();
     
-    if (window.confirm('Are you sure you want to delete this analysis?')) {
+    if (window.confirm(t('history.deleteConfirm'))) {
       try {
         await deleteDoc(doc(db, 'analyses', id));
         setHistory(prev => prev.filter(item => item.id !== id));
-        toast.success('History deleted successfully', { description: 'The analysis has been removed from your account.' });
+        toast.success(t('history.toasts.deletedSuccess'), { description: t('history.toasts.deletedSuccessDesc') });
       } catch (error) {
         console.error('Delete error:', error);
-        toast.error('Failed to delete history');
+        toast.error(t('history.toasts.deleteFailed'));
       }
     }
   };
@@ -140,8 +159,8 @@ export const History = () => {
       {/* Header with summary bar */}
       <div className="flex flex-col gap-3">
         <div>
-           <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-[-0.05em] text-text">Analysis history</h1>
-          <p className="text-text-muted text-sm mt-1">Review all your previous contract analyses.</p>
+           <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-[-0.05em] text-text">{t('history.header')}</h1>
+          <p className="text-text-muted text-sm mt-1">{t('history.subtitle')}</p>
         </div>
 
         {/* Summary pills */}
@@ -155,17 +174,17 @@ export const History = () => {
           ) : (
             [
               {
-                label: `${history.length} total`,
+                label: t('history.summaryPills.total', { count: history.length }),
                 color: 'text-text-subtle',
                 bg: 'bg-surface border-border',
               },
               {
-                label: `${history.filter(i => i.result?.redFlags?.some((rf: any) => rf.risk === 'High')).length} high risk`,
+                label: t('history.summaryPills.highRisk', { count: history.filter(i => i.result?.redFlags?.some((rf: any) => rf.risk === 'High')).length }),
                 color: 'text-red-500',
                 bg: 'bg-red-500/8 border-red-500/20',
               },
               {
-                label: `${history.filter(i => !i.result?.redFlags?.some((rf: any) => rf.risk === 'High')).length} safe`,
+                label: t('history.summaryPills.safe', { count: history.filter(i => !i.result?.redFlags?.some((rf: any) => rf.risk === 'High')).length }),
                 color: 'text-green-600',
                 bg: 'bg-green-500/8 border-green-500/20',
               },
@@ -186,7 +205,7 @@ export const History = () => {
         <Input
           value={searchQuery}
           onChange={(value) => setSearchQuery(value)}
-          placeholder="Search by file name..."
+          placeholder={t('history.search.placeholder')}
           leftIcon={<Search className="w-4 h-4 text-text-subtle" />}
           classNames={{ field: "bg-surface" }}
         />
@@ -200,7 +219,7 @@ export const History = () => {
                 size="sm"
                 onClick={() => setActiveFilter(f)}
               >
-                {f.toLowerCase()}
+                {t(FILTER_KEYS[f])}
               </Button>
             ))}
           </div>
@@ -208,7 +227,7 @@ export const History = () => {
           {/* Dynamic Result Count */}
           {(searchQuery || activeFilter !== 'All') && (
             <div className="text-[10px] font-bold text-text-subtle whitespace-nowrap shrink-0 mt-[-4px]">
-              showing <span className="text-primary">{filtered.length}</span> of {history.length} loaded
+              {t('history.showingResults', { count: filtered.length, total: history.length, highlight: (chunks: string) => `<span class="text-primary">${chunks}</span>` })}
             </div>
           )}
         </div>
@@ -228,7 +247,7 @@ export const History = () => {
             return (
               <div key={groupName} className="flex flex-col gap-3">
                 <h3 className="text-[10px] font-bold text-text-subtle uppercase tracking-widest pl-2">
-                  {groupName}
+                  {t(GROUP_KEYS[groupName])}
                 </h3>
                 <div className="flex flex-col gap-3">
                   {items.map((item: any) => {
@@ -262,18 +281,18 @@ export const History = () => {
                             <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                               <div className="flex items-center gap-1 text-xs text-text-subtle shrink-0">
                                 <Calendar className="w-3 h-3" />
-                                {item.createdAt?.toDate ? item.createdAt.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Just now'}
+                                {item.createdAt?.toDate ? item.createdAt.toDate().toLocaleDateString(i18n.language === 'id' ? 'id-ID' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : t('common.labels.justNow')}
                               </div>
                               <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-surface border border-border text-text-subtle lowercase shrink-0">
                                 <PersonaIcon className="w-3 h-3 inline-block mr-0.5" /> {item.persona}
                               </span>
                               {hasHighRisk ? (
                                 <span className="flex items-center gap-1 text-[10px] font-bold text-red-500 bg-red-500/10 px-2.5 py-0.5 rounded-full shrink-0">
-                                  <AlertTriangle className="w-3 h-3" /> {highRiskCount} risk{highRiskCount > 1 ? 's' : ''}
+                                  <AlertTriangle className="w-3 h-3" /> {t('common.labels.risks', { count: highRiskCount })}
                                 </span>
                               ) : (
                                 <span className="flex items-center gap-1 text-[10px] font-bold text-green-600 bg-green-500/10 px-2.5 py-0.5 rounded-full shrink-0">
-                                  <CheckCircle2 className="w-3 h-3" /> clean
+                                  <CheckCircle2 className="w-3 h-3" /> {t('common.labels.clean')}
                                 </span>
                               )}
                             </div>
@@ -285,7 +304,7 @@ export const History = () => {
                             size="icon"
                             onClick={(e) => handleDelete(e, item.id)}
                             className="text-text-subtle hover:text-red-500 md:opacity-0 group-hover:opacity-100"
-                            title="Delete"
+                            title={t('common.buttons.deleteAccount')}
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
@@ -304,13 +323,13 @@ export const History = () => {
               <FileText className="w-10 h-10 text-text-subtle/60" />
             </div>
             <div className="flex flex-col items-center gap-1.5">
-              <p className="font-display font-bold text-xl text-text">No analyses yet</p>
+              <p className="font-display font-bold text-xl text-text">{t('history.emptyStates.noAnalyses.title')}</p>
               <p className="text-[13px] text-text-muted max-w-[260px] leading-relaxed">
-                Your analyzed contracts will magically appear here. Let's get started!
+                {t('history.emptyStates.noAnalyses.description')}
               </p>
             </div>
             <Link to="/dashboard">
-              <Button>Analyze a Contract</Button>
+              <Button>{t('common.buttons.analyzeAContract')}</Button>
             </Link>
           </div>
         ) : (
@@ -319,9 +338,9 @@ export const History = () => {
               <Search className="w-10 h-10 text-text-subtle/60" />
             </div>
             <div className="flex flex-col items-center gap-1.5">
-              <p className="font-display font-bold text-xl text-text">No matching results</p>
+              <p className="font-display font-bold text-xl text-text">{t('history.emptyStates.noResults.title')}</p>
               <p className="text-[13px] text-text-muted max-w-[260px] leading-relaxed">
-                We couldn't find any documents matching your current search or filters.
+                {t('history.emptyStates.noResults.description')}
               </p>
             </div>
             <Button 
@@ -332,7 +351,7 @@ export const History = () => {
                 setActiveFilter('All');
               }}
             >
-              Clear all filters
+              {t('history.clearAllFilters')}
             </Button>
           </div>
         )}
@@ -349,10 +368,10 @@ export const History = () => {
               {isLoadingMore ? (
                 <>
                   <Loader variant="spinner" size={16} className="mr-2" />
-                  Loading...
+                  {t('common.labels.loading')}
                 </>
               ) : (
-                'Load more'
+                t('common.buttons.loadMore')
               )}
             </Button>
           </div>
@@ -361,7 +380,7 @@ export const History = () => {
         {/* All loaded indicator */}
         {!isLoading && !hasMore && history.length > PAGE_SIZE && (
           <p className="text-center text-xs text-text-subtle py-4">
-            All {history.length} analyses loaded
+            {t('history.allLoaded', { count: history.length })}
           </p>
         )}
       </div>

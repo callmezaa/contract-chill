@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, FilePenLine, History, Settings, LogOut, Sun, Moon, Menu, X } from 'lucide-react';
+import { LayoutDashboard, FilePenLine, History, Settings, LogOut, Sun, Moon, Menu, X, Globe } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Tooltip } from '@/components/motion/tooltip';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/contexts/AuthContext';
@@ -21,6 +23,7 @@ const useResolvedTheme = () => {
 };
 
 export const Layout = () => {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const { toggleTheme } = useTheme();
   const resolvedTheme = useResolvedTheme();
@@ -51,6 +54,7 @@ export const Layout = () => {
         </div>
 
         <div className="flex flex-col items-center gap-2 pb-4">
+          <LanguageSwitcher variant="compact" />
           <Tooltip content={resolvedTheme === 'dark' ? 'Light mode' : 'Dark mode'} side="right">
             <button onClick={toggleTheme} className="flex items-center justify-center size-10 rounded-xl text-text-muted hover:text-text hover:bg-surface-2 transition-colors">
               {resolvedTheme === 'dark' ? <Sun className="size-5" /> : <Moon className="size-5" />}
@@ -110,6 +114,9 @@ export const Layout = () => {
             </div>
 
             <div className="border-t border-border pt-4 pb-6 flex flex-col gap-4">
+              <div className="px-3">
+                <LanguageSwitcher />
+              </div>
               <button
                 onClick={() => { toggleTheme(); setIsMobileMenuOpen(false); }}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-colors"

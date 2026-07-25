@@ -1,14 +1,17 @@
 import { motion } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export const LegalPage = ({ title }: { title: string }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen pt-24 pb-12 transition-colors duration-500 bg-surface">
       <div className="max-w-3xl mx-auto px-6">
         <Link to="/" className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-text mb-8 transition-colors">
           <ArrowLeft className="w-4 h-4" />
-          Back to home
+          {t('legal.backToHome')}
         </Link>
         
         <motion.div
@@ -17,7 +20,8 @@ export const LegalPage = ({ title }: { title: string }) => {
           transition={{ duration: 0.5 }}
         >
           <h1 className="text-4xl md:text-5xl font-display font-bold text-text mb-3 tracking-tight">{title.toLowerCase()}</h1>
-          <p className="text-sm font-medium text-text-subtle mb-16">last updated: {new Date().toLocaleDateString()}</p>
+          <p className="text-sm font-medium text-text-subtle mb-8">last updated: {new Date().toLocaleDateString()}</p>
+          <p className="text-xs text-text-subtle mb-12 italic">{t('legal.englishNote')}</p>
           
           <div className="flex flex-col gap-12 text-text-muted">
             {title.toLowerCase().includes('privacy') ? (

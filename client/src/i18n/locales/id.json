@@ -1,0 +1,525 @@
+{
+  "common": {
+    "appName": "ContractChill",
+    "loading": "Memuat...",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "delete": "Hapus",
+    "edit": "Edit",
+    "close": "Tutup",
+    "back": "Kembali",
+    "next": "Selanjutnya",
+    "previous": "Sebelumnya",
+    "search": "Cari",
+    "filter": "Filter",
+    "clear": "Hapus",
+    "copy": "Salin",
+    "copied": "Disalin!",
+    "export": "Ekspor",
+    "download": "Unduh",
+    "upload": "Unggah",
+    "submit": "Kirim",
+    "confirm": "Konfirmasi",
+    "yes": "Ya",
+    "no": "Tidak",
+    "ok": "OK",
+    "error": "Terjadi kesalahan",
+    "success": "Berhasil",
+    "ready": "Siap",
+    "clean": "bersih",
+    "risk": "risiko",
+    "risks": "risiko",
+    "justNow": "Baru saja"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "generator": "Generator",
+    "history": "Riwayat",
+    "settings": "Pengaturan",
+    "howItWorks": "Cara Kerja",
+    "benefits": "Manfaat",
+    "personas": "Persona",
+    "pricing": "Harga",
+    "faq": "FAQ",
+    "product": "Produk",
+    "useCases": "Kasus Penggunaan",
+    "legal": "Legal",
+    "login": "Masuk",
+    "loginToAccount": "Masuk ke akun",
+    "getStarted": "Mulai",
+    "getStartedFree": "Mulai Gratis",
+    "signOut": "Keluar",
+    "lightMode": "Mode Terang",
+    "darkMode": "Mode Gelap"
+  },
+  "landing": {
+    "badge": "Kejelasan kontrak AI, tanpa bahasa hukum yang rumit",
+    "title": {
+      "your": "Kontrak",
+      "finally": "akhirnya",
+      "inPlainEnglish": "dalam bahasa yang mudah dipahami."
+    },
+    "subtitle": "Unggah kontrak hukum apa pun dan dapatkan analisis instan bertenaga AI — bendera merah, ringkasan klausul, dan tips negosiasi. Dalam hitungan detik.",
+    "cta": {
+      "startWithContract": "Mulai dengan kontrak",
+      "seeHowItWorks": "Lihat cara kerjanya"
+    },
+    "trustBadges": {
+      "noCreditCard": "Tidak perlu kartu kredit",
+      "pdfDocxSupport": "Dukungan PDF & DOCX",
+      "resultsInSeconds": "Hasil dalam hitungan detik"
+    },
+    "docTypes": {
+      "contracts": "kontrak",
+      "ndas": "NDA",
+      "freelanceAgreements": "perjanjian freelance",
+      "termSheets": "term sheet"
+    },
+    "preview": {
+      "uploadAnyFormat": "Unggah format kontrak apa pun",
+      "aiFlagsRisks": "AI langsung menandai risiko tersembunyi",
+      "getNegotiationAdvice": "Dapatkan saran negosiasi yang actionable",
+      "highRiskClause": "Klausul Berisiko Tinggi",
+      "aiSummary": "Ringkasan AI",
+      "negotiationTips": "Tips Negosiasi",
+      "redFlagsFound": "Bendera Merah Ditemukan",
+      "reviewBeforeSigning": "Tinjau sebelum menandatangani",
+      "analysisReady": "Analisis Siap",
+      "completedInSeconds": "Selesai dalam 8 detik"
+    },
+    "stats": {
+      "contractsAnalyzed": "Kontrak Dianalisis",
+      "aiPersonas": "Persona AI",
+      "averageAnalysisTime": "Rata-rata Waktu Analisis",
+      "userSatisfaction": "Kepuasan Pengguna"
+    },
+    "howItWorks": {
+      "sectionLabel": "Cara kerja",
+      "title": "Tiga langkah menuju kejelasan",
+      "subtitle": "Tidak perlu latar belakang hukum. Cukup unggah dan biarkan AI yang bekerja.",
+      "step1": {
+        "title": "Unggah kontrak Anda",
+        "desc": "Seret file PDF, DOCX, atau TXT. Kami mendukung kontrak hingga 10MB."
+      },
+      "step2": {
+        "title": "AI membaca dan menganalisis",
+        "desc": "Google Gemini AI memindai setiap klausul, mengidentifikasi risiko, dan menyiapkan analisis lengkap."
+      },
+      "step3": {
+        "title": "Tinjau dalam bahasa sederhana",
+        "desc": "Dapatkan analisis terstruktur dengan bendera merah, ringkasan, dan tips negosiasi."
+      }
+    },
+    "features": {
+      "sectionLabel": "Fitur",
+      "title": "Semua yang Anda butuhkan",
+      "subtitle": "Dirancang untuk freelancer, founder, dan siapa pun yang menandatangani kontrak.",
+      "redFlagDetection": {
+        "title": "Deteksi bendera merah",
+        "desc": "Secara otomatis menemukan klausul berisiko tinggi seperti tanggung jawab tanpa batas, pengambilan IP, dan ketentuan pemutusan yang tidak adil."
+      },
+      "smartSummarization": {
+        "title": "Ringkasan cerdas",
+        "desc": "Mengubah teks hukum yang padat menjadi ringkasan yang jelas dan ringkas yang bisa Anda baca dalam waktu kurang dari 2 menit."
+      },
+      "negotiationTips": {
+        "title": "Tips negosiasi",
+        "desc": "Dapatkan saran actionable tentang apa yang perlu dinegosiasikan dan cara menyampaikan penawaran balasan Anda."
+      },
+      "securePrivate": {
+        "title": "Aman & privat",
+        "desc": "Dokumen Anda dienkripsi dan hanya terhubung ke akun Google Anda. Tidak pernah dibagikan."
+      },
+      "sideBySideAnalysis": {
+        "title": "Analisis berdampingan",
+        "desc": "Baca kontrak asli dan analisis AI secara bersamaan dalam tampilan layar terbagi."
+      },
+      "analysisHistory": {
+        "title": "Riwayat analisis",
+        "desc": "Semua analisis sebelumnya tersimpan di cloud, dapat diakses kapan saja dari perangkat mana pun."
+      }
+    },
+    "personas": {
+      "sectionLabel": "Persona AI",
+      "title": "Pilih penasihat Anda",
+      "subtitle": "Kontrak yang sama, empat perspektif berbeda. Pilih yang sesuai dengan cara berpikir Anda.",
+      "angryLawyer": {
+        "name": "Angry Lawyer",
+        "tone": "Ketat & protektif",
+        "desc": "Menunjukkan setiap risiko dengan intensitas tinggi. Tidak takut untuk mengatakan 'jangan tanda tangani ini.'",
+        "preview": "Jangan tanda tangani ini! Mereka mencoba mencuri IP Anda!"
+      },
+      "chillFriend": {
+        "name": "Chill Friend",
+        "tone": "Santai & sederhana",
+        "desc": "Menjelaskan seperti ngobrol santai. Nol jargon, kejelasan maksimal.",
+        "preview": "Bro, klausul ini aman banget. Kamu oke kok."
+      },
+      "corporateMentor": {
+        "name": "Corporate Mentor",
+        "tone": "Strategis & tenang",
+        "desc": "Fokus pada implikasi jangka panjang, strategi bisnis, dan pertumbuhan profesional.",
+        "preview": "Ini sesuai praktik industri, tapi mari negosiasikan klausul 4."
+      },
+      "freelancerSenior": {
+        "name": "Freelancer Senior",
+        "tone": "Praktis & realistis",
+        "desc": "Tahu semua trik scope creep. Melindungi waktu, tarif, dan IP Anda.",
+        "preview": "Hati-hati scope creep di sini. Minta bayaran 50% di muka."
+      }
+    },
+    "testimonials": {
+      "sectionLabel": "Testimoni",
+      "title": "Dipercaya oleh kreator",
+      "items": [
+        {
+          "quote": "Saya hampir menandatangani kontrak dengan klausul IP yang akan mentransfer kepemilikan SEMUA karya masa depan saya. ContractChill langsung menangkapnya.",
+          "name": "Dimas R.",
+          "role": "Desainer UI/UX, Jakarta"
+        },
+        {
+          "quote": "Persona 'Chill Friend' menjelaskan perjanjian SaaS 30 halaman dalam waktu sekitar 2 menit. Saya memahami setiap klausul untuk pertama kalinya dalam hidup saya.",
+          "name": "Putri A.",
+          "role": "Developer Indie"
+        },
+        {
+          "quote": "Sebagai freelancer, saya menggunakan ini sebelum menandatangani setiap kontrak klien. Tips negosiasi saja sudah membantu saya menambahkan ketentuan pembayaran yang lebih baik.",
+          "name": "Kevin S.",
+          "role": "Konsultan Brand"
+        }
+      ]
+    },
+    "pricing": {
+      "sectionLabel": "Harga",
+      "title": "Harga sederhana dan transparan",
+      "subtitle": "Mulai gratis, upgrade saat butuh lebih banyak kekuatan.",
+      "free": {
+        "name": "Gratis",
+        "price": "$0",
+        "period": "/selamanya",
+        "description": "Cocok untuk mencoba ContractChill.",
+        "features": [
+          "20 analisis per hari",
+          "2 persona AI dasar",
+          "Dukungan standar",
+          "Ukuran file hingga 10MB"
+        ],
+        "cta": "Mulai gratis"
+      },
+      "pro": {
+        "name": "Pro",
+        "mostPopuler": "paling populer",
+        "price": "$12",
+        "period": "/bulan",
+        "description": "Untuk profesional yang sering menandatangani kontrak.",
+        "features": [
+          "Analisis tanpa batas",
+          "Semua 4 persona AI premium",
+          "Dukungan email prioritas",
+          "Ekspor analisis ke PDF",
+          "Simpan riwayat negosiasi"
+        ],
+        "cta": "Upgrade ke pro"
+      }
+    },
+    "faq": {
+      "sectionLabel": "FAQ",
+      "title": "Pertanyaan yang sering diajukan",
+      "items": [
+        {
+          "q": "Apakah dokumen saya privat dan aman?",
+          "a": "Tentu. Kami menggunakan enkripsi standar industri untuk memproses dokumen Anda. File Anda hanya digunakan untuk menghasilkan analisis dan tidak pernah dibagikan, dijual, atau digunakan untuk melatih model AI publik. Anda dapat menghapus riwayat analisis kapan saja."
+        },
+        {
+          "q": "Apakah ini menggantikan pengacara sungguhan?",
+          "a": "Tidak. ContractChill adalah asisten AI yang dirancang untuk membantu Anda memahami jargon hukum, menemukan bendera merah yang jelas, dan mempersiapkan negosiasi. Ini bukan pengganti nasihat hukum profesional. Untuk perjanjian berisiko tinggi, kami selalu merekomendasikan untuk berkonsultasi dengan pengacara yang berkualifikasi."
+        },
+        {
+          "q": "Format dokumen apa yang didukung?",
+          "a": "Saat ini, kami mendukung format berbasis teks standar termasuk PDF, DOCX, dan TXT hingga 10MB. Perlu diketahui bahwa PDF berbasis gambar (dokumen pindaian tanpa teks yang dapat dipilih) atau file yang dilindungi kata sandi tidak dapat dianalisis."
+        },
+        {
+          "q": "Seberapa akurat analisis AI?",
+          "a": "Sistem kami didukung oleh Google Gemini AI dan sangat mampu mengidentifikasi risiko hukum standar dan merangkum klausul yang kompleks. Namun, seperti semua AI, sesekali mungkin ada konteks halus yang spesifik untuk situasi bisnis unik Anda."
+        },
+        {
+          "q": "Apa itu persona AI yang berbeda?",
+          "a": "Kami menawarkan empat perspektif berbeda: 'chill friend' untuk ringkasan sederhana, 'angry lawyer' untuk deteksi risiko agresif, 'corporate mentor' untuk saran bisnis strategis, dan 'freelancer senior' untuk perlindungan pekerja independen."
+        }
+      ]
+    },
+    "finalCta": {
+      "title": "Berhenti menandatangani kontrak yang tidak Anda pahami.",
+      "subtitle": "Bergabung dengan ribuan freelancer dan founder yang meninjau kontrak dengan percaya diri bersama ContractChill.",
+      "button": "Mulai gratis",
+      "disclaimer": "Tidak perlu kartu kredit. Didukung oleh Google Gemini AI."
+    },
+    "footer": {
+      "description": "Analisis kontrak bertenaga AI untuk freelancer, founder, dan siapa pun yang menandatangani dokumen hukum.",
+      "documentsPrivate": "Dokumen Anda privat dan terenkripsi",
+      "copyright": "© {{year}} ContractChill. Hak cipta dilindungi. Analisis AI bukan pengganti nasihat hukum profesional.",
+      "poweredBy": "Didukung oleh"
+    }
+  },
+  "auth": {
+    "welcomeBack": "Selamat datang kembali",
+    "signInToAccount": "Masuk ke akun Anda",
+    "continueWithGoogle": "Lanjutkan dengan Google",
+    "orContinueWithEmail": "Atau lanjutkan dengan email",
+    "orSignUpWithEmail": "Atau daftar dengan email",
+    "emailAddress": "Alamat Email",
+    "password": "Kata Sandi",
+    "forgotPassword": "Lupa Kata Sandi?",
+    "signIn": "Masuk",
+    "signingIn": "Masuk...",
+    "createAccount": "Buat akun",
+    "analyzeFirstContract": "Analisis kontrak pertama Anda dalam hitungan menit.",
+    "fullName": "Nama Lengkap",
+    "signUp": "Daftar",
+    "creating": "Membuat...",
+    "dontHaveAccount": "Belum punya akun?",
+    "alreadyHaveAccount": "Sudah punya akun?",
+    "errors": {
+      "invalidEmailPassword": "email atau kata sandi tidak valid. silakan coba lagi.",
+      "pleaseEnterEmail": "Silakan masukkan alamat email Anda terlebih dahulu.",
+      "resetLinkSent": "Tautan reset terkirim!",
+      "checkEmailResetLink": "Periksa email Anda untuk tautan reset kata sandi.",
+      "failedToSendResetLink": "Gagal mengirim tautan reset.",
+      "googleSignInFailed": "Login Google gagal. Silakan coba lagi.",
+      "passwordMinLength": "Kata sandi harus minimal 6 karakter.",
+      "registrationFailed": "Pendaftaran gagal. Coba email lain.",
+      "googleLoginFailed": "Login Google gagal"
+    }
+  },
+  "dashboard": {
+    "goodMorning": "Selamat pagi, {{name}}",
+    "understandContract": "Pahami kontrak berikutnya sebelum Anda menandatangani.",
+    "stats": {
+      "totalAnalyses": "Total Analisis",
+      "risksFound": "Risiko Ditemukan",
+      "cleanContracts": "Kontrak Bersih",
+      "percentOfTotal": "{{percent}}% dari total"
+    },
+    "upload": {
+      "dropHere": "Seret kontrak Anda ke sini",
+      "dropItHere": "Lepaskan di sini!",
+      "pdfDocxTxt": "PDF, DOCX, atau TXT — hingga 10MB",
+      "browseFiles": "Pilih File",
+      "yourFirstContract": "kontrak pertama Anda menunggu",
+      "resultsInSeconds": "hasil dalam hitungan detik",
+      "flagsHiddenRisks": "menandai risiko tersembunyi",
+      "plainEnglishSummary": "ringkasan bahasa sederhana",
+      "trustedBy": "Dipercaya oleh",
+      "freelancersFounders": "freelancer & founder untuk menangkap apa yang dilewatkan pengacara."
+    },
+    "persona": {
+      "aiAdvisorPersona": "Persona penasihat AI",
+      "chooseAnalyzer": "Pilih siapa yang menganalisis kontrak Anda"
+    },
+    "legalDisclaimer": "Analisis AI hanya untuk tujuan informasi dan bukan merupakan nasihat hukum profesional.",
+    "recentActivity": {
+      "title": "Aktivitas terbaru",
+      "viewAll": "Lihat semua",
+      "unnamedContract": "Kontrak tanpa nama"
+    },
+    "loading": {
+      "extractingText": "Mengekstrak teks...",
+      "readingDocument": "Membaca konten dokumen",
+      "sendingToAi": "Mengirim ke AI...",
+      "securelyTransferring": "Mentransfer secara aman ke Gemini",
+      "analyzingClauses": "Menganalisis klausul...",
+      "scanningForRisks": "Memindai risiko tersembunyi",
+      "structuringReport": "Menyusun laporan...",
+      "formattingInsights": "Memformat insight akhir"
+    },
+    "errors": {
+      "fileTooLarge": "File terlalu besar",
+      "uploadSmaller": "Silakan unggah dokumen lebih kecil dari 10MB.",
+      "unsupportedFormat": "Format file tidak didukung",
+      "onlySupportPdfDocxTxt": "Saat ini kami hanya mendukung file PDF, DOCX, dan TXT.",
+      "analysisFailed": "Analisis gagal. Silakan periksa dokumen Anda dan coba lagi."
+    },
+    "success": {
+      "analysisComplete": "Analisis selesai!",
+      "contractScanned": "Kontrak Anda telah dipindai untuk risiko."
+    }
+  },
+  "analyzer": {
+    "title": "Hasil Analisis",
+    "analyzingContract": "Menganalisis Kontrak...",
+    "documentNotFound": "Dokumen tidak ditemukan",
+    "tryReupload": "Silakan coba unggah ulang file",
+    "back": "kembali",
+    "copy": "salin",
+    "copied": "disalin!",
+    "exportPdf": "ekspor pdf",
+    "contractAnalysis": "Analisis Kontrak",
+    "generatedBy": "Dibuat oleh ContractChill AI • {{date}}",
+    "executiveSummary": "Ringkasan Eksekutif",
+    "jargonTranslator": "Penerjemah Jargon",
+    "complexLegalTerms": "Istilah hukum kompleks, disederhanakan.",
+    "criticalRisks": "Risiko Kritis",
+    "issuesDetected": "{{count}} masalah terdeteksi",
+    "locateClause": "Temukan Klausul",
+    "generateNegotiationScript": "buat skrip negosiasi",
+    "negotiationStrategy": "Strategi Negosiasi",
+    "theVerdict": "Vonis",
+    "aiAnalyst": "Analis AI",
+    "analyzedDocument": "Saya telah menganalisis dokumen ini. Berikut temuan saya.",
+    "highRisk": "Risiko Tinggi",
+    "mediumRisk": "Risiko Sedang",
+    "lowRisk": "Risiko Rendah"
+  },
+  "history": {
+    "title": "Riwayat analisis",
+    "subtitle": "Tinjau semua analisis kontrak sebelumnya Anda.",
+    "total": "total",
+    "highRisk": "risiko tinggi",
+    "safe": "aman",
+    "searchByFileName": "Cari berdasarkan nama file...",
+    "all": "Semua",
+    "today": "Hari ini",
+    "yesterday": "Kemarin",
+    "thisWeek": "Minggu ini",
+    "earlier": "Sebelumnya",
+    "noAnalysesYet": "Belum ada analisis",
+    "analyzedWillAppear": "Kontrak yang Anda analisis akan muncul di sini secara ajaib. Ayo mulai!",
+    "analyzeAContract": "Analisis Kontrak",
+    "noMatchingResults": "Tidak ada hasil yang cocok",
+    "couldntFindDocuments": "Kami tidak menemukan dokumen yang cocok dengan pencarian atau filter Anda saat ini.",
+    "clearAllFilters": "Hapus semua filter",
+    "loadMore": "Muat lebih banyak",
+    "loading": "Memuat...",
+    "allAnalysesLoaded": "Semua {{count}} analisis dimuat",
+    "showing": "menampilkan",
+    "ofLoaded": "dari {{count}} dimuat",
+    "deleteConfirm": "Apakah Anda yakin ingin menghapus analisis ini?",
+    "deleteSuccess": "Riwayat berhasil dihapus",
+    "analysisRemoved": "Analisis telah dihapus dari akun Anda.",
+    "deleteFailed": "Gagal menghapus riwayat"
+  },
+  "settings": {
+    "title": "Pengaturan",
+    "subtitle": "Kelola akun dan preferensi Anda.",
+    "changesSaved": "Perubahan disimpan",
+    "profile": {
+      "title": "Informasi profil",
+      "subtitle": "Perbarui foto dan detail pribadi Anda.",
+      "changePhoto": "ubah foto",
+      "displayName": "Nama tampilan",
+      "yourName": "Nama Anda",
+      "emailAddress": "Alamat email",
+      "saveChanges": "Simpan perubahan",
+      "profileUpdated": "Profil berhasil diperbarui",
+      "profileUpdateFailed": "Gagal memperbarui profil",
+      "photoUploaded": "Foto berhasil diunggah",
+      "photoUploadFailed": "Gagal mengunggah foto"
+    },
+    "subscription": {
+      "title": "Langganan",
+      "freePlan": "Paket Gratis",
+      "analysesPerDay": "20 analisis per hari",
+      "upgradeToPro": "Upgrade ke pro"
+    },
+    "notifications": {
+      "title": "Notifikasi",
+      "analysisComplete": "Analisis selesai",
+      "notifyWhenScanFinishes": "Beritahu saat pemindaian selesai",
+      "weeklySummary": "Ringkasan mingguan",
+      "yourContractInsights": "Insight kontrak Anda",
+      "enabled": "diaktifkan",
+      "disabled": "dinonaktifkan",
+      "saveFailed": "Gagal menyimpan pengaturan"
+    },
+    "dangerZone": {
+      "title": "Zona Bahaya",
+      "deleteAccount": "Hapus Akun",
+      "deleteDescription": "Hapus akun, langganan, dan semua data terkait secara permanen. Tindakan ini tidak dapat dibatalkan.",
+      "deleteConfirm": "Apakah Anda benar-benar yakin ingin menghapus akun Anda?\n\nTindakan ini tidak dapat dibatalkan. Semua data, riwayat analisis, dan langganan aktif Anda akan dihapus secara permanen.",
+      "accountDeleted": "Akun dihapus secara permanen",
+      "deleteFailed": "Gagal menghapus akun",
+      "securityCheck": "Pemeriksaan Keamanan",
+      "logoutBeforeDelete": "Silakan keluar dan masuk kembali sebelum menghapus akun Anda.",
+      "contactSupport": "Silakan hubungi dukungan jika masalah berlanjut."
+    }
+  },
+  "generator": {
+    "title": "Generator Kontrak",
+    "subtitle": "Buat draf kontrak profesional yang sah secara hukum secara otomatis dengan tenaga AI.",
+    "draftSettings": "Pengaturan draf",
+    "fillDetails": "Isi detail untuk menghasilkan",
+    "contractType": "Jenis Kontrak",
+    "clientName": "Nama Klien (Pihak A)",
+    "yourName": "Nama Anda / Agency (Pihak B)",
+    "projectValue": "Nilai Proyek / Kompensasi",
+    "specialConditions": "Kondisi Khusus (Opsional)",
+    "generateContract": "Buat Kontrak",
+    "generatingDraft": "Membuat Draf...",
+    "preview": "Pratinjau",
+    "draftingArenaReady": "Arena Draf Siap",
+    "fillGeneratorDetails": "Isi detail generator di sebelah kiri, lalu klik 'Buat Kontrak' untuk membuat draf Anda.",
+    "aiDraftingClauses": "AI Membuat Klausul yang Kokoh...",
+    "contractGenerated": "Kontrak Dibuat!",
+    "proFreelancerDraft": "Draf pro-freelancer Anda siap.",
+    "generationFailed": "Pembuatan Gagal",
+    "somethingWentWrong": "Terjadi kesalahan.",
+    "copiedToClipboard": "Disalin ke clipboard",
+    "formCleared": "Formulir dihapus",
+    "missingFields": "Field kosong",
+    "fillRequiredFields": "Silakan isi semua field yang diperlukan.",
+    "failedToOpenPrint": "Gagal membuka jendela cetak",
+    "allowPopups": "Silakan izinkan pop-up untuk situs ini.",
+    "contractTypes": {
+      "freelanceServices": "Perjanjian Layanan Freelance",
+      "nda": "Perjanjian Kerahasiaan (NDA)",
+      "softwareDevelopment": "Kontrak Pengembangan Perangkat Lunak",
+      "retainer": "Perjanjian Retainer",
+      "creativeAgency": "Kontrak Agensi Kreatif"
+    },
+    "placeholders": {
+      "clientName": "contoh: Acme Corp",
+      "yourName": "contoh: John Doe",
+      "projectValue": "contoh: $5.000 USD atau Rp 50.000.000",
+      "specialConditions": "contoh: 50% bayar di muka, maksimal 2 revisi..."
+    }
+  },
+  "chat": {
+    "askPersona": "Tanya {{persona}}",
+    "instantInsights": "Insight instan",
+    "askAnything": "Tanyakan apa saja tentang kontrak ini.",
+    "askQuestion": "Ajukan pertanyaan...",
+    "thinking": "Berpikir...",
+    "closeChat": "Tutup chat",
+    "askAi": "tanya ai",
+    "askMeAnything": "tanyakan apa saja tentang kontrak ini!",
+    "sorryTrouble": "Maaf, saya sedang mengalami masalah koneksi. Bisa coba lagi?",
+    "suggestions": {
+      "writeRejectionEmail": "Tulis email penolakan",
+      "howToReviseClause": "Cara revisi klausul",
+      "simplifyLanguage": "Sederhanakan bahasa",
+      "findMissedRisks": "Cari risiko terlewat"
+    }
+  },
+  "pdf": {
+    "criticalRisksAndRedFlags": "Risiko Kritis & Bendera Merah",
+    "verdictExplanation": "Vonis / Penjelasan",
+    "strategicNegotiationSuggestions": "Saran Negosiasi Strategis",
+    "keyClausesChecked": "Klausul Utama yang Diperiksa",
+    "jargonTranslator": "Penerjemah Jargon",
+    "riskScore": "Skor Risiko",
+    "overallAssessment": "Penilaian Keseluruhan",
+    "highRisk": "Risiko Tinggi",
+    "mediumRisk": "Risiko Sedang",
+    "safe": "Aman",
+    "contractSummary": "Ringkasan Kontrak"
+  },
+  "footer": {
+    "copyright": "© {{year}} ContractChill. Hak cipta dilindungi. Analisis AI bukan pengganti nasihat hukum profesional.",
+    "poweredBy": "Didukung oleh",
+    "privacyPolicy": "Kebijakan Privasi",
+    "termsOfService": "Ketentuan Layanan",
+    "freelancers": "Freelancer",
+    "founders": "Founder",
+    "creators": "Kreator"
+  }
+}

@@ -5,10 +5,12 @@ import { useState } from 'react';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { Button } from '@/components/motion/button';
 import { Input } from '@/components/motion/input';
+import { useTranslation } from 'react-i18next';
 
 export const RegisterPage = () => {
   const { registerWithEmail, loginWithGoogle, user } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -45,7 +47,7 @@ export const RegisterPage = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password.length < 6) {
-      setError('Password must be at least 6 characters.');
+      setError(t('auth.register.errors.passwordTooShort'));
       return;
     }
 
@@ -55,7 +57,7 @@ export const RegisterPage = () => {
       await registerWithEmail(email, password, name);
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err.message || 'Registration failed. Try a different email.');
+      setError(err.message || t('auth.register.errors.registrationFailed'));
     } finally {
       setLoading(false);
     }
@@ -68,7 +70,7 @@ export const RegisterPage = () => {
       await loginWithGoogle();
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err.message || 'Google login failed');
+      setError(err.message || t('auth.register.errors.googleFailed'));
     } finally {
       setLoading(false);
     }
@@ -77,8 +79,8 @@ export const RegisterPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-sm border border-border rounded-xl p-8 bg-surface">
-        <h1 className="text-2xl font-semibold text-text text-center mb-2">Create account</h1>
-        <p className="text-sm text-text-muted text-center mb-8">Analyze your first contract in minutes.</p>
+        <h1 className="text-2xl font-semibold text-text text-center mb-2">{t('auth.register.title')}</h1>
+        <p className="text-sm text-text-muted text-center mb-8">{t('auth.register.subtitle')}</p>
 
         <Button
           variant="secondary"
@@ -87,7 +89,7 @@ export const RegisterPage = () => {
           disabled={loading}
         >
           <img src="https://www.google.com/favicon.ico" alt="Google" className="w-4 h-4" />
-          Continue with Google
+          {t('common.buttons.continueWithGoogle')}
         </Button>
 
         <div className="relative mb-5">
@@ -95,7 +97,7 @@ export const RegisterPage = () => {
             <div className="w-full border-t border-border" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-4 text-xs font-medium text-text-muted bg-surface">Or sign up with email</span>
+            <span className="px-4 text-xs font-medium text-text-muted bg-surface">{t('auth.register.orSignUpWithEmail')}</span>
           </div>
         </div>
 
@@ -111,21 +113,21 @@ export const RegisterPage = () => {
             type="text"
             value={name}
             onChange={(value) => setName(value)}
-            placeholder="Full Name"
+            placeholder={t('auth.register.namePlaceholder')}
           />
 
           <Input
             type="email"
             value={email}
             onChange={(value) => setEmail(value)}
-            placeholder="Email Address"
+            placeholder={t('auth.register.emailPlaceholder')}
           />
 
           <Input
             type={showPassword ? "text" : "password"}
             value={password}
             onChange={(value) => setPassword(value)}
-            placeholder="Password"
+            placeholder={t('auth.register.passwordPlaceholder')}
             rightIcon={
               <button
                 type="button"
@@ -156,17 +158,17 @@ export const RegisterPage = () => {
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                Creating...
+                {t('auth.register.creating')}
               </>
             ) : (
-              'Sign Up'
+              t('common.buttons.signUp')
             )}
           </Button>
         </form>
 
         <p className="text-center text-xs text-text-muted mt-6">
-          Already have an account?{' '}
-          <Link to="/login" className="text-primary font-semibold hover:underline">Sign in</Link>
+          {t('auth.register.alreadyHaveAccount')}{' '}
+          <Link to="/login" className="text-primary font-semibold hover:underline">{t('auth.register.signInLink')}</Link>
         </p>
       </div>
     </div>

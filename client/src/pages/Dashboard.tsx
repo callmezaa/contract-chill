@@ -6,6 +6,7 @@ import {
 import { useState, useRef, useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation, Trans } from 'react-i18next';
 import { analyzeContract } from '../services/api';
 import type { Persona } from '@chill/shared';
 import { db } from '../lib/firebase';
@@ -19,6 +20,13 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Loader } from '@/components/motion/loader';
 
+const personaKeyMap: Record<string, string> = {
+  'Chill Friend': 'chillFriend',
+  'Angry Lawyer': 'angryLawyer',
+  'Corporate Mentor': 'corporateMentor',
+  'Freelancer Senior': 'freelancerSenior',
+};
+
 const personas = [
   { id: 'Chill Friend',      desc: 'Casual & direct',    icon: Coffee,    preview: '"Hey, clause 4 is a red flag. I\'d push back on this before signing."'       },
   { id: 'Angry Lawyer',      desc: 'Strict & protective', icon: Scale,     preview: '"DO NOT SIGN THIS. They are trying to strip your IP rights completely!"'        },
@@ -29,12 +37,13 @@ const personas = [
 export const Dashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedPersona, setSelectedPersona] = useState<Persona>('Chill Friend');
   const [hoveredPersona, setHoveredPersona] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  useDocumentTitle('Dashboard - ContractChill');
+  useDocumentTitle(t('dashboard.title'));
 
   const { data: history } = useQuery({
     queryKey: ['history-stats', user?.uid],
@@ -71,7 +80,7 @@ export const Dashboard = () => {
         const docSnap = await getDoc(docRef);
         const prefs = docSnap.exists() ? docSnap.data().notifications : { analysis: true };
         if (prefs?.analysis) {
-          toast.success('Analysis complete!', { description: 'Your contract has been scanned for risks.', duration: 5000 });
+          toast.success(t('dashboard.toasts.analysisComplete'), { description: t('dashboard.toasts.analysisCompleteDesc'), duration: 5000 });
         }
       }
       navigate(`/analyze/${data.id}`, { state: { result: data.result, persona: selectedPersona, fileUrl: data.fileUrl } });
@@ -86,10 +95,10 @@ export const Dashboard = () => {
 
   const [loadingStep, setLoadingStep] = useState(0);
   const loadingMessages = [
-    { title: "Extracting text...", desc: "Reading document content" },
-    { title: "Sending to AI...", desc: "Securely transferring to Gemini" },
-    { title: "Analyzing clauses...", desc: "Scanning for hidden risks" },
-    { title: "Structuring report...", desc: "Formatting final insights" }
+    { title: t('dashboard.loading.extractingText'), desc: t('dashboard.loading.extractingTextDesc') },
+    { title: t('dashboard.loading.sendingToAi'), desc: t('dashboard.loading.sendingToAiDesc') },
+    { title: t('dashboard.loading.analyzingClauses'), desc: t('dashboard.loading.analyzingClausesDesc') },
+    { title: t('dashboard.loading.structuringReport'), desc: t('dashboard.loading.structuringReportDesc') },
   ];
 
   useEffect(() => {
@@ -105,7 +114,7 @@ export const Dashboard = () => {
   const validateFile = (file: File) => {
     const MAX_SIZE = 10 * 1024 * 1024; // 10MB
     if (file.size > MAX_SIZE) {
-      toast.error('File is too large', { description: 'Please upload a document smaller than 10MB.' });
+      toast.error(t('common.fileInfo.fileTooLarge'), { description: t('common.fileInfo.fileTooLarge') });
       return false;
     }
     
@@ -118,7 +127,7 @@ export const Dashboard = () => {
     const allowedExts = ['pdf', 'docx', 'txt'];
 
     if (!allowedTypes.includes(file.type) && !allowedExts.includes(ext || '')) {
-      toast.error('Unsupported file format', { description: 'We only support PDF, DOCX, and TXT files for now.' });
+      toast.error(t('common.fileInfo.unsupportedFormat'), { description: t('common.fileInfo.unsupportedFormat') });
       return false;
     }
 
@@ -142,21 +151,21 @@ export const Dashboard = () => {
 
   const statCards = [
     {
-      label: 'Total Analyses',
+      label: t('dashboard.stats.totalAnalyses'),
       value: totalAnalyses,
       suffix: '',
       icon: <FileText className="w-4 h-4" />,
     },
     {
-      label: 'Risks Found',
+      label: t('dashboard.stats.risksFound'),
       value: redFlagsCount,
-      suffix: redFlagsCount !== 1 ? 'risks' : 'risk',
+      suffix: redFlagsCount !== 1 ? t('common.labels.risks') : t('common.labels.risk'),
       icon: <AlertTriangle className="w-4 h-4" />,
     },
     {
-      label: 'Clean Contracts',
+      label: t('dashboard.stats.cleanContracts'),
       value: safeCount,
-      suffix: `${safePercent}% of total`,
+      suffix: t('dashboard.stats.percentOfTotal', { percent: safePercent }),
       icon: <CheckCircle2 className="w-4 h-4" />,
     },
   ];
@@ -171,9 +180,9 @@ export const Dashboard = () => {
       >
         <div>
           <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-[-0.04em] text-text">
-            Good morning, {user?.displayName?.split(' ')[0]}
+            {t('dashboard.greeting', { name: user?.displayName?.split(' ')[0] })}
           </h1>
-          <p className="text-text-muted text-sm mt-2">Understand your next contract before you sign.</p>
+          <p className="text-text-muted text-sm mt-2">{t('dashboard.subtitle')}</p>
         </div>
       </motion.div>
 
@@ -236,7 +245,7 @@ export const Dashboard = () => {
             onChange={handleFileChange}
             className="hidden"
             accept=".pdf,.docx,.txt"
-            title="Upload contract file"
+            title={t('common.buttons.browseFiles')}
           />
 
           {mutation.isPending ? (
@@ -290,9 +299,9 @@ export const Dashboard = () => {
 
               <div className="flex flex-col gap-1.5">
                 <p className="font-bold text-text text-base">
-                  {isDragging ? 'Drop it here!' : 'Drop your contract here'}
+                  {isDragging ? t('dashboard.upload.dropItHere') : t('dashboard.upload.dropHere')}
                 </p>
-                <p className="text-xs text-text-muted">PDF, DOCX, or TXT — up to 10MB</p>
+                <p className="text-xs text-text-muted">{t('common.fileInfo.pdfDocxTxt')}</p>
               </div>
 
               <Button
@@ -301,7 +310,7 @@ export const Dashboard = () => {
                 disabled={isDragging}
                 onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
               >
-                Browse Files
+                {t('common.buttons.browseFiles')}
               </Button>
 
               {/* Empty State callout — only for new users */}
@@ -315,16 +324,16 @@ export const Dashboard = () => {
                   {/* Divider */}
                   <div className="flex items-center gap-3 w-full">
                     <div className="h-px flex-1 bg-border" />
-                    <span className="text-[10px] text-text-subtle font-bold tracking-widest">your first contract awaits</span>
+                    <span className="text-[10px] text-text-subtle font-bold tracking-widest">{t('dashboard.upload.firstContractAwaits')}</span>
                     <div className="h-px flex-1 bg-border" />
                   </div>
 
                   {/* Benefit pills */}
                   <div className="flex flex-wrap justify-center gap-2">
                     {([
-                      { Icon: Zap, text: 'results in seconds' },
-                      { Icon: Shield, text: 'flags hidden risks' },
-                      { Icon: MessageCircle, text: 'plain-english summary' },
+                      { Icon: Zap, text: t('dashboard.upload.resultsInSeconds') },
+                      { Icon: Shield, text: t('dashboard.upload.flagsHiddenRisks') },
+                      { Icon: MessageCircle, text: t('dashboard.upload.plainEnglishSummary') },
                     ]).map((b) => (
                       <span
                         key={b.text}
@@ -338,7 +347,10 @@ export const Dashboard = () => {
 
                   {/* Social proof */}
                   <p className="text-[10px] text-text-subtle text-center leading-relaxed">
-                    Trusted by <span className="font-bold text-text">2,400+</span> freelancers & founders to catch what lawyers miss.
+                    <Trans
+                      i18nKey="dashboard.upload.socialProof"
+                      components={{ bold: <span className="font-bold text-text" /> }}
+                    />
                   </p>
                 </motion.div>
               )}
@@ -354,7 +366,7 @@ export const Dashboard = () => {
             >
               <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
               <span>
-                {(mutation.error as any)?.response?.data?.error || mutation.error?.message || 'Analisis gagal. Silakan periksa dokumen Anda dan coba lagi.'}
+                {(mutation.error as any)?.response?.data?.error || mutation.error?.message || t('dashboard.errors.analysisFailed')}
               </span>
             </motion.div>
           )}
@@ -372,13 +384,14 @@ export const Dashboard = () => {
                    className="rounded-2xl border p-4 flex flex-col gap-3 bg-surface border-border shadow-sm"
           >
             <div>
-              <p className="text-xs font-bold text-text-subtle tracking-wide">AI advisor persona</p>
-              <p className="text-[10px] text-text-subtle/60 mt-0.5">Choose who analyzes your contract</p>
+              <p className="text-xs font-bold text-text-subtle tracking-wide">{t('dashboard.personaSelector.label')}</p>
+              <p className="text-[10px] text-text-subtle/60 mt-0.5">{t('dashboard.personaSelector.description')}</p>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               {personas.map((persona) => {
                 const isActive = selectedPersona === persona.id;
+                const personaKey = personaKeyMap[persona.id];
                 return (
                   <motion.button
                     key={persona.id}
@@ -397,9 +410,9 @@ export const Dashboard = () => {
                     )}
                     <persona.icon className="w-5 h-5 text-primary" />
                     <p className={`text-[11px] font-bold leading-tight ${isActive ? 'text-primary' : 'text-text'}`}>
-                      {persona.id}
+                      {t(`dashboard.personaSelector.${personaKey}.id`)}
                     </p>
-                    <p className="text-[9px] text-text-subtle font-medium leading-tight">{persona.desc}</p>
+                    <p className="text-[9px] text-text-subtle font-medium leading-tight">{t(`dashboard.personaSelector.${personaKey}.desc`)}</p>
                   </motion.button>
                 );
               })}
@@ -410,6 +423,7 @@ export const Dashboard = () => {
               {hoveredPersona && (() => {
                 const p = personas.find(x => x.id === hoveredPersona);
                 if (!p) return null;
+                const personaKey = personaKeyMap[p.id];
                 return (
                   <motion.div
                     key={hoveredPersona}
@@ -425,7 +439,7 @@ export const Dashboard = () => {
                         return Icon ? <Icon className="w-4 h-4 shrink-0 mt-0.5" /> : null;
                       })()}
                       <p className="text-[11px] text-text-muted leading-relaxed font-medium italic">
-                        {p.preview}
+                        {t(`dashboard.personaSelector.${personaKey}.preview`)}
                       </p>
                     </div>
                   </motion.div>
@@ -439,7 +453,7 @@ export const Dashboard = () => {
           {/* Legal disclaimer */}
           <div className="flex items-start gap-2 px-3 py-2.5 rounded-xl border text-[10px] text-text-subtle font-medium leading-relaxed bg-surface border-border">
             <ShieldCheck className="w-3.5 h-3.5 text-primary/50 shrink-0 mt-0.5" />
-            <span>AI analysis is for informational purposes only and does not constitute professional legal advice.</span>
+            <span>{t('dashboard.disclaimer')}</span>
           </div>
         </div>
       </div>
@@ -456,14 +470,14 @@ export const Dashboard = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-text-muted" />
-              <span className="text-sm font-bold text-text">recent activity</span>
+              <span className="text-sm font-bold text-text">{t('dashboard.recentActivity.title')}</span>
             </div>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => navigate('/history')}
             >
-              view all
+              {t('common.buttons.viewAll')}
               <ChevronRight className="w-3.5 h-3.5" />
             </Button>
           </div>
@@ -482,8 +496,8 @@ export const Dashboard = () => {
                 const highRiskCount = item.result?.redFlags?.filter((rf: any) => rf.risk === 'High').length ?? 0;
                 const PersonaIcon = personas.find(x => x.id === item.persona)?.icon || Shield;
                 const date = item.createdAt?.seconds
-                  ? new Date(item.createdAt.seconds * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-                  : 'just now';
+                  ? new Date(item.createdAt.seconds * 1000).toLocaleDateString(i18n.language, { month: 'short', day: 'numeric' })
+                  : t('common.labels.justNow');
 
                 return (
                   <motion.button
@@ -506,7 +520,7 @@ export const Dashboard = () => {
                     {/* Main info */}
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold text-text truncate">
-                        {item.fileName || 'Unnamed contract'}
+                        {item.fileName || t('dashboard.recentActivity.unnamedContract')}
                       </p>
                       <div className="flex items-center gap-2 mt-0.5">
                           <span className="text-[10px] text-text-subtle font-medium inline-flex items-center gap-1">
@@ -524,9 +538,9 @@ export const Dashboard = () => {
                         : 'bg-green-500/10 text-green-600'
                     }`}>
                       {hasHighRisk ? (
-                        <><AlertTriangle className="w-3 h-3" /> {highRiskCount} risk{highRiskCount > 1 ? 's' : ''}</>
+                        <><AlertTriangle className="w-3 h-3" /> {highRiskCount} {t('common.labels.risks')}</>
                       ) : (
-                        <><CheckCircle2 className="w-3 h-3" /> clean</>
+                        <><CheckCircle2 className="w-3 h-3" /> {t('common.labels.clean')}</>
                       )}
                     </div>
 

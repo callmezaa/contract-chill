@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, ArrowRight, ArrowDown, CheckCircle2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 
 const sampleLegalText = "The Receiving Party shall hold and maintain the Confidential Information in strictest confidence for the sole and exclusive benefit of the Disclosing Party. The Receiving Party shall carefully restrict access to Confidential Information to employees, contractors and third parties as is reasonably required to carry out the obligations under this Agreement.";
@@ -8,6 +9,7 @@ const sampleLegalText = "The Receiving Party shall hold and maintain the Confide
 const translatedText = "You must keep this information completely secret. You can only use it to benefit the person sharing it with you. Only share it with your employees or contractors if they absolutely need it to do their jobs.";
 
 export const MiniDemo = () => {
+  const { t } = useTranslation();
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   
@@ -55,9 +57,9 @@ export const MiniDemo = () => {
         viewport={{ once: true }}
         className="flex flex-col items-center gap-3 text-center mb-12"
       >
-        <p className="text-xs font-medium tracking-[0.16em] uppercase text-primary">Live demo</p>
-        <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-[-0.05em] text-text [text-wrap:balance]">See the clarity</h2>
-        <p className="text-text-muted [text-wrap:pretty]">Turn dense legal language into something you can act on.</p>
+        <p className="text-xs font-medium tracking-[0.16em] uppercase text-primary">{t('landing.miniDemo.sectionLabel')}</p>
+        <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-[-0.05em] text-text [text-wrap:balance]">{t('landing.miniDemo.title')}</h2>
+        <p className="text-text-muted [text-wrap:pretty]">{t('landing.miniDemo.subtitle')}</p>
       </motion.div>
 
       <div className="bg-surface rounded-2xl shadow-[0_20px_60px_-28px_rgba(0,0,0,0.28)] border border-border p-2 overflow-hidden flex flex-col md:flex-row relative">
@@ -65,8 +67,8 @@ export const MiniDemo = () => {
         {/* Left side: Jargon */}
         <div className="flex-1 p-6 md:p-8 flex flex-col bg-surface-2 rounded-xl">
           <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-bold text-slate-500">Original Contract Clause</span>
-            <span className="text-[10px] bg-slate-200 text-slate-600 px-2 py-1 rounded-md font-medium">Standard NDA</span>
+            <span className="text-xs font-bold text-slate-500">{t('landing.miniDemo.originalClause')}</span>
+            <span className="text-[10px] bg-slate-200 text-slate-600 px-2 py-1 rounded-md font-medium">{t('landing.miniDemo.standardNda')}</span>
           </div>
           <div className="relative flex-1">
             <p className="text-slate-700 text-sm md:text-base leading-relaxed font-serif italic">
@@ -88,14 +90,14 @@ export const MiniDemo = () => {
               {isTranslating ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Analyzing...
+                  {t('landing.miniDemo.analyzing')}
                 </>
               ) : showResult ? (
-                'Reset Demo'
+                t('landing.miniDemo.resetDemo')
               ) : (
                 <>
                   <Sparkles className="w-4 h-4" />
-                  Translate to plain English
+                  {t('landing.miniDemo.translateButton')}
                 </>
               )}
             </button>
@@ -126,7 +128,7 @@ export const MiniDemo = () => {
                 className="flex flex-col items-center justify-center text-center h-full text-slate-400 gap-3"
               >
                 <Sparkles className="w-8 h-8 text-slate-200" />
-                <p className="text-sm">Click translate to see the magic happen</p>
+                <p className="text-sm">{t('landing.miniDemo.clickTranslate')}</p>
               </motion.div>
             )}
 
@@ -140,7 +142,7 @@ export const MiniDemo = () => {
               >
                 <div className="flex items-center gap-2 mb-2">
                   <Sparkles className="w-4 h-4 text-primary animate-pulse" />
-                  <span className="text-xs font-bold text-primary">Gemini AI is thinking...</span>
+                  <span className="text-xs font-bold text-primary">{t('landing.miniDemo.geminiThinking')}</span>
                 </div>
                 <div className="space-y-3">
                   <div className="h-3 bg-slate-100 rounded-full w-full animate-pulse" />
@@ -159,7 +161,7 @@ export const MiniDemo = () => {
               >
                 <div className="flex items-center gap-2 mb-4">
                   <CheckCircle2 className="w-4 h-4 text-green-500" />
-                  <span className="text-xs font-bold text-green-600">Simplified by AI</span>
+                  <span className="text-xs font-bold text-green-600">{t('landing.miniDemo.simplifiedByAi')}</span>
                 </div>
                 <p className="text-slate-800 text-lg md:text-xl font-medium leading-relaxed">
                   {displayedText}

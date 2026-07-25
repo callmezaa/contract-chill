@@ -10,9 +10,11 @@ import { toast } from 'sonner';
 import { Loader } from '@/components/motion/loader';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
+import { useTranslation } from 'react-i18next';
 
 export const Generator = () => {
-  useDocumentTitle('Contract Generator - ContractChill');
+  const { t } = useTranslation();
+  useDocumentTitle(t('generator.title'));
   const { user } = useAuth();
   
   const [isGenerating, setIsGenerating] = useState(false);
@@ -78,7 +80,7 @@ export const Generator = () => {
     setDraft(null);
     localStorage.removeItem('contract_generator_draft');
     localStorage.removeItem('contract_generator_result_draft');
-    toast.success('Form cleared');
+    toast.success(t('generator.toasts.formCleared'));
   };
 
   const resultRef = useRef<HTMLDivElement>(null);
@@ -86,7 +88,7 @@ export const Generator = () => {
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.clientName || !formData.myName || !formData.projectValue) {
-      toast.error('Missing fields', { description: 'Please fill in all required fields.' });
+      toast.error(t('generator.toasts.missingFields'), { description: t('generator.toasts.missingFieldsDesc') });
       return;
     }
 
@@ -94,9 +96,9 @@ export const Generator = () => {
     try {
       const generatedDraft = await generateContractDraft(formData);
       setDraft(generatedDraft);
-      toast.success('Contract Generated!', { description: 'Your pro-freelancer draft is ready.' });
+      toast.success(t('generator.toasts.contractGenerated'), { description: t('generator.toasts.contractGeneratedDesc') });
     } catch (error: any) {
-      toast.error('Generation Failed', { description: error.message || 'Something went wrong.' });
+      toast.error(t('generator.toasts.generationFailed'), { description: error.message || 'Something went wrong.' });
     } finally {
       setIsGenerating(false);
     }
@@ -106,7 +108,7 @@ export const Generator = () => {
     if (!draft) return;
     navigator.clipboard.writeText(draft);
     setIsCopied(true);
-    toast.success('Copied to clipboard');
+    toast.success(t('generator.toasts.copiedToClipboard'));
     setTimeout(() => setIsCopied(false), 2000);
   };
 
@@ -115,7 +117,7 @@ export const Generator = () => {
     
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
-      toast.error('Failed to open print window', { description: 'Please allow pop-ups for this site.' });
+      toast.error(t('generator.toasts.failedToOpenPrint'), { description: t('generator.toasts.failedToOpenPrintDesc') });
       return;
     }
 
@@ -165,13 +167,7 @@ export const Generator = () => {
     printWindow.document.close();
   };
 
-  const contractTypes = [
-    'Freelance Services Agreement',
-    'Non-Disclosure Agreement (NDA)',
-    'Software Development Contract',
-    'Retainer Agreement',
-    'Creative Agency Contract'
-  ];
+  const contractTypes = t('generator.contractTypes', { returnObjects: true }) as string[];
 
   return (
     <div className="flex flex-col gap-8 max-w-6xl w-full mx-auto">
@@ -179,9 +175,9 @@ export const Generator = () => {
       <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-1">
          <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-[-0.05em] text-text flex items-center gap-3">
           <Wand2 className="w-6 h-6 text-primary" />
-          Contract Generator
+          {t('generator.header')}
         </h1>
-        <p className="text-text-muted text-sm">Automatically draft professional, legally sound contracts powered by AI.</p>
+        <p className="text-text-muted text-sm">{t('generator.subtitle')}</p>
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -197,8 +193,8 @@ export const Generator = () => {
                 <PenTool className="w-4 h-4" />
               </div>
               <div>
-                 <h3 className="font-semibold text-sm">Draft settings</h3>
-                <p className="text-xs text-text-subtle">Fill in the details to generate</p>
+                 <h3 className="font-semibold text-sm">{t('generator.form.draftSettings')}</h3>
+                <p className="text-xs text-text-subtle">{t('generator.form.fillDetails')}</p>
               </div>
             </div>
             {(formData.clientName || formData.projectValue || formData.specialConditions || draft) && (
@@ -207,19 +203,19 @@ export const Generator = () => {
                 size="sm"
                 type="button"
                 onClick={handleClear}
-                title="Clear Draft"
+                title={t('common.buttons.clear')}
               >
-                clear
+                {t('common.buttons.clear')}
               </Button>
             )}
           </div>
 
           <form onSubmit={handleGenerate} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="contractType" className="text-xs font-bold text-text-muted">Contract Type</label>
+              <label htmlFor="contractType" className="text-xs font-bold text-text-muted">{t('generator.form.contractType')}</label>
               <select 
                 id="contractType"
-                title="Select contract type"
+                title={t('generator.form.contractType')}
                 value={formData.contractType}
                 onChange={(e) => setFormData({...formData, contractType: e.target.value})}
                 className="p-2.5 rounded-xl border text-sm outline-none transition-colors bg-surface-2 border-border focus:border-primary"
@@ -231,13 +227,13 @@ export const Generator = () => {
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="clientName" className="text-xs font-bold text-text-muted">Client Name (Party A)</label>
+              <label htmlFor="clientName" className="text-xs font-bold text-text-muted">{t('generator.form.clientName')}</label>
               <input 
                 id="clientName"
                 type="text" 
                 required
-                title="Client Name"
-                placeholder="e.g. Acme Corp"
+                title={t('generator.form.clientName')}
+                placeholder={t('generator.form.clientNamePlaceholder')}
                 value={formData.clientName}
                 onChange={(e) => setFormData({...formData, clientName: e.target.value})}
                 className="p-2.5 rounded-xl border text-sm outline-none transition-colors bg-surface-2 border-border focus:border-primary"
@@ -245,13 +241,13 @@ export const Generator = () => {
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="myName" className="text-xs font-bold text-text-muted">Your Name / Agency (Party B)</label>
+              <label htmlFor="myName" className="text-xs font-bold text-text-muted">{t('generator.form.yourName')}</label>
               <input 
                 id="myName"
                 type="text" 
                 required
-                title="Your Name"
-                placeholder="e.g. John Doe"
+                title={t('generator.form.yourName')}
+                placeholder={t('generator.form.yourNamePlaceholder')}
                 value={formData.myName}
                 onChange={(e) => setFormData({...formData, myName: e.target.value})}
                 className="p-2.5 rounded-xl border text-sm outline-none transition-colors bg-surface-2 border-border focus:border-primary"
@@ -259,13 +255,13 @@ export const Generator = () => {
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="projectValue" className="text-xs font-bold text-text-muted">Project Value / Compensation</label>
+              <label htmlFor="projectValue" className="text-xs font-bold text-text-muted">{t('generator.form.projectValue')}</label>
               <input 
                 id="projectValue"
                 type="text" 
                 required
-                title="Project Value"
-                placeholder="e.g. $5,000 USD or Rp 50.000.000"
+                title={t('generator.form.projectValue')}
+                placeholder={t('generator.form.projectValuePlaceholder')}
                 value={formData.projectValue}
                 onChange={(e) => setFormData({...formData, projectValue: e.target.value})}
                 className="p-2.5 rounded-xl border text-sm outline-none transition-colors bg-surface-2 border-border focus:border-primary"
@@ -273,12 +269,12 @@ export const Generator = () => {
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="specialConditions" className="text-xs font-bold text-text-muted">Special Conditions (Optional)</label>
+              <label htmlFor="specialConditions" className="text-xs font-bold text-text-muted">{t('generator.form.specialConditions')}</label>
               <textarea 
                 id="specialConditions"
                 rows={3}
-                title="Special Conditions"
-                placeholder="e.g. 50% upfront payment, max 2 revisions..."
+                title={t('generator.form.specialConditions')}
+                placeholder={t('generator.form.specialConditionsPlaceholder')}
                 value={formData.specialConditions}
                 onChange={(e) => setFormData({...formData, specialConditions: e.target.value})}
                 className="p-2.5 rounded-xl border text-sm outline-none transition-colors resize-none bg-surface-2 border-border focus:border-primary"
@@ -295,12 +291,12 @@ export const Generator = () => {
               {isGenerating ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  Generating Draft...
+                  {t('generator.form.generatingDraft')}
                 </>
               ) : (
                 <>
                   <Wand2 className="w-4 h-4" />
-                  Generate Contract
+                  {t('common.buttons.generateContract')}
                 </>
               )}
             </Button>
@@ -315,14 +311,14 @@ export const Generator = () => {
         >
           {/* Toolbar */}
           <div className="p-4 border-b flex items-center justify-between border-border bg-surface">
-            <h3 className="font-bold text-sm text-text">Preview</h3>
+            <h3 className="font-bold text-sm text-text">{t('common.labels.preview')}</h3>
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleCopy}
                 disabled={!draft}
-                title="Copy to clipboard"
+                title={t('common.buttons.copy')}
               >
                 {isCopied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
               </Button>
@@ -331,7 +327,7 @@ export const Generator = () => {
                 size="sm"
                 onClick={handleDownloadPDF}
                 disabled={!draft}
-                title="Download PDF"
+                title={t('common.buttons.exportPdf')}
               >
                 <Download className="w-4 h-4" />
               </Button>
@@ -350,7 +346,7 @@ export const Generator = () => {
                   className="absolute inset-0 flex flex-col items-center justify-center gap-4"
                 >
                   <Loader variant="comet" size={64} />
-                  <span className="text-[12px] font-bold text-text-muted animate-pulse">AI Drafting Iron-Clad Clauses...</span>
+                  <span className="text-[12px] font-bold text-text-muted animate-pulse">{t('generator.loading')}</span>
                 </motion.div>
               ) : draft ? (
                 <motion.div
@@ -377,8 +373,8 @@ export const Generator = () => {
                     </div>
                   </div>
                   <div className="text-center px-6">
-                    <p className="text-sm font-semibold text-text mb-1">Drafting Arena Ready</p>
-                    <p className="text-[12px] text-text-subtle max-w-[260px] mx-auto leading-relaxed">Fill out the generator details on the left, then click 'Generate Contract' to create your draft.</p>
+                    <p className="text-sm font-semibold text-text mb-1">{t('generator.emptyState.title')}</p>
+                    <p className="text-[12px] text-text-subtle max-w-[260px] mx-auto leading-relaxed">{t('generator.emptyState.description')}</p>
                   </div>
                 </motion.div>
               )}

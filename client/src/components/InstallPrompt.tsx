@@ -1,10 +1,12 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { Download, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useInstallPrompt } from '@/hooks/useInstallPrompt';
 import { EASE_OUT, SPRING_PANEL } from '@/lib/ease';
 import { Button } from '@/components/motion/button';
 
 export function InstallPrompt() {
+  const { t } = useTranslation();
   const { shouldShow, promptInstall, dismiss } = useInstallPrompt();
   const reduce = useReducedMotion();
 
@@ -26,7 +28,7 @@ export function InstallPrompt() {
             <button
               onClick={dismiss}
               className="absolute top-3 right-3 p-1 rounded-lg text-text-subtle hover:text-text hover:bg-surface-2 transition-colors"
-              aria-label="Dismiss"
+              aria-label={t('install.dismiss')}
             >
               <X className="w-4 h-4" />
             </button>
@@ -46,10 +48,10 @@ export function InstallPrompt() {
               {/* Text */}
               <div className="flex-1 min-w-0 pr-2">
                 <h3 className="text-sm font-semibold text-text">
-                  Install Contract Chill
+                  {t('install.title')}
                 </h3>
                 <p className="text-xs text-text-muted mt-1 leading-relaxed">
-                  Access your contracts offline. Get the full app experience on your device.
+                  {t('install.description')}
                 </p>
               </div>
             </div>
@@ -62,14 +64,14 @@ export function InstallPrompt() {
                 onClick={promptInstall}
                 className="flex-1"
               >
-                Install
+                {t('common.buttons.install')}
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={dismiss}
               >
-                Not now
+                {t('common.buttons.notNow')}
               </Button>
             </div>
           </div>

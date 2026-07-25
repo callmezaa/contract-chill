@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 import { auth } from '../lib/firebase';
 import type { AnalysisResult, Persona } from '@chill/shared';
 
-export const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000/api' : '/api');
+export const API_URL = import.meta.env.DEV ? 'http://localhost:5000/api' : '/api';
 
 export const api = axios.create({
   baseURL: API_URL,

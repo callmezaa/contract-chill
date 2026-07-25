@@ -29,28 +29,19 @@
     "clean": "bersih",
     "risk": "risiko",
     "risks": "risiko",
-    "justNow": "Baru saja"
+    "justNow": "Baru saja",
+    "collapse": "Ciutkan",
+    "expand": "Perluas",
+    "lightMode": "Mode terang",
+    "darkMode": "Mode gelap",
+    "signOut": "Keluar"
   },
   "nav": {
     "dashboard": "Dashboard",
     "generator": "Generator",
     "history": "Riwayat",
-    "settings": "Pengaturan",
-    "howItWorks": "Cara Kerja",
-    "benefits": "Manfaat",
-    "personas": "Persona",
-    "pricing": "Harga",
-    "faq": "FAQ",
-    "product": "Produk",
-    "useCases": "Kasus Penggunaan",
-    "legal": "Legal",
-    "login": "Masuk",
-    "loginToAccount": "Masuk ke akun",
-    "getStarted": "Mulai",
-    "getStartedFree": "Mulai Gratis",
-    "signOut": "Keluar",
-    "lightMode": "Mode Terang",
-    "darkMode": "Mode Gelap"
+    "analytics": "Analitik",
+    "settings": "Pengaturan"
   },
   "landing": {
     "badge": "Kejelasan kontrak AI, tanpa bahasa hukum yang rumit",
@@ -188,39 +179,6 @@
           "role": "Konsultan Brand"
         }
       ]
-    },
-    "pricing": {
-      "sectionLabel": "Harga",
-      "title": "Harga sederhana dan transparan",
-      "subtitle": "Mulai gratis, upgrade saat butuh lebih banyak kekuatan.",
-      "free": {
-        "name": "Gratis",
-        "price": "$0",
-        "period": "/selamanya",
-        "description": "Cocok untuk mencoba ContractChill.",
-        "features": [
-          "20 analisis per hari",
-          "2 persona AI dasar",
-          "Dukungan standar",
-          "Ukuran file hingga 10MB"
-        ],
-        "cta": "Mulai gratis"
-      },
-      "pro": {
-        "name": "Pro",
-        "mostPopuler": "paling populer",
-        "price": "$12",
-        "period": "/bulan",
-        "description": "Untuk profesional yang sering menandatangani kontrak.",
-        "features": [
-          "Analisis tanpa batas",
-          "Semua 4 persona AI premium",
-          "Dukungan email prioritas",
-          "Ekspor analisis ke PDF",
-          "Simpan riwayat negosiasi"
-        ],
-        "cta": "Upgrade ke pro"
-      }
     },
     "faq": {
       "sectionLabel": "FAQ",
@@ -415,12 +373,6 @@
       "photoUploaded": "Foto berhasil diunggah",
       "photoUploadFailed": "Gagal mengunggah foto"
     },
-    "subscription": {
-      "title": "Langganan",
-      "freePlan": "Paket Gratis",
-      "analysesPerDay": "20 analisis per hari",
-      "upgradeToPro": "Upgrade ke pro"
-    },
     "notifications": {
       "title": "Notifikasi",
       "analysisComplete": "Analisis selesai",
@@ -540,5 +492,12 @@
     "noFlagsYet": "Belum terdeteksi red flag",
     "emptyTitle": "Belum ada analisis",
     "emptyDescription": "Mulai analisis kontrak untuk melihat wawasan analitik di sini."
+  },
+  "pageSubtitles": {
+    "dashboard": "Kelola dan analisis kontrak Anda",
+    "generator": "Buat kontrak profesional dengan AI",
+    "history": "Tinjau analisis sebelumnya",
+    "analytics": "Wawasan dari data Anda",
+    "settings": "Kelola akun dan preferensi"
   }
 }

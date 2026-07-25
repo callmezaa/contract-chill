@@ -63,7 +63,6 @@ export const LandingPage = () => {
     { label: t('common.nav.howItWorks'), href: '#how-it-works' },
     { label: t('common.nav.benefits'), href: '#benefits' },
     { label: t('common.nav.personas'), href: '#personas' },
-    { label: t('common.nav.pricing'), href: '#pricing' },
     { label: t('common.nav.faq'), href: '#faq' },
   ];
 
@@ -144,8 +143,6 @@ export const LandingPage = () => {
 
   const faqs = t('landing.faq.items', { returnObjects: true }) as Array<{ q: string; a: string }>;
 
-  const freeFeatures = t('landing.pricing.free.features', { returnObjects: true }) as string[];
-  const proFeatures = t('landing.pricing.pro.features', { returnObjects: true }) as string[];
 
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans overflow-hidden text-text">
@@ -745,81 +742,6 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* ── PRICING ─────────────────────────────────────────── */}
-      <section id="pricing" className="max-w-6xl mx-auto px-6 py-24">
-        <motion.div
-          initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
-          className="flex flex-col items-center gap-4 text-center mb-16"
-        >
-          <motion.p variants={fadeUp} className="text-xs font-bold tracking-widest text-primary">{t('landing.pricing.sectionLabel')}</motion.p>
-          <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-display font-semibold tracking-[-0.05em] text-text [text-wrap:balance]">{t('landing.pricing.title')}</motion.h2>
-          <motion.p variants={fadeUp} className="text-text-muted max-w-xl">{t('landing.pricing.subtitle')}</motion.p>
-        </motion.div>
-
-        <motion.div 
-          initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} variants={stagger}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
-        >
-          {/* Free Plan */}
-          <motion.div
-            variants={fadeUp}
-             className="bg-surface rounded-2xl border border-border p-8 md:p-10 flex flex-col gap-8 shadow-sm hover:shadow-sm hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200"
-          >
-            <div>
-              <h3 className="text-xl font-display font-bold text-text mb-2">{t('landing.pricing.free.name')}</h3>
-              <div className="flex items-baseline gap-1">
-                <span className="text-4xl font-display font-bold text-text">{t('landing.pricing.free.price')}</span>
-                <span className="text-sm text-text-muted">{t('landing.pricing.free.period')}</span>
-              </div>
-              <p className="text-sm text-text-muted mt-4">{t('landing.pricing.free.description')}</p>
-            </div>
-            <div className="flex flex-col gap-4 flex-1">
-              {freeFeatures.map((feature, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-text-subtle shrink-0" />
-                  <span className="text-sm font-medium text-text">{feature}</span>
-                </div>
-              ))}
-            </div>
-            <Link to="/login" className="w-full py-3.5 rounded-xl border-2 border-border text-center font-bold text-sm text-text hover:bg-border/50 transition-colors">
-              {t('landing.pricing.free.cta')}
-            </Link>
-          </motion.div>
-
-          {/* Pro Plan */}
-          <motion.div
-            variants={fadeUp}
-             className="relative bg-surface rounded-2xl border border-primary/30 p-8 md:p-10 flex flex-col gap-8 shadow-sm hover:shadow-sm hover:-translate-y-0.5 transition-[box-shadow,transform] duration-200 group overflow-hidden"
-          >
-            {/* Glow effect */}
-            <div className="absolute inset-x-0 top-0 h-32 bg-primary/5 pointer-events-none" />
-            
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-xl font-display font-bold text-primary">{t('landing.pricing.pro.name')}</h3>
-                <span className="text-[10px] font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-full">{t('landing.pricing.pro.badge')}</span>
-              </div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-4xl font-display font-bold text-text">{t('landing.pricing.pro.price')}</span>
-                <span className="text-sm text-text-muted">{t('landing.pricing.pro.period')}</span>
-              </div>
-              <p className="text-sm text-text-muted mt-4">{t('landing.pricing.pro.description')}</p>
-            </div>
-            <div className="flex flex-col gap-4 flex-1 relative z-10">
-              {proFeatures.map((feature, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-primary shrink-0 group-hover:scale-110 transition-transform" />
-                  <span className="text-sm font-medium text-text">{feature}</span>
-                </div>
-              ))}
-            </div>
-            <Link to="/login" className="bg-text text-surface w-full py-3.5 text-center font-bold text-sm relative z-10 rounded-xl">
-              {t('landing.pricing.pro.cta')}
-            </Link>
-          </motion.div>
-        </motion.div>
-      </section>
-
       {/* ── FAQ ─────────────────────────────────────────────── */}
       <section id="faq" className="bg-surface transition-colors duration-500">
         <div className="max-w-3xl mx-auto px-6 py-24">
@@ -888,7 +810,6 @@ export const LandingPage = () => {
                 <a href="#how-it-works" className="text-text-muted hover:text-text transition-colors">{t('common.nav.howItWorks')}</a>
                <a href="#benefits" className="text-text-muted hover:text-text transition-colors">{t('common.nav.benefits')}</a>
                 <a href="#personas" className="text-text-muted hover:text-text transition-colors">{t('common.nav.personas')}</a>
-                <a href="#pricing" className="text-text-muted hover:text-text transition-colors">{t('common.nav.pricing')}</a>
               </div>
               <div className="flex flex-col gap-3">
                 <p className="text-xs font-bold tracking-widest text-text-subtle">{t('landing.footer.useCases')}</p>

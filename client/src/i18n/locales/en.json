@@ -75,7 +75,12 @@
     "tooltips": {
       "lightMode": "Light mode",
       "darkMode": "Dark mode"
-    }
+    },
+    "collapse": "Collapse",
+    "expand": "Expand",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode",
+    "signOut": "Sign out"
   },
   "landing": {
     "title": "ContractChill | AI Legal Assistant for Everyone",
@@ -224,39 +229,6 @@
           "role": "Brand Consultant"
         }
       ]
-    },
-    "pricing": {
-      "sectionLabel": "Pricing",
-      "title": "Simple, transparent pricing",
-      "subtitle": "Start for free, upgrade when you need more power.",
-      "free": {
-        "name": "Free",
-        "price": "$0",
-        "period": "/forever",
-        "description": "Perfect for trying out contractchill.",
-        "features": [
-          "20 analyses per day",
-          "2 basic AI personas",
-          "standard support",
-          "up to 10MB file size"
-        ],
-        "cta": "get started free"
-      },
-      "pro": {
-        "name": "Pro",
-        "badge": "most popular",
-        "price": "$12",
-        "period": "/month",
-        "description": "for professionals who sign contracts often.",
-        "features": [
-          "unlimited analyses",
-          "all 4 premium AI personas",
-          "priority email support",
-          "export analysis to PDF",
-          "save negotiation history"
-        ],
-        "cta": "upgrade to pro"
-      }
     },
     "faq": {
       "sectionLabel": "FAQ",
@@ -568,12 +540,6 @@
       "emailAddress": "Email address",
       "changePhoto": "change photo"
     },
-    "subscription": {
-      "title": "Subscription",
-      "freePlan": "Free plan",
-      "analysesPerDay": "20 analyses per day",
-      "upgradeButton": "Upgrade to pro"
-    },
     "notifications": {
       "title": "Notifications",
       "analysisComplete": "Analysis complete",
@@ -681,5 +647,19 @@
     "noFlagsYet": "No red flags detected yet",
     "emptyTitle": "No analyses yet",
     "emptyDescription": "Start analyzing contracts to see your analytics insights here."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "generator": "Generator",
+    "history": "History",
+    "analytics": "Analytics",
+    "settings": "Settings"
+  },
+  "pageSubtitles": {
+    "dashboard": "Manage and analyze your contracts",
+    "generator": "Draft professional contracts with AI",
+    "history": "Review your past analyses",
+    "analytics": "Insights from your data",
+    "settings": "Manage your account and preferences"
   }
 }

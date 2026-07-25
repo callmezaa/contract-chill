@@ -1,17 +1,14 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import helmet from 'helmet';
 import path from 'path';
 import fs from 'fs';
 
+import { env } from './config/env';
 import analysisRoutes from './routes/analysis.routes';
 import { AppError } from './utils/app-error';
 
-dotenv.config();
-
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 // Ensure uploads directory exists
 const uploadsDir = path.join(__dirname, '../uploads');
@@ -36,7 +33,7 @@ app.use('/uploads', express.static(uploadsDir));
 app.use('/api', analysisRoutes);
 
 // Serve Static Frontend Assets in Production
-if (process.env.NODE_ENV === 'production') {
+if (env.NODE_ENV === 'production') {
   const clientDistPath = path.join(__dirname, '../../client/dist');
   app.use(express.static(clientDistPath));
 
@@ -66,6 +63,6 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`[server]: Server is running at http://localhost:${PORT}`);
+app.listen(env.PORT, () => {
+  console.log(`[server]: Server is running at http://localhost:${env.PORT}`);
 });

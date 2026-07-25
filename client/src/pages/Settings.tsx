@@ -1,4 +1,4 @@
-import { User, CreditCard, Bell, Shield, Camera, Loader2, CheckCircle2, AlertTriangle, Trash2 } from 'lucide-react';
+import { User, Bell, Shield, Camera, Loader2, CheckCircle2, AlertTriangle, Trash2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useState, useRef, useEffect } from 'react';
 import { updateProfile, deleteUser } from 'firebase/auth';
@@ -232,30 +232,7 @@ export const Settings = () => {
       </form>
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Subscription Card */}
-        <Card className="p-7 flex flex-col gap-6" size="sm">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-surface flex items-center justify-center">
-              <CreditCard className="w-4.5 h-4.5 text-primary" />
-            </div>
-            <h2 className="text-base font-display font-bold text-text">{t('settings.subscription.title')}</h2>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-surface/50 border border-border/40 hover:border-primary/10 transition-all flex flex-col gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-surface border border-border flex items-center justify-center">
-                <Shield className="w-5 h-5 text-primary/60" />
-              </div>
-              <div>
-                 <p className="text-sm font-semibold text-text">{t('settings.subscription.freePlan')}</p>
-                <p className="text-[10px] text-text-muted font-medium">{t('settings.subscription.analysesPerDay')}</p>
-              </div>
-            </div>
-            <Button size="sm" className="w-full">{t('settings.subscription.upgradeButton')}</Button>
-          </div>
-        </Card>
-
+      <div className="grid grid-cols-1 gap-6">
         {/* Notifications Card */}
         <Card className="p-7 flex flex-col gap-6" size="sm">
           <div className="flex items-center gap-3">

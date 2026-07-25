@@ -5,6 +5,7 @@ import { Toaster } from 'sonner';
 import { AnimatedRoutes } from './components/AnimatedRoutes';
 import { CommandPalette } from '@/components/motion/command-palette';
 import { InstallPrompt } from '@/components/InstallPrompt';
+import { SidebarProvider } from './context/SidebarContext';
 import { LayoutDashboard, FilePenLine, History as HistoryIcon, Settings as SettingsIcon, BarChart3 } from 'lucide-react';
 
 import { Component, useState } from 'react';
@@ -81,10 +82,12 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <Toaster position="top-center" richColors />
+          <SidebarProvider>
           <Router>
               <AnimatedRoutes />
               <CommandPaletteWithNav />
           </Router>
+        </SidebarProvider>
           <InstallPrompt />
         </AuthProvider>
       </QueryClientProvider>

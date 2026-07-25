@@ -4,6 +4,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { Toaster } from 'sonner';
 import { AnimatedRoutes } from './components/AnimatedRoutes';
 import { CommandPalette } from '@/components/motion/command-palette';
+import { InstallPrompt } from '@/components/InstallPrompt';
 import { LayoutDashboard, FilePenLine, History as HistoryIcon, Settings as SettingsIcon } from 'lucide-react';
 
 import { Component, useState } from 'react';
@@ -78,6 +79,7 @@ function App() {
               <AnimatedRoutes />
               <CommandPaletteWithNav />
           </Router>
+          <InstallPrompt />
         </AuthProvider>
       </QueryClientProvider>
     </ErrorBoundary>

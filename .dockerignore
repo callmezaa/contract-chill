@@ -8,3 +8,14 @@ server/.env
 .dockerignore
 npm-debug.log
 scratch
+
+# AI tooling & local configs
+.opencode/
+.superpowers/
+.kilo/
+.agents/
+docs/
+dummy_contracts/
+opencode.json
+cors-config.json
+.gcloudignore

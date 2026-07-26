@@ -50,6 +50,22 @@ uploads/
 *.exe
 *.zip
 
-# OpenCode tooling
+# AI / Editor tooling (personal workspace, not project code)
 .agents/
+.agile/
+.anthropic/
+.cursor/
+.kilo/
+.opencode/
+.superpowers/
 skills-lock.json
+opencode.json
+
+# Platform-specific deployment configs (using Railway)
+.gcloudignore
+cors-config.json
+koyeb.exe
+
+# Internal docs / development artifacts
+docs/superpowers/
+dummy_contracts/

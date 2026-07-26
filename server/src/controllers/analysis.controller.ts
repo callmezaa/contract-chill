@@ -23,7 +23,6 @@ export class AnalysisController {
         const data = await pdf(file.buffer);
         text = data.text;
         if (!text || text.trim().length < 50) {
-          console.log('[PDF] pdf-parse returned insufficient text, trying OCR...');
           text = await ocrPDF(file.buffer);
         }
       } else {
@@ -43,7 +42,6 @@ export class AnalysisController {
     const baseUrl = `${req.protocol}://${req.get('host')}`;
     const fileUrl = `${baseUrl}/uploads/${fileName}`;
 
-    console.log(`Starting analysis for persona: ${persona}. Text length: ${text.length} chars.`);
     const analysis = await GeminiService.analyzeContract(text, persona);
 
     res.json({ ...analysis, fileUrl });
@@ -58,13 +56,11 @@ export class AnalysisController {
     }
 
     if (!contractText && fileUrl) {
-      console.log('Fetching contract text from URL for chat...');
       const response = await axios.get(fileUrl, { responseType: 'arraybuffer' });
       const pdfBuffer = Buffer.from(response.data);
       const pdfData = await pdf(pdfBuffer);
       contractText = pdfData.text;
       if (!contractText || contractText.trim().length < 50) {
-        console.log('[Chat PDF] pdf-parse returned insufficient text, trying OCR...');
         contractText = await ocrPDF(pdfBuffer);
       }
     }

@@ -1,8 +1,8 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Express API for AI-powered legal document analysis",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
@@ -11,9 +11,8 @@
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "private": true,
+  "license": "UNLICENSED",
   "type": "commonjs",
   "dependencies": {
     "@chill/shared": "*",

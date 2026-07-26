@@ -65,10 +65,7 @@ const actionLimiter = rateLimit({
 });
 
 // All routes are now protected by requireAuth
-router.post('/analyze', requireAuth, analyzeLimiter, upload.single('contract'), (req, res, next) => {
-  console.log('API /analyze hit!');
-  next();
-}, asyncHandler(AnalysisController.analyze));
+router.post('/analyze', requireAuth, analyzeLimiter, upload.single('contract'), asyncHandler(AnalysisController.analyze));
 
 router.post('/chat', requireAuth, actionLimiter, asyncHandler(AnalysisController.chat));
 router.post('/generate-script', requireAuth, actionLimiter, asyncHandler(AnalysisController.generateScript));

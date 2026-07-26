@@ -88,7 +88,6 @@ export class GeminiService {
       }
       
       const jsonText = jsonMatch[0];
-      console.log('Gemini Extracted JSON:', jsonText);
       return JSON.parse(jsonText);
     } catch (error: any) {
       if (error.status === 503 && retries > 0) {

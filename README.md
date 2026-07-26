@@ -1,8 +1,17 @@
-# ContractChill
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="client/public/logo/brandLogo_white.png">
+    <img alt="ContractChill" src="client/public/logo/brandLogo_black.png" width="320">
+  </picture>
+</p>
 
-**AI-Powered Legal Document Analyzer** — Instantly review, identify risks, and understand complex contracts with AI-driven analysis. Built for freelancers, founders, and anyone who signs agreements but isn't a lawyer.
+<p align="center">
+  <strong>AI-Powered Legal Document Analyzer</strong><br>
+  Instantly review, identify risks, and understand complex contracts with AI-driven analysis.<br>
+  Built for freelancers, founders, and anyone who signs agreements but isn't a lawyer.
+</p>
 
-<p>
+<p align="center">
   <img alt="React" src="https://img.shields.io/badge/React-19-1B1B18?style=flat-square&logo=react&logoColor=white" />
   <img alt="Vite" src="https://img.shields.io/badge/Vite-8-1B1B18?style=flat-square&logo=vite&logoColor=white" />
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-6-1B1B18?style=flat-square&logo=typescript&logoColor=white" />
@@ -10,26 +19,30 @@
   <img alt="Firebase" src="https://img.shields.io/badge/Firebase-1B1B18?style=flat-square&logo=firebase&logoColor=white" />
   <img alt="Gemini" src="https://img.shields.io/badge/Gemini_AI-1B1B18?style=flat-square&logo=googlegemini&logoColor=white" />
   <img alt="Tailwind" src="https://img.shields.io/badge/Tailwind-4-1B1B18?style=flat-square&logo=tailwindcss&logoColor=white" />
-  <img alt="Framer Motion" src="https://img.shields.io/badge/Framer_Motion-12-1B1B18?style=flat-square&logo=framer&logoColor=white" />
-  <img alt="Deployed on Railway" src="https://img.shields.io/badge/Railway-1B1B18?style=flat-square&logo=railway&logoColor=white" />
+  <img alt="Railway" src="https://img.shields.io/badge/Railway-1B1B18?style=flat-square&logo=railway&logoColor=white" />
 </p>
 
 ---
 
-## Features
+## Overview
 
-- **AI-Powered Analysis** — Paste a contract clause or upload a PDF/DOCX/TXT file. Gemini AI returns a structured breakdown in seconds.
-- **4 Personas** — Choose how the AI communicates: *Chill Friend* (casual), *Angry Lawyer* (strict), *Corporate Mentor* (strategic), *Freelancer Senior* (practical). Personas auto-detect English or Indonesian.
+ContractChill transforms complex legal documents into clear, actionable insights. Upload a contract (PDF, DOCX, or TXT), and the AI delivers a structured breakdown with risk flags, plain-language summaries, and negotiation scripts — all tailored to your preferred persona.
+
+### Key Features
+
+- **Multi-Persona AI Analysis** — Choose from four communication styles: *Chill Friend* (casual), *Angry Lawyer* (strict), *Corporate Mentor* (strategic), or *Freelancer Senior* (practical). Personas auto-detect English or Indonesian.
 - **Red Flag Detection** — Clauses flagged as High, Medium, or Safe risk with plain-English explanations.
-- **Clause Summaries** — Every clause broken down in clear language.
-- **Jargon Definitions** — Legal terms explained in context.
+- **Clause Summaries & Jargon Definitions** — Every clause broken down in clear language. Legal terms explained in context.
 - **Negotiation Scripts** — Generate email or chat drafts to negotiate specific clauses, in the persona's tone.
 - **AI Chat** — Follow-up Q&A about any analyzed contract.
 - **Contract Generator** — Draft full contracts from scratch based on project details.
 - **Side-by-Side Viewer** — Original contract and AI analysis displayed simultaneously.
 - **Analysis History** — All past analyses saved in Firestore, searchable and filterable by persona.
-- **Dark / Light / System Theme** — Persistent preference with system detection.
 - **Command Palette** — `⌘K` quick navigation to any page.
+- **Analytics Dashboard** — Visual insights into your contract analysis history.
+- **Dark / Light / System Theme** — Persistent preference with automatic system detection.
+- **PWA Support** — Installable as a standalone app with offline fallback.
+- **Bilingual** — Full English and Indonesian language support.
 
 ---
 
@@ -48,7 +61,7 @@
 | Icons | lucide-react |
 | Notifications | sonner |
 | HTTP | axios (client), cors + helmet (server) |
-| Container | Docker (multi-stage) |
+| Container | Docker (multi-stage build) |
 
 ---
 
@@ -58,12 +71,12 @@
 contract-chill/
 ├── client/                  # React SPA
 │   ├── src/
-│   │   ├── components/      # beUI motion + shadcn/ui components
-│   │   ├── pages/           # Landing, Dashboard, Analyzer, Generator, History, Settings
-│   │   ├── contexts/        # AuthContext (Firebase), ThemeContext
+│   │   ├── components/      # UI components (motion + base)
+│   │   ├── pages/           # Route-level views
+│   │   ├── contexts/        # Auth, Theme, Sidebar
 │   │   ├── hooks/           # Custom React hooks
-│   │   ├── services/        # API client (axios + Firebase auth interceptor)
-│   │   └── lib/             # Firebase client init, easing config
+│   │   ├── services/        # API client with Firebase auth interceptor
+│   │   └── lib/             # Firebase init, utilities
 │   └── vite.config.ts
 ├── server/                  # Express API
 │   ├── src/
@@ -72,9 +85,10 @@ contract-chill/
 │   │   ├── middleware/       # Firebase token verification
 │   │   ├── types/           # Shared TypeScript types
 │   │   └── utils/           # AppError, asyncHandler, file helpers
-│   └── index.ts             # Express app setup
-├── Dockerfile               # Multi-stage build
-└── .env.example
+│   └── index.ts
+├── shared/                  # Shared types between client and server
+├── Dockerfile               # Multi-stage production build
+└── .env.example             # Environment variable reference
 ```
 
 **Development:** Vite dev server (`:5173`) proxies API calls to Express (`:5000`).
@@ -89,18 +103,16 @@ contract-chill/
 
 - Node.js 20+
 - Firebase project (Auth + Firestore enabled)
-- Google Gemini API key ([get one here](https://aistudio.google.com/))
+- Google Gemini API key
 
 ### Setup
 
 ```bash
-# Clone the repository
 git clone https://github.com/your-org/contract-chill.git
 cd contract-chill
 
-# Install dependencies
-cd client && npm install && cd ..
-cd server && npm install && cd ..
+# Install workspace dependencies
+npm install
 
 # Copy environment variables and fill in your values
 cp .env.example client/.env
@@ -109,39 +121,27 @@ cp .env.example server/.env
 
 Refer to [`.env.example`](.env.example) for all required variables.
 
-### Run locally
+### Run Locally
 
 ```bash
-# From root — starts both client (:5173) and server (:5000)
-# (or use two terminals: cd client && npm run dev + cd server && npm run dev)
+# Starts both client (:5173) and server (:5000) concurrently
+npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173).
 
----
-
-## Docker
+### Docker
 
 ```bash
 docker build -t contract-chill .
 docker run -p 8080:8080 --env-file .env contract-chill
 ```
 
-Multi-stage build stages:
-
-1. **client-builder** — builds the React SPA
-2. **server-builder** — compiles TypeScript server
-3. **runner** — production image with `node:20-alpine`, serves Express + static client
-
 ---
 
 ## Deployment
 
-Deployed on [Railway](https://railway.app) via the included `Dockerfile`.
-
-1. Connect your GitHub repository to Railway
-2. Set all environment variables from `.env.example` in the Railway dashboard
-3. Railway auto-detects the `Dockerfile` and deploys on push to main
+Deployed on [Railway](https://railway.app) via the included `Dockerfile`. Railway auto-deploys from GitHub on push to the default branch.
 
 Environment variables required in production:
 
@@ -159,7 +159,7 @@ Environment variables required in production:
 
 - **Font:** Geist Variable (sans) + Geist Mono (code)
 - **Palette:** Warm monochrome — off-white backgrounds, near-black text, subtle warm-gray borders
-- **Components:** beUI motion components + shadcn/ui base components
+- **Components:** beUI motion components + shadcn/ui primitives
 - **Animations:** Framer Motion — page transitions, stagger reveals, micro-interactions
 - **Theme:** Light, Dark, and System modes persisted in localStorage
 
@@ -167,4 +167,6 @@ Environment variables required in production:
 
 ## License
 
-MIT
+All Rights Reserved.
+
+Copyright (c) 2026 ContractChill. This source code is provided for viewing and reference purposes only. See the [LICENSE](./LICENSE) file for details.

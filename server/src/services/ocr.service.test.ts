@@ -26,7 +26,6 @@ describe('ocrPDF', () => {
     expect(mockRecognize).toHaveBeenCalledWith(
       expect.any(Buffer),
       'ind+eng',
-      expect.objectContaining({ logger: expect.any(Function) })
     );
   });
 

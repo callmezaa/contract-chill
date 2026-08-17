@@ -1,9 +1,13 @@
 import axios from 'axios';
 import { toast } from 'sonner';
 import { auth } from '../lib/firebase';
+import { upload } from '@vercel/blob/client';
 import type { AnalysisResult, Persona } from '@chill/shared';
 
-export const API_URL = import.meta.env.DEV ? 'http://localhost:5000/api' : '/api';
+const devApiUrl = 'http://localhost:5000/api';
+const prodApiUrl = (import.meta.env.VITE_API_URL as string | undefined) || '/api';
+
+export const API_URL = (import.meta.env.DEV ? devApiUrl : prodApiUrl).replace(/\/$/, '');
 
 export const api = axios.create({
   baseURL: API_URL,
@@ -56,18 +60,37 @@ api.interceptors.response.use(
   }
 );
 
-export const analyzeContract = async (file: File, persona: Persona): Promise<AnalysisResult & { fileUrl: string }> => {
-  const formData = new FormData();
-  formData.append('contract', file);
-  formData.append('persona', persona);
+const getAuthHeaders = async (): Promise<Record<string, string>> => {
+  if (!auth.currentUser) return {};
+  const token = await auth.currentUser.getIdToken();
+  return { Authorization: `Bearer ${token}` };
+};
 
-  const response = await api.post(`/analyze`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
+const uploadToBlob = async (file: File, type: 'contract' | 'photo'): Promise<string> => {
+  const headers = await getAuthHeaders();
+  const result = await upload(file.name, file, {
+    access: 'public',
+    handleUploadUrl: `${API_URL}/upload-token`,
+    headers,
+    clientPayload: JSON.stringify({ type }),
+  });
+  return result.url;
+};
+
+export const analyzeContract = async (file: File, persona: Persona): Promise<AnalysisResult & { fileUrl: string }> => {
+  const fileUrl = await uploadToBlob(file, 'contract');
+  const response = await api.post(`/analyze`, {
+    fileUrl,
+    fileName: file.name,
+    fileType: file.type,
+    persona,
   });
 
   return response.data;
+};
+
+export const uploadProfilePhoto = async (file: File): Promise<string> => {
+  return uploadToBlob(file, 'photo');
 };
 
 export const generateNegotiationScript = async (clause: string, explanation: string, persona: Persona, tone?: string): Promise<string> => {

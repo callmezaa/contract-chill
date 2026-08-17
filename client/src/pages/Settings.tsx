@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { updateProfile, deleteUser } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { api } from '../services/api';
+import { uploadProfilePhoto } from '../services/api';
 import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'sonner';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -83,12 +83,8 @@ export const Settings = () => {
 
     setIsUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('photo', file);
-      const { data } = await api.post('/upload-photo', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      await updateProfile(user, { photoURL: data.photoURL });
+      const photoURL = await uploadProfilePhoto(file);
+      await updateProfile(user, { photoURL });
       toast.success(t('settings.toasts.photoUploaded'));
       window.location.reload(); 
     } catch (error) {

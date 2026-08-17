@@ -31,6 +31,10 @@ export interface ButtonProps extends Omit<
   pressScale?: number;
   /** Spawn a Material-style ripple from the press point. Off by default. */
   ripple?: boolean;
+  /** 3D "raised" slab — hard offset shadow underneath + glossy sheen on top. */
+  raised?: boolean;
+  /** Stack the button on a light backing plate with a soft shadow (instead of a hard slab). */
+  backing?: boolean;
   children?: ReactNode;
 }
 
@@ -51,6 +55,10 @@ const SIZE_CLASS: Record<ButtonSize, string> = {
   icon: "h-8 w-8 rounded-lg",
 };
 
+const RAISED_SHADOW = "0 4px 0 0 rgba(0, 0, 0, 0.3)";
+const RAISED_SHADOW_HOVER = "0 6px 0 0 rgba(0, 0, 0, 0.3)";
+const RAISED_SHADOW_PRESS = "0 2px 0 0 rgba(0, 0, 0, 0.3)";
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(
     {
@@ -58,15 +66,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       size = "md",
       pressScale = 0.93,
       ripple = false,
+      raised,
+      backing,
       className,
       children,
       onPointerDown,
+      style,
       ...rest
     },
     ref,
   ) {
     const reduce = useReducedMotion();
     const canHover = useHoverCapable();
+    const useBacking = backing === undefined ? variant === "primary" : backing;
+    const useSlab = !useBacking && (raised === undefined ? variant === "primary" : raised);
     const [ripples, setRipples] = useState<Ripple[]>([]);
     const nextId = useRef(0);
 
@@ -91,18 +104,21 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       [ripple, reduce, onPointerDown],
     );
 
-    return (
+    const renderButton = (onPlate: boolean) => (
       <motion.button
         ref={ref}
         type="button"
-        whileTap={reduce ? undefined : { scale: pressScale }}
-        whileHover={reduce || !canHover ? undefined : { scale: 1.02 }}
-        transition={SPRING_PRESS}
+        whileTap={reduce ? undefined : onPlate ? { scale: pressScale } : useSlab ? { scale: 1, y: 2, boxShadow: RAISED_SHADOW_PRESS } : { scale: pressScale }}
+        whileHover={reduce || !canHover ? undefined : onPlate ? { scale: 1.02 } : useSlab ? { y: -2, boxShadow: RAISED_SHADOW_HOVER } : { scale: 1.02 }}
+        transition={useSlab && !onPlate ? { y: SPRING_PRESS, boxShadow: { type: "tween", duration: 0.15, ease: EASE_OUT } } : SPRING_PRESS}
+        style={{ boxShadow: useSlab && !onPlate ? RAISED_SHADOW : undefined, ...style }}
         onPointerDown={handlePointerDown}
         className={cn(
           "inline-flex items-center justify-center font-medium select-none",
           "transition-colors",
           "disabled:pointer-events-none disabled:opacity-50",
+          onPlate && "relative z-10 overflow-hidden",
+          useSlab && !onPlate && "relative overflow-hidden",
           ripple && "relative overflow-hidden",
           VARIANT_CLASS[variant],
           SIZE_CLASS[size],
@@ -138,7 +154,25 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           </span>
         ) : null}
         {children}
+        {onPlate && (
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/25 via-white/10 to-transparent"
+          />
+        )}
       </motion.button>
+    );
+
+    return useBacking ? (
+      <span className="relative inline-flex">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 translate-y-[3px] rounded-full bg-white shadow-[0_12px_22px_-8px_rgba(0,0,0,0.4)]"
+        />
+        {renderButton(true)}
+      </span>
+    ) : (
+      renderButton(false)
     );
   },
 );

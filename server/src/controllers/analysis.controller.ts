@@ -2,47 +2,44 @@ import { Request, Response } from 'express';
 import { GeminiService } from '../services/gemini.service';
 import type { Persona } from '@chill/shared';
 import { AppError } from '../utils/app-error';
-import { saveFile } from '../utils/file-helpers';
+import { extractTextFromBuffer, MIN_TEXT_LENGTH } from '../utils/extract-text';
 import axios from 'axios';
-import path from 'path';
-import { ocrPDF } from '../services/ocr.service';
-const pdf = require('pdf-parse');
+
+function inferTypeFromName(fileName?: string): string | undefined {
+  if (!fileName) return undefined;
+  if (/\.pdf$/i.test(fileName)) return 'application/pdf';
+  return undefined;
+}
 
 export class AnalysisController {
   static async analyze(req: Request, res: Response) {
-    const file = req.file;
-    const persona = (req.body.persona as Persona) || 'Chill Friend';
+    const { fileUrl, persona, fileName, fileType } = req.body as {
+      fileUrl?: string;
+      persona?: Persona;
+      fileName?: string;
+      fileType?: string;
+    };
+    const selectedPersona = persona || 'Chill Friend';
 
-    if (!file) {
-      throw new AppError(400, 'No file uploaded');
+    if (!fileUrl) {
+      throw new AppError(400, 'File URL is required');
     }
 
     let text = '';
     try {
-      if (file.mimetype === 'application/pdf') {
-        const data = await pdf(file.buffer);
-        text = data.text;
-        if (!text || text.trim().length < 50) {
-          text = await ocrPDF(file.buffer);
-        }
-      } else {
-        text = file.buffer.toString('utf-8');
-      }
+      const response = await axios.get(fileUrl, { responseType: 'arraybuffer' });
+      const buffer = Buffer.from(response.data);
+      text = await extractTextFromBuffer(buffer, fileType || inferTypeFromName(fileName));
     } catch (err) {
-      console.error('PDF Parse Error:', err);
+      console.error('Document parse error:', err);
       throw new AppError(400, 'Gagal membaca dokumen. Pastikan PDF Anda tidak dikunci dengan password (terenkripsi) atau rusak.');
     }
 
-    if (!text || text.trim().length < 50) {
+    if (!text || text.trim().length < MIN_TEXT_LENGTH) {
       throw new AppError(400, 'Teks dokumen terlalu sedikit atau tidak terbaca (misalnya PDF berisi gambar hasil scan). Harap unggah dokumen yang teksnya bisa disalin.');
     }
 
-    const uploadsDir = path.join(__dirname, '../../uploads');
-    const { fileName } = saveFile(file.buffer, file.originalname, uploadsDir);
-    const baseUrl = `${req.protocol}://${req.get('host')}`;
-    const fileUrl = `${baseUrl}/uploads/${fileName}`;
-
-    const analysis = await GeminiService.analyzeContract(text, persona);
+    const analysis = await GeminiService.analyzeContract(text, selectedPersona);
 
     res.json({ ...analysis, fileUrl });
   }
@@ -57,12 +54,9 @@ export class AnalysisController {
 
     if (!contractText && fileUrl) {
       const response = await axios.get(fileUrl, { responseType: 'arraybuffer' });
-      const pdfBuffer = Buffer.from(response.data);
-      const pdfData = await pdf(pdfBuffer);
-      contractText = pdfData.text;
-      if (!contractText || contractText.trim().length < 50) {
-        contractText = await ocrPDF(pdfBuffer);
-      }
+      const buffer = Buffer.from(response.data);
+      const isPdf = /\.pdf(?:$|\?)/i.test(String(fileUrl));
+      contractText = await extractTextFromBuffer(buffer, isPdf ? 'application/pdf' : 'text/plain');
     }
 
     if (!contractText) {

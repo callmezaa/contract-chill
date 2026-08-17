@@ -1,0 +1,36 @@
+# Render Blueprint for ContractChill
+# Deploy: Dashboard -> New + Blueprint -> select this repo.
+# The repo field is required by the Render API and ignored when using the dashboard flow.
+services:
+  - type: web
+    name: contract-chill
+    runtime: docker
+    repo: https://github.com/callmezaa/contract-chill.git
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Render injects PORT automatically; do not set it manually.
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT
+        sync: false
+      # Firebase Web SDK config (needed at build time so Vite bakes it into the client bundle)
+      - key: VITE_FIREBASE_API_KEY
+        sync: false
+      - key: VITE_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: VITE_FIREBASE_PROJECT_ID
+        sync: false
+      - key: VITE_FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: VITE_FIREBASE_MESSAGING_SENDER_ID
+        sync: false
+      - key: VITE_FIREBASE_APP_ID
+        sync: false
+      - key: VITE_FIREBASE_MEASUREMENT_ID
+        sync: false

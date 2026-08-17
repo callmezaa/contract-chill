@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, ArrowRight, ArrowDown, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from '../context/ThemeContext';
+import { SectionHeader } from './SectionHeader';
 
 const sampleLegalText = "The Receiving Party shall hold and maintain the Confidential Information in strictest confidence for the sole and exclusive benefit of the Disclosing Party. The Receiving Party shall carefully restrict access to Confidential Information to employees, contractors and third parties as is reasonably required to carry out the obligations under this Agreement.";
 
@@ -10,8 +10,6 @@ const translatedText = "You must keep this information completely secret. You ca
 
 export const MiniDemo = () => {
   const { t } = useTranslation();
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
   
   const [isTranslating, setIsTranslating] = useState(false);
   const [showResult, setShowResult] = useState(false);
@@ -51,43 +49,46 @@ export const MiniDemo = () => {
 
   return (
     <section className="max-w-5xl mx-auto px-6 py-20">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="flex flex-col items-center gap-3 text-center mb-12"
-      >
-        <p className="text-xs font-medium tracking-[0.16em] uppercase text-primary">{t('landing.miniDemo.sectionLabel')}</p>
-        <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-[-0.05em] text-text [text-wrap:balance]">{t('landing.miniDemo.title')}</h2>
-        <p className="text-text-muted [text-wrap:pretty]">{t('landing.miniDemo.subtitle')}</p>
-      </motion.div>
+      <SectionHeader
+        label={t('landing.miniDemo.sectionLabel')}
+        title={t('landing.miniDemo.title')}
+        subtitle={t('landing.miniDemo.subtitle')}
+        className="mb-12"
+      />
 
       <div className="bg-surface rounded-2xl shadow-[0_20px_60px_-28px_rgba(0,0,0,0.28)] border border-border p-2 overflow-hidden flex flex-col md:flex-row relative">
         
         {/* Left side: Jargon */}
         <div className="flex-1 p-6 md:p-8 flex flex-col bg-surface-2 rounded-xl">
           <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-bold text-slate-500">{t('landing.miniDemo.originalClause')}</span>
-            <span className="text-[10px] bg-slate-200 text-slate-600 px-2 py-1 rounded-md font-medium">{t('landing.miniDemo.standardNda')}</span>
+            <span className="text-xs font-bold text-text-muted">{t('landing.miniDemo.originalClause')}</span>
+            <span className="text-[10px] bg-surface text-text-muted border border-border px-2 py-1 rounded-md font-medium">{t('landing.miniDemo.standardNda')}</span>
           </div>
           <div className="relative flex-1">
-            <p className="text-slate-700 text-sm md:text-base leading-relaxed font-serif italic">
+            <p className="text-text text-sm md:text-base leading-relaxed font-serif italic">
               "{sampleLegalText}"
             </p>
           </div>
           
           <div className="mt-8 flex justify-center md:justify-start">
-            <button 
-              onClick={handleTranslate}
-              disabled={isTranslating}
-               className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-sm transition-[background-color,box-shadow,transform] active:scale-[0.96]
-                ${showResult 
-                  ? 'bg-slate-200 text-slate-700 hover:bg-slate-300' 
-                  : 'bg-primary text-white hover:bg-primary-hover hover:shadow-lg hover:shadow-primary/20'
-                }
-              `}
-            >
-              {isTranslating ? (
+            <span className="relative inline-flex">
+              {!showResult && (
+                <span aria-hidden="true" className="pointer-events-none absolute inset-0 translate-y-[3px] rounded-xl bg-white shadow-[0_12px_22px_-8px_rgba(0,0,0,0.4)]" />
+              )}
+              <button 
+                onClick={handleTranslate}
+                disabled={isTranslating}
+                 className={`relative z-10 flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-sm transition-[background-color,transform] active:scale-[0.96] overflow-hidden
+                  ${showResult 
+                    ? 'bg-surface-2 text-text hover:bg-border' 
+                    : 'bg-primary text-primary-foreground hover:-translate-y-0.5'
+                  }
+                `}
+              >
+                {!showResult && (
+                  <span aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/25 via-white/10 to-transparent" />
+                )}
+                {isTranslating ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   {t('landing.miniDemo.analyzing')}
@@ -101,18 +102,19 @@ export const MiniDemo = () => {
                 </>
               )}
             </button>
+            </span>
           </div>
         </div>
 
         {/* Center arrow / divider */}
         <div className="hidden md:flex items-center justify-center -mx-4 z-10">
-          <div className="w-8 h-8 bg-white border border-slate-200 rounded-full flex items-center justify-center shadow-sm">
-            <ArrowRight className="w-4 h-4 text-slate-400" />
+          <div className="w-8 h-8 bg-surface border border-border rounded-full flex items-center justify-center shadow-sm">
+            <ArrowRight className="w-4 h-4 text-text-muted" />
           </div>
         </div>
         <div className="md:hidden flex items-center justify-center -my-4 z-10">
-          <div className="w-8 h-8 bg-white border border-slate-200 rounded-full flex items-center justify-center shadow-sm">
-            <ArrowDown className="w-4 h-4 text-slate-400" />
+          <div className="w-8 h-8 bg-surface border border-border rounded-full flex items-center justify-center shadow-sm">
+            <ArrowDown className="w-4 h-4 text-text-muted" />
           </div>
         </div>
 
@@ -125,9 +127,9 @@ export const MiniDemo = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="flex flex-col items-center justify-center text-center h-full text-slate-400 gap-3"
+                className="flex flex-col items-center justify-center text-center h-full text-text-muted gap-3"
               >
-                <Sparkles className="w-8 h-8 text-slate-200" />
+                <Sparkles className="w-8 h-8 text-text-subtle" />
                 <p className="text-sm">{t('landing.miniDemo.clickTranslate')}</p>
               </motion.div>
             )}
@@ -145,9 +147,9 @@ export const MiniDemo = () => {
                   <span className="text-xs font-bold text-primary">{t('landing.miniDemo.geminiThinking')}</span>
                 </div>
                 <div className="space-y-3">
-                  <div className="h-3 bg-slate-100 rounded-full w-full animate-pulse" />
-                  <div className="h-3 bg-slate-100 rounded-full w-5/6 animate-pulse" />
-                  <div className="h-3 bg-slate-100 rounded-full w-4/5 animate-pulse" />
+                  <div className="h-3 bg-surface-2 rounded-full w-full animate-pulse" />
+                  <div className="h-3 bg-surface-2 rounded-full w-5/6 animate-pulse" />
+                  <div className="h-3 bg-surface-2 rounded-full w-4/5 animate-pulse" />
                 </div>
               </motion.div>
             )}
@@ -160,10 +162,10 @@ export const MiniDemo = () => {
                 className="flex flex-col h-full"
               >
                 <div className="flex items-center gap-2 mb-4">
-                  <CheckCircle2 className="w-4 h-4 text-green-500" />
-                  <span className="text-xs font-bold text-green-600">{t('landing.miniDemo.simplifiedByAi')}</span>
+                  <CheckCircle2 className="w-4 h-4 text-success" />
+                  <span className="text-xs font-bold text-success">{t('landing.miniDemo.simplifiedByAi')}</span>
                 </div>
-                <p className="text-slate-800 text-lg md:text-xl font-medium leading-relaxed">
+                <p className="text-text text-lg md:text-xl font-medium leading-relaxed">
                   {displayedText}
                   <span className="inline-block w-1 h-5 ml-1 bg-primary animate-pulse align-middle" />
                 </p>

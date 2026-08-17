@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { upload as blobUpload } from '@vercel/blob/client'
 
 const mockAxiosInstance = {
   post: vi.fn(),
@@ -18,7 +19,13 @@ vi.mock('sonner', () => ({
   toast: { error: vi.fn() },
 }))
 
-const { analyzeContract, generateNegotiationScript, generateContractDraft } = await import('./api')
+const mockBlobUrl = 'https://store.public.blob.vercel-storage.com/contract.pdf'
+
+vi.mock('@vercel/blob/client', () => ({
+  upload: vi.fn(async () => ({ url: mockBlobUrl })),
+}))
+
+const { analyzeContract, uploadProfilePhoto, generateNegotiationScript, generateContractDraft } = await import('./api')
 
 describe('API Service', () => {
   beforeEach(() => {
@@ -26,19 +33,28 @@ describe('API Service', () => {
   })
 
   describe('analyzeContract', () => {
-    it('sends a POST request with form data', async () => {
+    it('uploads the file to Blob, then sends the blob URL to /analyze', async () => {
       const file = new File(['contract content'], 'contract.pdf', { type: 'application/pdf' })
       mockAxiosInstance.post.mockResolvedValueOnce({
-        data: { summary: 'Test summary', redFlags: [], fileUrl: '/uploads/test.pdf' },
+        data: { summary: 'Test summary', redFlags: [], fileUrl: mockBlobUrl },
       })
 
       const result = await analyzeContract(file, 'Chill Friend')
 
-      expect(mockAxiosInstance.post).toHaveBeenCalledWith(
-        '/analyze',
-        expect.any(FormData),
-        { headers: { 'Content-Type': 'multipart/form-data' } }
+      expect(blobUpload).toHaveBeenCalledWith(
+        'contract.pdf',
+        file,
+        expect.objectContaining({
+          handleUploadUrl: expect.stringContaining('/upload-token'),
+          clientPayload: JSON.stringify({ type: 'contract' }),
+        })
       )
+      expect(mockAxiosInstance.post).toHaveBeenCalledWith('/analyze', {
+        fileUrl: mockBlobUrl,
+        fileName: 'contract.pdf',
+        fileType: 'application/pdf',
+        persona: 'Chill Friend',
+      })
       expect(result.summary).toBe('Test summary')
     })
 
@@ -47,6 +63,23 @@ describe('API Service', () => {
       mockAxiosInstance.post.mockRejectedValueOnce(new Error('Network Error'))
 
       await expect(analyzeContract(file, 'Angry Lawyer')).rejects.toThrow('Network Error')
+    })
+  })
+
+  describe('uploadProfilePhoto', () => {
+    it('uploads a photo to Blob and returns its URL', async () => {
+      const file = new File(['photo'], 'avatar.png', { type: 'image/png' })
+
+      const url = await uploadProfilePhoto(file)
+
+      expect(blobUpload).toHaveBeenCalledWith(
+        'avatar.png',
+        file,
+        expect.objectContaining({
+          clientPayload: JSON.stringify({ type: 'photo' }),
+        })
+      )
+      expect(url).toBe(mockBlobUrl)
     })
   })
 

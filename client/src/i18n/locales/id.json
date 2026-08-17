@@ -34,6 +34,14 @@
     "expand": "Perluas",
     "lightMode": "Mode terang",
     "darkMode": "Mode gelap",
+    "buttons": {
+      "login": "Masuk",
+      "loginToAccount": "Masuk ke akun",
+      "getStarted": "Mulai",
+      "getStartedFree": "Mulai Gratis",
+      "openMenu": "Buka menu",
+      "closeMenu": "Tutup menu"
+    },
     "signOut": "Keluar"
   },
   "nav": {
@@ -41,7 +49,11 @@
     "generator": "Generator",
     "history": "Riwayat",
     "analytics": "Analitik",
-    "settings": "Pengaturan"
+    "settings": "Pengaturan",
+    "howItWorks": "Cara kerja",
+    "benefits": "Manfaat",
+    "personas": "Persona",
+    "faq": "FAQ"
   },
   "landing": {
     "badge": "Kejelasan kontrak AI, tanpa bahasa hukum yang rumit",
@@ -79,10 +91,10 @@
       "completedInSeconds": "Selesai dalam 8 detik"
     },
     "stats": {
-      "contractsAnalyzed": "Kontrak Dianalisis",
+      "formatsSupported": "Format Didukung",
       "aiPersonas": "Persona AI",
       "averageAnalysisTime": "Rata-rata Waktu Analisis",
-      "userSatisfaction": "Kepuasan Pengguna"
+      "bilingual": "Analisis Dwi Bahasa"
     },
     "howItWorks": {
       "sectionLabel": "Cara kerja",

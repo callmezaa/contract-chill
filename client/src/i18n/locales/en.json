@@ -12,6 +12,8 @@
       "signOut": "Sign out",
       "login": "Login",
       "loginToAccount": "Login to account",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu",
       "continueWithGoogle": "Continue with Google",
       "forgotPassword": "Forgot Password?",
       "saveChanges": "Save changes",
@@ -114,10 +116,10 @@
       "completedInSeconds": "Completed in 8 seconds"
     },
     "stats": {
-      "contractsAnalyzed": "Contracts Analyzed",
+      "formatsSupported": "Formats Supported",
       "aiPersonas": "AI Personas",
       "averageAnalysisTime": "Average Analysis Time",
-      "userSatisfaction": "User Satisfaction"
+      "bilingual": "Bilingual Analysis"
     },
     "miniDemo": {
       "sectionLabel": "Live demo",

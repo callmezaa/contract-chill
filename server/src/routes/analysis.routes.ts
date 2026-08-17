@@ -1,46 +1,11 @@
 import { Router } from 'express';
-import multer from 'multer';
 import rateLimit from 'express-rate-limit';
-import path from 'path';
-import fs from 'fs';
-import crypto from 'crypto';
+import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
 import { AnalysisController } from '../controllers/analysis.controller';
-import { requireAuth, AuthenticatedRequest } from '../middleware/auth.middleware';
+import { requireAuth } from '../middleware/auth.middleware';
 import { asyncHandler } from '../utils/async-handler';
 
 const router = Router();
-
-// Set file upload limit to 10MB to prevent Out Of Memory (OOM) / DoS attacks
-const upload = multer({ 
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 10 * 1024 * 1024 } 
-});
-
-// Profile photo upload endpoint (bypasses Firebase Storage quota)
-const photoUpload = multer({ 
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 2 * 1024 * 1024 } // 2MB for profile photos
-});
-router.post('/upload-photo', requireAuth, photoUpload.single('photo'), (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
-    }
-    const authReq = req as AuthenticatedRequest;
-    const uploadsDir = path.join(__dirname, '../../uploads');
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
-    }
-    const ext = path.extname(req.file.originalname) || '.jpg';
-    const safeName = `profile_${authReq.user?.uid}_${crypto.randomUUID()}${ext}`;
-    fs.writeFileSync(path.join(uploadsDir, safeName), req.file.buffer);
-    const baseUrl = `${req.protocol}://${req.get('host')}`;
-    res.json({ photoURL: `${baseUrl}/uploads/${safeName}` });
-  } catch (error) {
-    console.error('Photo upload error:', error);
-    res.status(500).json({ error: 'Failed to upload photo' });
-  }
-});
 
 // Rate limiter: Max 5 analysis requests per hour per IP (Free Tier protection)
 const analyzeLimiter = rateLimit({
@@ -53,7 +18,7 @@ const analyzeLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// Rate limiter for chat/script (less strict, e.g., 20 per hour)
+// Rate limiter for chat/script/token requests (less strict, e.g., 20 per hour)
 const actionLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
   max: 20,
@@ -64,9 +29,33 @@ const actionLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// All routes are now protected by requireAuth
-router.post('/analyze', requireAuth, analyzeLimiter, upload.single('contract'), asyncHandler(AnalysisController.analyze));
+// Issues a short-lived upload token so the browser can upload files
+// directly to Vercel Blob (bypasses the 4.5MB serverless function body limit).
+router.post('/upload-token', requireAuth, actionLimiter, asyncHandler(async (req, res) => {
+  const jsonResponse = await handleUpload({
+    body: req.body as HandleUploadBody,
+    request: req,
+    onBeforeGenerateToken: async (_pathname, clientPayload) => {
+      let type: string | undefined;
+      try {
+        type = JSON.parse(clientPayload || '{}')?.type;
+      } catch {
+        type = undefined;
+      }
+      const isPhoto = type === 'photo';
+      return {
+        allowedContentTypes: isPhoto
+          ? ['image/jpeg', 'image/png', 'image/webp']
+          : ['application/pdf', 'text/plain', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+        maximumSizeInBytes: isPhoto ? 2 * 1024 * 1024 : 10 * 1024 * 1024,
+        addRandomSuffix: true,
+      };
+    },
+  });
+  res.json(jsonResponse);
+}));
 
+router.post('/analyze', requireAuth, analyzeLimiter, asyncHandler(AnalysisController.analyze));
 router.post('/chat', requireAuth, actionLimiter, asyncHandler(AnalysisController.chat));
 router.post('/generate-script', requireAuth, actionLimiter, asyncHandler(AnalysisController.generateScript));
 router.post('/generate-contract', requireAuth, actionLimiter, asyncHandler(AnalysisController.generateContract));

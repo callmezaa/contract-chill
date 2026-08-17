@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import { MulterError } from 'multer';
 import path from 'path';
 import fs from 'fs';
 
@@ -16,6 +17,10 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
+// Trust the first proxy hop so req.ip reflects the real client IP
+// behind Render / Railway / similar reverse proxies (needed for per-IP rate limiting).
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(
   helmet({
@@ -25,6 +30,11 @@ app.use(
 );
 app.use(cors());
 app.use(express.json());
+
+// Health check (also used by Render health checks and keep-awake pings)
+app.get('/health', (_req: Request, res: Response) => {
+  res.status(200).json({ status: 'ok' });
+});
 
 // Serve uploaded files (bypasses Firebase Storage quota)
 app.use('/uploads', express.static(uploadsDir));
@@ -52,6 +62,19 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
     return res.status(err.statusCode).json({
       success: false,
       error: err.message,
+      code: err.code,
+    });
+  }
+
+  // Multer errors (e.g. file exceeds the size limit) -> 413 Payload Too Large
+  if (err instanceof MulterError) {
+    const message =
+      err.code === 'LIMIT_FILE_SIZE'
+        ? 'File is too large. Please upload a smaller file.'
+        : 'File upload failed.';
+    return res.status(413).json({
+      success: false,
+      error: message,
       code: err.code,
     });
   }

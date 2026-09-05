@@ -106,7 +106,7 @@ export const LandingNav = () => {
               whileHover={reduceMotion ? undefined : { scale: 1.05, rotate: -1.5 }}
               whileTap={reduceMotion ? undefined : { scale: 0.95 }}
             />
-            <span className="font-display text-lg font-semibold tracking-[-0.04em]">{t('common.appName')}</span>
+            <span className="font-display text-lg font-medium tracking-[-0.01em]">{t('common.appName')}</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-1 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -216,7 +216,7 @@ export const LandingNav = () => {
               <div className="flex items-center justify-between h-[68px] px-5 border-b border-border shrink-0">
                 <div className="flex items-center gap-2.5">
                   <img src={logoSrc} alt="ContractChill Logo" className="w-8 h-8 rounded-lg shadow-sm" />
-                  <span className="font-display text-lg font-semibold tracking-[-0.04em]">{t('common.appName')}</span>
+                  <span className="font-display text-lg font-medium tracking-[-0.01em]">{t('common.appName')}</span>
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}

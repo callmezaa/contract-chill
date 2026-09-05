@@ -39,6 +39,8 @@
       "loginToAccount": "Masuk ke akun",
       "getStarted": "Mulai",
       "getStartedFree": "Mulai Gratis",
+      "startWithContract": "Mulai dengan kontrak",
+      "seeHowItWorks": "Lihat cara kerja",
       "openMenu": "Buka menu",
       "closeMenu": "Tutup menu"
     },
@@ -56,27 +58,18 @@
     "faq": "FAQ"
   },
   "landing": {
-    "badge": "Kejelasan kontrak AI, tanpa bahasa hukum yang rumit",
-    "title": {
-      "your": "Kontrak",
-      "finally": "akhirnya",
-      "inPlainEnglish": "dalam bahasa yang mudah dipahami."
-    },
-    "subtitle": "Unggah kontrak hukum apa pun dan dapatkan analisis instan bertenaga AI — bendera merah, ringkasan klausul, dan tips negosiasi. Dalam hitungan detik.",
-    "cta": {
-      "startWithContract": "Mulai dengan kontrak",
-      "seeHowItWorks": "Lihat cara kerjanya"
-    },
-    "trustBadges": {
-      "noCreditCard": "Tidak perlu kartu kredit",
-      "pdfDocxSupport": "Dukungan PDF & DOCX",
-      "resultsInSeconds": "Hasil dalam hitungan detik"
-    },
-    "docTypes": {
-      "contracts": "kontrak",
-      "ndas": "NDA",
-      "freelanceAgreements": "perjanjian freelance",
-      "termSheets": "term sheet"
+    "hero": {
+      "heroTitle": {
+        "prefix": "",
+        "highlight": "Kontrak",
+        "suffix": "akhirnya dalam bahasa yang mudah dipahami."
+      },
+      "subtitle": "Unggah kontrak hukum apa pun dan dapatkan analisis instan bertenaga AI — bendera merah, ringkasan klausul, dan tips negosiasi. Dalam hitungan detik.",
+      "trustBadges": {
+        "noCreditCard": "Tidak perlu kartu kredit",
+        "pdfDocxSupport": "Dukungan PDF & DOCX",
+        "resultsInSeconds": "Hasil dalam hitungan detik"
+      }
     },
     "preview": {
       "uploadAnyFormat": "Unggah format kontrak apa pun",

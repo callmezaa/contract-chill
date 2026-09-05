@@ -88,8 +88,11 @@
     "title": "ContractChill | AI Legal Assistant for Everyone",
     "hero": {
       "badge": "AI contract clarity, without the legalese",
-      "titlePrefix": "Your",
-      "titleSuffix": "finally in plain English.",
+      "heroTitle": {
+        "prefix": "Your",
+        "highlight": "contracts",
+        "suffix": "finally in plain English."
+      },
       "docTypes": [
         "contracts",
         "NDAs",

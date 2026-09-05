@@ -14,26 +14,23 @@ const fadeUp = {
 };
 
 interface SectionHeaderProps {
-  label: string;
+  label?: string;
   title: string;
   subtitle?: string;
   className?: string;
 }
 
-export const SectionHeader = ({ label, title, subtitle, className = 'mb-16' }: SectionHeaderProps) => (
+export const SectionHeader = ({ title, subtitle, className = 'mb-16' }: SectionHeaderProps) => (
   <motion.div
     initial="hidden"
     whileInView="show"
     viewport={{ once: true }}
     variants={stagger}
-    className={`flex flex-col items-center gap-3 text-center ${className}`}
+    className={`flex flex-col items-center gap-4 text-center ${className}`}
   >
-    <motion.p variants={fadeUp} className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
-      {label}
-    </motion.p>
     <motion.h2
       variants={fadeUp}
-      className="text-3xl md:text-4xl font-display font-semibold tracking-[-0.05em] text-text [text-wrap:balance]"
+      className="text-3xl md:text-[2.75rem] md:leading-[1.12] font-display font-medium tracking-[-0.02em] text-text [text-wrap:balance]"
     >
       {title}
     </motion.h2>

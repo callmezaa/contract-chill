@@ -24,9 +24,11 @@
 @theme {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-  --font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 
   --color-background: var(--background);
+  --color-brand: var(--brand);
+  --color-brand-wash: var(--brand-wash);
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
@@ -76,6 +78,11 @@
 :root {
   --font-geist-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
   --font-geist-mono: 'Geist Mono', ui-monospace, monospace;
+  --font-fraunces: 'Fraunces Variable', 'Geist', ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand accent — warm ochre "highlighter" */
+  --brand: #A16207;
+  --brand-wash: rgba(196, 143, 45, 0.18);
 
   --background: #FBFBFA;
   --foreground: #1B1B18;
@@ -121,6 +128,13 @@
 }
 
 .dark, [data-theme='dark'] {
+  --font-geist-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-geist-mono: 'Geist Mono', ui-monospace, monospace;
+  --font-fraunces: 'Fraunces Variable', 'Geist', ui-sans-serif, system-ui, sans-serif;
+
+  --brand: #D9A441;
+  --brand-wash: rgba(217, 164, 65, 0.16);
+
   --background: #131312;
   --foreground: #F0EFED;
   --surface: #1C1C1A;

@@ -30,7 +30,7 @@ export const SectionHeader = ({ title, subtitle, className = 'mb-16' }: SectionH
   >
     <motion.h2
       variants={fadeUp}
-      className="text-3xl md:text-[2.75rem] md:leading-[1.12] font-display font-medium tracking-[-0.02em] text-text [text-wrap:balance]"
+      className="text-3xl md:text-[2.75rem] md:leading-[1.15] font-display font-bold tracking-[-0.025em] text-foreground [text-wrap:balance]"
     >
       {title}
     </motion.h2>

@@ -41,18 +41,20 @@ export interface ButtonProps extends Omit<
 type Ripple = { id: number; x: number; y: number; size: number };
 
 const VARIANT_CLASS: Record<ButtonVariant, string> = {
-  primary: "bg-primary text-primary-foreground hover:bg-primary/90",
-  secondary: "border border-border bg-card text-foreground hover:border-border",
-  ghost: "text-muted-foreground hover:text-foreground hover:bg-primary/5",
+  primary:
+    "border border-primary bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+  secondary:
+    "border border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/90",
+  ghost: "border border-transparent text-foreground hover:bg-accent",
   outline:
-    "border border-border bg-transparent text-foreground hover:bg-primary/5",
+    "border border-input bg-popover text-foreground shadow-xs hover:bg-accent/50",
 };
 
 const SIZE_CLASS: Record<ButtonSize, string> = {
-  sm: "h-8 px-3 text-xs gap-1.5 rounded-full",
-  md: "h-10 px-5 text-sm gap-2 rounded-full",
-  lg: "h-12 px-6 text-base gap-2 rounded-full",
-  icon: "h-8 w-8 rounded-lg",
+  sm: "h-8 px-3 text-xs gap-1.5 rounded-lg",
+  md: "h-9 px-4 text-sm gap-2 rounded-lg",
+  lg: "h-11 px-5 text-[15px] gap-2 rounded-lg",
+  icon: "size-9 rounded-lg",
 };
 
 const RAISED_SHADOW = "0 4px 0 0 rgba(0, 0, 0, 0.3)";
@@ -78,8 +80,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) {
     const reduce = useReducedMotion();
     const canHover = useHoverCapable();
-    const useBacking = backing === undefined ? variant === "primary" : backing;
-    const useSlab = !useBacking && (raised === undefined ? variant === "primary" : raised);
+    const useBacking = backing ?? false;
+    const useSlab = !useBacking && (raised ?? false);
     const [ripples, setRipples] = useState<Ripple[]>([]);
     const nextId = useRef(0);
 

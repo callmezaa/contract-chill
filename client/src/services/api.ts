@@ -68,13 +68,26 @@ const getAuthHeaders = async (): Promise<Record<string, string>> => {
 
 const uploadToBlob = async (file: File, type: 'contract' | 'photo'): Promise<string> => {
   const headers = await getAuthHeaders();
-  const result = await upload(file.name, file, {
-    access: 'public',
-    handleUploadUrl: `${API_URL}/upload-token`,
-    headers,
-    clientPayload: JSON.stringify({ type }),
-  });
-  return result.url;
+  try {
+    const result = await upload(file.name, file, {
+      access: 'public',
+      handleUploadUrl: `${API_URL}/upload-token`,
+      headers,
+      clientPayload: JSON.stringify({ type }),
+    });
+    return result.url;
+  } catch (err) {
+    // @vercel/blob/client throws a vague "Failed to retrieve the client token"
+    // whenever /upload-token returns non-OK (401 auth, 429 rate-limit, 500
+    // missing BLOB_READ_WRITE_TOKEN). Log a hint so Network tab inspection
+    // points straight at the cause.
+    console.error(
+      `[uploadToBlob] Failed. Check Network tab -> POST ${API_URL}/upload-token status: ` +
+      `401 = login expired, 429 = rate-limited, 500 = server misconfigured (likely missing BLOB_READ_WRITE_TOKEN).`,
+      err,
+    );
+    throw err;
+  }
 };
 
 export const analyzeContract = async (file: File, persona: Persona): Promise<AnalysisResult & { fileUrl: string }> => {

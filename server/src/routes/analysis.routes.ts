@@ -32,9 +32,19 @@ const actionLimiter = rateLimit({
 // Issues a short-lived upload token so the browser can upload files
 // directly to Vercel Blob (bypasses the 4.5MB serverless function body limit).
 router.post('/upload-token', requireAuth, actionLimiter, asyncHandler(async (req, res) => {
-  const jsonResponse = await handleUpload({
-    body: req.body as HandleUploadBody,
-    request: req,
+  const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
+  if (!blobToken) {
+    console.error('BLOB_READ_WRITE_TOKEN is not configured. Add it to server/.env locally or to the Vercel project environment variables.');
+    return res.status(500).json({
+      error: 'File upload is not configured (missing BLOB_READ_WRITE_TOKEN). Please contact support or check server env.',
+    });
+  }
+
+  try {
+    const jsonResponse = await handleUpload({
+      body: req.body as HandleUploadBody,
+      request: req,
+      token: blobToken,
     onBeforeGenerateToken: async (_pathname, clientPayload) => {
       let type: string | undefined;
       try {
@@ -51,8 +61,14 @@ router.post('/upload-token', requireAuth, actionLimiter, asyncHandler(async (req
         addRandomSuffix: true,
       };
     },
-  });
-  res.json(jsonResponse);
+    });
+    res.json(jsonResponse);
+  } catch (err) {
+    console.error('handleUpload failed:', err);
+    return res.status(500).json({
+      error: err instanceof Error ? err.message : 'Failed to generate upload token',
+    });
+  }
 }));
 
 router.post('/analyze', requireAuth, analyzeLimiter, asyncHandler(AnalysisController.analyze));

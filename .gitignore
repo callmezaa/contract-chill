@@ -69,3 +69,6 @@ koyeb.exe
 # Internal docs / development artifacts
 docs/superpowers/
 dummy_contracts/
+
+.vercel
+.env*
